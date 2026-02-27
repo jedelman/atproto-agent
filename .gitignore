@@ -1,5 +1,6 @@
 .chainlink/
 .claude/
+.letta/
 .mcp.json
 node_modules/
 package-lock.json
