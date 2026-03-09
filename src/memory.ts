@@ -11,9 +11,9 @@
 const LETTA_BASE_URL = process.env.LETTA_BASE_URL
 const LETTA_AGENT_ID = process.env.LETTA_AGENT_ID
 const LETTA_API_KEY = process.env.LETTA_API_KEY
-const BLOCK_LABEL = process.env.BLOCK_LABEL   // e.g. 'human', 'persona'
-const BLOCK_VALUE = process.env.BLOCK_VALUE   // replace entire value
-const BLOCK_APPEND = process.env.BLOCK_APPEND // append to existing value
+const BLOCK_LABEL = process.env.BLOCK_LABEL || undefined
+const BLOCK_VALUE = process.env.BLOCK_VALUE || undefined   // empty string = unset
+const BLOCK_APPEND = process.env.BLOCK_APPEND || undefined // empty string = unset
 const DRY_RUN = process.env.DRY_RUN === 'true'
 
 if (!LETTA_BASE_URL || !LETTA_AGENT_ID) {
@@ -39,7 +39,7 @@ interface MemoryBlock {
 
 async function listBlocks(): Promise<MemoryBlock[]> {
   const res = await fetch(
-    `${LETTA_BASE_URL}/v1/agents/${LETTA_AGENT_ID}/core-memory/blocks`,
+    `${LETTA_BASE_URL}/v1/agents/${encodeURIComponent(LETTA_AGENT_ID!)}/core-memory/blocks`,
     { headers }
   )
   if (!res.ok) throw new Error(`List blocks failed: ${res.status} ${await res.text()}`)
@@ -48,7 +48,7 @@ async function listBlocks(): Promise<MemoryBlock[]> {
 
 async function updateBlock(label: string, value: string): Promise<MemoryBlock> {
   const res = await fetch(
-    `${LETTA_BASE_URL}/v1/agents/${LETTA_AGENT_ID}/core-memory/blocks/${label}`,
+    `${LETTA_BASE_URL}/v1/agents/${LETTA_AGENT_ID}/core-memory/blocks/${encodeURIComponent(label)}`,
     { method: 'PATCH', headers, body: JSON.stringify({ value }) }
   )
   if (!res.ok) throw new Error(`Update block failed: ${res.status} ${await res.text()}`)
