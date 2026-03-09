@@ -22,7 +22,7 @@ on:
 jobs:
   agent:
     runs-on: ubuntu-latest
-    # Only run if the triggering feed workflow succeeded (or if manually dispatched)
+    environment: scout-two
     if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
     permissions:
       contents: write   # for committing requests.md
@@ -77,8 +77,8 @@ jobs:
 
       - name: Think — send feed to Scout-Two
         env:
-          LETTA_BASE_URL: ${{ secrets.LETTA_BASE_URL }}
-          LETTA_AGENT_ID: ${{ secrets.LETTA_AGENT_ID }}
+          LETTA_BASE_URL: ${{ vars.LETTA_BASE_URL }}
+          LETTA_AGENT_ID: ${{ vars.LETTA_AGENT_ID }}
           LETTA_API_KEY: ${{ secrets.LETTA_API_KEY }}
           INPUT_DIR: ./output
           THINK_OUTPUT_DIR: ./think-output
@@ -113,7 +113,7 @@ jobs:
 
       - name: Act — execute on Bluesky
         env:
-          ATPROTO_IDENTIFIER: ${{ secrets.ATPROTO_IDENTIFIER }}
+          ATPROTO_IDENTIFIER: ${{ vars.ATPROTO_IDENTIFIER }}
           ATPROTO_APP_PASSWORD: ${{ secrets.ATPROTO_APP_PASSWORD }}
           ATPROTO_HTTP_SERVICE: https://bsky.social
           THINK_OUTPUT_DIR: ./think-output

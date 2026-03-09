@@ -17,6 +17,7 @@ on:
 jobs:
   feed:
     runs-on: ubuntu-latest
+    environment: scout-two
     permissions:
       contents: read
       actions: write
@@ -39,7 +40,7 @@ jobs:
 
       - name: Pull home timeline
         env:
-          ATPROTO_IDENTIFIER: ${{ secrets.ATPROTO_IDENTIFIER }}
+          ATPROTO_IDENTIFIER: ${{ vars.ATPROTO_IDENTIFIER }}
           ATPROTO_APP_PASSWORD: ${{ secrets.ATPROTO_APP_PASSWORD }}
           ATPROTO_HTTP_SERVICE: https://bsky.social
           OUTPUT_DIR: ./output
