@@ -208,7 +208,9 @@ function formatDigest(posts: PostDigest[]): string {
 interface LettaMessage {
   id?: string
   role: string
+  message_type?: string
   content: string | Array<{ type: string; text?: string }>
+  [key: string]: unknown  // tool_calls, function_call, etc.
 }
 
 interface LettaResponse {
@@ -256,26 +258,73 @@ async function callLetta(digest: string): Promise<{ json: string; messageIds: st
   const data = await res.json() as LettaResponse
   console.log(`Letta responded with ${data.messages?.length ?? 0} messages`)
 
+  // Debug: log message structure so we can see what Letta actually returns
+  data.messages.forEach((msg, i) => {
+    const contentPreview = typeof msg.content === 'string'
+      ? msg.content.slice(0, 200)
+      : JSON.stringify(msg.content).slice(0, 200)
+    console.log(`  msg[${i}] role=${msg.role} id=${msg.id ?? '?'} content_preview=${contentPreview}`)
+    if ((msg as Record<string, unknown>).tool_calls) {
+      console.log(`    tool_calls=${JSON.stringify((msg as Record<string, unknown>).tool_calls).slice(0, 300)}`)
+    }
+  })
+
   const messageIds = data.messages.map(m => m.id).filter((id): id is string => !!id)
 
-  // Extract the last assistant message containing JSON
+  // Try every extraction strategy in order:
+
+  // 1. Direct content string or text blocks (stateless Claude-style)
   for (let i = data.messages.length - 1; i >= 0; i--) {
     const msg = data.messages[i]
     if (msg.role !== 'assistant') continue
-
     const text = typeof msg.content === 'string'
       ? msg.content
-      : msg.content
-          .filter((b) => b.type === 'text')
-          .map((b) => b.text ?? '')
-          .join('')
-
-    // Find JSON block in the response
+      : Array.isArray(msg.content)
+        ? msg.content.filter((b) => b.type === 'text').map((b) => b.text ?? '').join('')
+        : ''
     const jsonMatch = text.match(/\{[\s\S]*\}/)
-    if (jsonMatch) return { json: jsonMatch[0], messageIds }
+    if (jsonMatch) {
+      console.log('Extracted JSON from content field')
+      return { json: jsonMatch[0], messageIds }
+    }
   }
 
-  throw new Error('No JSON found in Letta response')
+  // 2. Letta tool_calls — agent sends via send_message(message=...) or similar
+  for (const msg of data.messages) {
+    const raw = msg as Record<string, unknown>
+    const toolCalls = raw.tool_calls as Array<Record<string, unknown>> | undefined
+    if (!toolCalls) continue
+    for (const tc of toolCalls) {
+      const fnArgs = (tc.function as Record<string, unknown>)?.arguments
+      const argsStr = typeof fnArgs === 'string' ? fnArgs : JSON.stringify(fnArgs ?? '')
+      // send_message argument is typically { message: "..." }
+      let innerText = argsStr
+      try {
+        const parsed = JSON.parse(argsStr)
+        innerText = parsed.message ?? parsed.content ?? argsStr
+      } catch { /* use raw argsStr */ }
+      const jsonMatch = innerText.match(/\{[\s\S]*\}/)
+      if (jsonMatch) {
+        console.log(`Extracted JSON from tool_call: ${tc.name ?? '?'}`)
+        return { json: jsonMatch[0], messageIds }
+      }
+    }
+  }
+
+  // 3. tool_return / function_call_output blocks
+  for (const msg of data.messages) {
+    const raw = msg as Record<string, unknown>
+    if (raw.role === 'tool' || raw.message_type === 'tool_return') {
+      const text = typeof raw.content === 'string' ? raw.content : JSON.stringify(raw.content ?? '')
+      const jsonMatch = text.match(/\{[\s\S]*\}/)
+      if (jsonMatch) {
+        console.log('Extracted JSON from tool_return message')
+        return { json: jsonMatch[0], messageIds }
+      }
+    }
+  }
+
+  throw new Error(`No JSON found in Letta response. Full response:\n${JSON.stringify(data, null, 2).slice(0, 2000)}`)
 }
 
 // ---------------------------------------------------------------------------
