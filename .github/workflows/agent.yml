@@ -10,8 +10,8 @@ on:
         description: 'Dry run (no Bluesky writes, no Letta calls)'
         required: false
         default: 'false'
-      feed_run_number:
-        description: 'Run number of the feed.yml run to use (required for manual dispatch)'
+      feed_run_id:
+        description: 'Run ID of the feed.yml run to use (the number in the Actions URL, required for manual dispatch)'
         required: false
         default: ''
       max_posts:
@@ -55,13 +55,15 @@ jobs:
           run-id: ${{ github.event.workflow_run.id }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      # For manual dispatch: run feed.yml first, then pass its run_number here
+      # For manual dispatch: grab the run ID from the feed.yml URL (Actions → feed run → ID in browser URL)
       - name: Download feed artifact (manual dispatch)
         if: github.event_name == 'workflow_dispatch'
         uses: actions/download-artifact@v4
         with:
-          name: atproto-feed-${{ github.event.inputs.feed_run_number }}
+          pattern: atproto-feed-*
+          run-id: ${{ github.event.inputs.feed_run_id }}
           path: ./output
+          merge-multiple: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Verify feed data
