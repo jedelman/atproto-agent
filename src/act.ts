@@ -37,8 +37,52 @@ function parseAtUri(uri: string): { did: string; rkey: string } {
 }
 
 // ---------------------------------------------------------------------------
-// Result tracking
+// Helpers
 // ---------------------------------------------------------------------------
+
+const GRAPHEME_LIMIT = 295 // leave 5 for safety margin
+
+function splitIntoChunks(text: string): string[] {
+  const graphemes = [...text]
+  if (graphemes.length <= GRAPHEME_LIMIT) return [text]
+  const chunks: string[] = []
+  for (let i = 0; i < graphemes.length; i += GRAPHEME_LIMIT) {
+    chunks.push(graphemes.slice(i, i + GRAPHEME_LIMIT).join(''))
+  }
+  return chunks
+}
+
+async function resolveCid(agent: AtpAgent, uri: string): Promise<string> {
+  const { did, rkey } = parseAtUri(uri)
+  const postRes = await agent.getPost({ repo: did, rkey })
+  if (!postRes.cid) throw new Error(`No CID returned for ${uri}`)
+  return postRes.cid
+}
+
+async function postThread(
+  agent: AtpAgent,
+  chunks: string[],
+  replyRef?: { parent: { uri: string; cid: string }; root: { uri: string; cid: string } }
+): Promise<Array<{ uri: string; cid: string }>> {
+  const posted: Array<{ uri: string; cid: string }> = []
+  let currentReply = replyRef
+
+  for (const chunk of chunks) {
+    const rt = new RichText({ text: chunk })
+    await rt.detectFacets(agent)
+    const res = await agent.post({
+      text: rt.text,
+      facets: rt.facets,
+      reply: currentReply,
+      createdAt: new Date().toISOString(),
+    })
+    posted.push({ uri: res.uri, cid: res.cid })
+    // Each subsequent chunk replies to the previous
+    const root = currentReply?.root ?? { uri: res.uri, cid: res.cid }
+    currentReply = { parent: { uri: res.uri, cid: res.cid }, root }
+  }
+  return posted
+}
 
 interface ActionResult {
   action: string
@@ -73,23 +117,17 @@ async function executePosts(
   }
 
   for (const p of capped) {
-    const safeText = [...p.text].slice(0, 300).join('')
-    console.log(`  Post: "${safeText.slice(0, 80)}..."`)
+    const chunks = splitIntoChunks(p.text)
+    console.log(`  Post: "${p.text.slice(0, 80)}..." (${chunks.length} chunk${chunks.length > 1 ? 's' : ''})`)
     if (DRY_RUN) {
-      record('post', { text: safeText }, true, { dry_run: true })
+      record('post', { text: p.text, chunks: chunks.length }, true, { dry_run: true })
       continue
     }
     try {
-      const rt = new RichText({ text: safeText })
-      await rt.detectFacets(agent)
-      const res = await agent.post({
-        text: rt.text,
-        facets: rt.facets,
-        createdAt: new Date().toISOString(),
-      })
-      record('post', { text: safeText }, true, { uri: res.uri, cid: res.cid })
+      const posted = await postThread(agent, chunks)
+      record('post', { text: p.text }, true, { posts: posted })
     } catch (e) {
-      record('post', { text: safeText }, false, undefined, String(e))
+      record('post', { text: p.text }, false, undefined, String(e))
     }
   }
 }
@@ -104,19 +142,20 @@ async function executeReplies(
   }
 
   for (const r of capped) {
-    console.log(`  Reply to ${r.uri}: "${r.text.slice(0, 60)}..."`)
+    const chunks = splitIntoChunks(r.text)
+    console.log(`  Reply to ${r.uri}: "${r.text.slice(0, 60)}..." (${chunks.length} chunk${chunks.length > 1 ? 's' : ''})`)
     if (DRY_RUN) {
-      record('reply', { uri: r.uri, text: r.text }, true, { dry_run: true })
+      record('reply', { uri: r.uri, text: r.text, chunks: chunks.length }, true, { dry_run: true })
       continue
     }
     try {
-      // Resolve the post to get its CID for the reply ref
       const { did, rkey } = parseAtUri(r.uri)
-
       const postRes = await agent.getPost({ repo: did, rkey })
+      if (!postRes.cid) throw new Error(`No CID returned for ${r.uri}`)
+
       const parentRef = { uri: r.uri, cid: postRes.cid }
 
-      // Walk up to find root (if post is itself a reply, use its root; otherwise post is root)
+      // Walk up to root
       let rootRef = parentRef
       const parentRecord = postRes.value as Record<string, unknown>
       if (parentRecord.reply && typeof parentRecord.reply === 'object') {
@@ -124,18 +163,8 @@ async function executeReplies(
         rootRef = { uri: replyRefs.root.uri, cid: replyRefs.root.cid }
       }
 
-      // Bluesky hard limit: 300 graphemes
-      const safeText = [...r.text].slice(0, 300).join('')
-      const rt = new RichText({ text: safeText })
-      await rt.detectFacets(agent)
-
-      const res = await agent.post({
-        text: rt.text,
-        facets: rt.facets,
-        reply: { parent: parentRef, root: rootRef },
-        createdAt: new Date().toISOString(),
-      })
-      record('reply', { uri: r.uri, text: safeText }, true, { uri: res.uri, cid: res.cid })
+      const posted = await postThread(agent, chunks, { parent: parentRef, root: rootRef })
+      record('reply', { uri: r.uri, text: r.text }, true, { posts: posted })
     } catch (e) {
       record('reply', { uri: r.uri, text: r.text }, false, undefined, String(e))
     }

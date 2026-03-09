@@ -182,6 +182,12 @@ function formatDigest(posts: PostDigest[]): string {
   lines.push('---')
   lines.push('Review this feed. Respond ONLY with a JSON object matching this exact schema:')
   lines.push('')
+  lines.push('IMPORTANT CONSTRAINTS:')
+  lines.push('- Bluesky posts have a hard 300 grapheme limit')
+  lines.push('- Keep each post/reply text under 300 graphemes')
+  lines.push('- If a thought needs more space, split it: write the first part as the reply, then a follow-up as a separate reply to the same URI (add a second entry to the replies array targeting the same post)')
+  lines.push('- Do not truncate mid-thought — split cleanly at sentence boundaries')
+  lines.push('')
   lines.push(JSON.stringify({
     actions: {
       posts: [{ text: 'string — your original post text', rationale: 'optional string' }],
