@@ -274,55 +274,52 @@ async function callLetta(digest: string): Promise<{ json: string; messageIds: st
 
   const messageIds = data.messages.map(m => m.id).filter((id): id is string => !!id)
 
-  // Try every extraction strategy in order:
-
-  // 1. Direct content string or text blocks (stateless Claude-style)
+  // Letta uses message_type not role. Search all messages for JSON content.
   for (let i = data.messages.length - 1; i >= 0; i--) {
-    const msg = data.messages[i]
-    if (msg.role !== 'assistant') continue
-    const text = typeof msg.content === 'string'
-      ? msg.content
-      : Array.isArray(msg.content)
-        ? msg.content.filter((b) => b.type === 'text').map((b) => b.text ?? '').join('')
-        : ''
+    const msg = data.messages[i] as Record<string, unknown>
+    const messageType = msg.message_type as string | undefined
+
+    // Skip pure reasoning messages — they contain thinking, not output
+    if (messageType === 'reasoning_message') continue
+
+    // Get text from whatever field holds content
+    let text = ''
+    if (typeof msg.content === 'string') {
+      text = msg.content
+    } else if (typeof msg.message === 'string') {
+      text = msg.message
+    } else if (Array.isArray(msg.content)) {
+      text = (msg.content as Array<{ type: string; text?: string }>)
+        .filter(b => b.type === 'text').map(b => b.text ?? '').join('')
+    } else {
+      text = JSON.stringify(msg)
+    }
+
+    // Strip markdown code fences if present
+    text = text.replace(/^```(?:json)?\s*/m, '').replace(/\s*```\s*$/m, '').trim()
+
     const jsonMatch = text.match(/\{[\s\S]*\}/)
     if (jsonMatch) {
-      console.log('Extracted JSON from content field')
+      console.log(`Extracted JSON from msg[${i}] message_type=${messageType ?? 'unknown'}`)
       return { json: jsonMatch[0], messageIds }
     }
-  }
 
-  // 2. Letta tool_calls — agent sends via send_message(message=...) or similar
-  for (const msg of data.messages) {
-    const raw = msg as Record<string, unknown>
-    const toolCalls = raw.tool_calls as Array<Record<string, unknown>> | undefined
-    if (!toolCalls) continue
-    for (const tc of toolCalls) {
-      const fnArgs = (tc.function as Record<string, unknown>)?.arguments
-      const argsStr = typeof fnArgs === 'string' ? fnArgs : JSON.stringify(fnArgs ?? '')
-      // send_message argument is typically { message: "..." }
-      let innerText = argsStr
-      try {
-        const parsed = JSON.parse(argsStr)
-        innerText = parsed.message ?? parsed.content ?? argsStr
-      } catch { /* use raw argsStr */ }
-      const jsonMatch = innerText.match(/\{[\s\S]*\}/)
-      if (jsonMatch) {
-        console.log(`Extracted JSON from tool_call: ${tc.name ?? '?'}`)
-        return { json: jsonMatch[0], messageIds }
-      }
-    }
-  }
-
-  // 3. tool_return / function_call_output blocks
-  for (const msg of data.messages) {
-    const raw = msg as Record<string, unknown>
-    if (raw.role === 'tool' || raw.message_type === 'tool_return') {
-      const text = typeof raw.content === 'string' ? raw.content : JSON.stringify(raw.content ?? '')
-      const jsonMatch = text.match(/\{[\s\S]*\}/)
-      if (jsonMatch) {
-        console.log('Extracted JSON from tool_return message')
-        return { json: jsonMatch[0], messageIds }
+    // Also check tool_calls
+    const toolCalls = msg.tool_calls as Array<Record<string, unknown>> | undefined
+    if (toolCalls) {
+      for (const tc of toolCalls) {
+        const fnArgs = (tc.function as Record<string, unknown>)?.arguments
+        const argsStr = typeof fnArgs === 'string' ? fnArgs : JSON.stringify(fnArgs ?? '')
+        try {
+          const parsed = JSON.parse(argsStr)
+          const inner = parsed.message ?? parsed.content ?? ''
+          const stripped = inner.replace(/^```(?:json)?\s*/m, '').replace(/\s*```\s*$/m, '').trim()
+          const match = stripped.match(/\{[\s\S]*\}/)
+          if (match) {
+            console.log(`Extracted JSON from tool_call ${tc.name ?? '?'} in msg[${i}]`)
+            return { json: match[0], messageIds }
+          }
+        } catch { /* ignore */ }
       }
     }
   }
