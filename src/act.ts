@@ -73,22 +73,23 @@ async function executePosts(
   }
 
   for (const p of capped) {
-    console.log(`  Post: "${p.text.slice(0, 80)}..."`)
+    const safeText = [...p.text].slice(0, 300).join('')
+    console.log(`  Post: "${safeText.slice(0, 80)}..."`)
     if (DRY_RUN) {
-      record('post', { text: p.text }, true, { dry_run: true })
+      record('post', { text: safeText }, true, { dry_run: true })
       continue
     }
     try {
-      const rt = new RichText({ text: p.text })
+      const rt = new RichText({ text: safeText })
       await rt.detectFacets(agent)
       const res = await agent.post({
         text: rt.text,
         facets: rt.facets,
         createdAt: new Date().toISOString(),
       })
-      record('post', { text: p.text }, true, { uri: res.uri, cid: res.cid })
+      record('post', { text: safeText }, true, { uri: res.uri, cid: res.cid })
     } catch (e) {
-      record('post', { text: p.text }, false, undefined, String(e))
+      record('post', { text: safeText }, false, undefined, String(e))
     }
   }
 }
@@ -123,7 +124,9 @@ async function executeReplies(
         rootRef = { uri: replyRefs.root.uri, cid: replyRefs.root.cid }
       }
 
-      const rt = new RichText({ text: r.text })
+      // Bluesky hard limit: 300 graphemes
+      const safeText = [...r.text].slice(0, 300).join('')
+      const rt = new RichText({ text: safeText })
       await rt.detectFacets(agent)
 
       const res = await agent.post({
@@ -132,7 +135,7 @@ async function executeReplies(
         reply: { parent: parentRef, root: rootRef },
         createdAt: new Date().toISOString(),
       })
-      record('reply', { uri: r.uri, text: r.text }, true, { uri: res.uri, cid: res.cid })
+      record('reply', { uri: r.uri, text: safeText }, true, { uri: res.uri, cid: res.cid })
     } catch (e) {
       record('reply', { uri: r.uri, text: r.text }, false, undefined, String(e))
     }

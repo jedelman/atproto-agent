@@ -16,7 +16,9 @@
     "respond": "node dist/respond.js",
     "respond:list": "RESPONSES_JSON='[]' DRY_RUN=true node dist/respond.js",
     "respond:dry": "DRY_RUN=true node dist/respond.js",
-    "posts": "node dist/posts.js"
+    "posts": "node dist/posts.js",
+    "memory": "node dist/memory.js",
+    "memory:list": "node dist/memory.js"
   },
   "dependencies": {
     "@atproto/api": "^0.19.3",
