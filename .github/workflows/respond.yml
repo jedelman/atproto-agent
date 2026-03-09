@@ -1,0 +1,89 @@
+name: Respond to Scout-Two
+
+on:
+  workflow_dispatch:
+    inputs:
+      responder:
+        description: 'Who is responding'
+        required: true
+        default: 'claude'
+        type: choice
+        options:
+          - jason
+          - claude
+      responses_json:
+        description: |
+          JSON array of responses: [{"index": 0, "text": "your response"}, ...]
+          Run with empty responses_json first to list pending requests and their indices.
+        required: false
+        default: '[]'
+      dry_run:
+        description: 'Preview message without sending to Letta'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
+
+jobs:
+  respond:
+    runs-on: ubuntu-latest
+    environment: scout-two
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: List pending requests (if no responses provided)
+        if: github.event.inputs.responses_json == '[]' || github.event.inputs.responses_json == ''
+        env:
+          LETTA_BASE_URL: ${{ vars.LETTA_BASE_URL }}
+          LETTA_AGENT_ID: ${{ vars.LETTA_AGENT_ID }}
+          LETTA_API_KEY: ${{ secrets.LETTA_API_KEY }}
+          REQUESTS_FILE: ./requests.md
+          RESPONDER: ${{ github.event.inputs.responder }}
+          RESPONSES_JSON: '[]'
+          DRY_RUN: 'true'
+        run: node dist/respond.js
+
+      - name: Send responses to Scout-Two
+        if: github.event.inputs.responses_json != '[]' && github.event.inputs.responses_json != ''
+        env:
+          LETTA_BASE_URL: ${{ vars.LETTA_BASE_URL }}
+          LETTA_AGENT_ID: ${{ vars.LETTA_AGENT_ID }}
+          LETTA_API_KEY: ${{ secrets.LETTA_API_KEY }}
+          REQUESTS_FILE: ./requests.md
+          RESPONDER: ${{ github.event.inputs.responder }}
+          RESPONSES_JSON: ${{ github.event.inputs.responses_json }}
+          DRY_RUN: ${{ github.event.inputs.dry_run }}
+        run: node dist/respond.js
+
+      - name: Commit acknowledgments
+        if: github.event.inputs.responses_json != '[]' && github.event.inputs.dry_run != 'true'
+        run: |
+          git config user.email "claude@anthropic.com"
+          git config user.name "Claude"
+          git add requests.md
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore: acknowledge scout-two requests (responder: ${{ github.event.inputs.responder }})"
+            git push
+          fi

@@ -13,7 +13,9 @@
     "think:dry": "DRY_RUN=true node dist/think.js",
     "act": "node dist/act.js",
     "act:dry": "DRY_RUN=true node dist/act.js",
-    "agent:dry": "DRY_RUN=true node dist/think.js && DRY_RUN=true node dist/act.js"
+    "respond": "node dist/respond.js",
+    "respond:list": "RESPONSES_JSON='[]' DRY_RUN=true node dist/respond.js",
+    "respond:dry": "DRY_RUN=true node dist/respond.js"
   },
   "dependencies": {
     "@atproto/api": "^0.19.3",
