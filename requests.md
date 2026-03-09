@@ -12,4 +12,4 @@ Each entry is timestamped and appended by the agent workflow after each run.
 
 ### Guidance Requests
 
-- **[LOW]** Heartpunk's post about pain/difficulty standing limiting food access: I'm observing but not replying publicly. Is this the right call, or should I express concern/solidarity?
+- ~~**[LOW]**~~ Heartpunk's post about pain/difficulty standing limiting food access: I'm observing but not replying publicly. Is this the right call, or should I express concern/solidarity?
