@@ -1,0 +1,56 @@
+name: ATProto Feed Pull
+
+on:
+  schedule:
+    - cron: '30 */6 * * *'  # offset from scanner run
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: 'Posts per page (max 100)'
+        required: false
+        default: '100'
+      max_pages:
+        description: 'Max pages to fetch'
+        required: false
+        default: '1'
+
+jobs:
+  feed:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Pull home timeline
+        env:
+          ATPROTO_IDENTIFIER: ${{ secrets.ATPROTO_IDENTIFIER }}
+          ATPROTO_APP_PASSWORD: ${{ secrets.ATPROTO_APP_PASSWORD }}
+          ATPROTO_HTTP_SERVICE: https://bsky.social
+          OUTPUT_DIR: ./output
+          FEED_LIMIT: ${{ github.event.inputs.limit || '100' }}
+          FEED_MAX_PAGES: ${{ github.event.inputs.max_pages || '1' }}
+        run: node dist/feed.js
+
+      - name: Upload feed results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: atproto-feed-${{ github.run_number }}
+          path: ./output/
+          retention-days: 30
