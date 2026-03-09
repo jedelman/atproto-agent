@@ -312,6 +312,10 @@ async function main() {
   const outPath = path.join(OUTPUT_DIR, 'actions.json')
   fs.writeFileSync(outPath, JSON.stringify(actions, null, 2))
 
+  // Audit trail — save input and raw output alongside actions
+  fs.writeFileSync(path.join(OUTPUT_DIR, 'digest.txt'), digest)
+  fs.writeFileSync(path.join(OUTPUT_DIR, 'letta-raw.txt'), rawResponse)
+
   console.log(`\nActions written to ${outPath}`)
   console.log(`  posts:    ${actions.actions.posts.length}`)
   console.log(`  replies:  ${actions.actions.replies.length}`)

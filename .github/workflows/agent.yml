@@ -10,6 +10,10 @@ on:
         description: 'Dry run (no Bluesky writes, no Letta calls)'
         required: false
         default: 'false'
+      feed_run_number:
+        description: 'Run number of the feed.yml run to use (required for manual dispatch)'
+        required: false
+        default: ''
       max_posts:
         description: 'Max feed posts to send to Scout-Two'
         required: false
@@ -42,8 +46,6 @@ jobs:
       - name: Build
         run: npm run build
 
-      # Download the feed artifact from the triggering workflow run
-      # Falls back to the latest available feed artifact on manual dispatch
       - name: Download feed artifact (from workflow_run)
         if: github.event_name == 'workflow_run'
         uses: actions/download-artifact@v4
@@ -53,16 +55,14 @@ jobs:
           run-id: ${{ github.event.workflow_run.id }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Download latest feed artifact (manual dispatch)
+      # For manual dispatch: run feed.yml first, then pass its run_number here
+      - name: Download feed artifact (manual dispatch)
         if: github.event_name == 'workflow_dispatch'
-        uses: dawidd6/action-download-artifact@v6
+        uses: actions/download-artifact@v4
         with:
-          workflow: feed.yml
-          name_is_regexp: true
-          name: atproto-feed-\d+
+          name: atproto-feed-${{ github.event.inputs.feed_run_number }}
           path: ./output
-          search_artifacts: true
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Verify feed data
         run: |
