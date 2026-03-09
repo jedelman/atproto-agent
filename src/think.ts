@@ -206,6 +206,7 @@ function formatDigest(posts: PostDigest[]): string {
 // ---------------------------------------------------------------------------
 
 interface LettaMessage {
+  id?: string
   role: string
   content: string | Array<{ type: string; text?: string }>
 }
@@ -215,7 +216,7 @@ interface LettaResponse {
   usage?: Record<string, number>
 }
 
-async function callLetta(digest: string): Promise<string> {
+async function callLetta(digest: string): Promise<{ json: string; messageIds: string[] }> {
   const url = `${LETTA_BASE_URL}/v1/agents/${LETTA_AGENT_ID}/messages`
 
   const headers: Record<string, string> = {
@@ -236,10 +237,13 @@ async function callLetta(digest: string): Promise<string> {
   console.log(`Calling Letta: ${url}`)
   if (DRY_RUN) {
     console.log('[DRY RUN] Would send digest to Letta. Returning empty actions.')
-    return JSON.stringify({
-      actions: { posts: [], replies: [], likes: [], reposts: [] },
-      out_of_band: { guidance_requests: [], feature_requests: [], bug_reports: [] },
-    })
+    return {
+      json: JSON.stringify({
+        actions: { posts: [], replies: [], likes: [], reposts: [] },
+        out_of_band: { guidance_requests: [], feature_requests: [], bug_reports: [] },
+      }),
+      messageIds: [],
+    }
   }
 
   const res = await fetch(url, { method: 'POST', headers, body })
@@ -251,6 +255,8 @@ async function callLetta(digest: string): Promise<string> {
 
   const data = await res.json() as LettaResponse
   console.log(`Letta responded with ${data.messages?.length ?? 0} messages`)
+
+  const messageIds = data.messages.map(m => m.id).filter((id): id is string => !!id)
 
   // Extract the last assistant message containing JSON
   for (let i = data.messages.length - 1; i >= 0; i--) {
@@ -266,7 +272,7 @@ async function callLetta(digest: string): Promise<string> {
 
     // Find JSON block in the response
     const jsonMatch = text.match(/\{[\s\S]*\}/)
-    if (jsonMatch) return jsonMatch[0]
+    if (jsonMatch) return { json: jsonMatch[0], messageIds }
   }
 
   throw new Error('No JSON found in Letta response')
@@ -288,7 +294,7 @@ async function main() {
   const digest = formatDigest(posts)
   console.log(`Digest prepared: ${digest.length} chars, ${posts.length} posts`)
 
-  const rawResponse = await callLetta(digest)
+  const { json: rawResponse, messageIds } = await callLetta(digest)
 
   // Validate JSON
   let actions: ActionsSchema
@@ -312,9 +318,16 @@ async function main() {
   const outPath = path.join(OUTPUT_DIR, 'actions.json')
   fs.writeFileSync(outPath, JSON.stringify(actions, null, 2))
 
-  // Audit trail — save input and raw output alongside actions
-  fs.writeFileSync(path.join(OUTPUT_DIR, 'digest.txt'), digest)
-  fs.writeFileSync(path.join(OUTPUT_DIR, 'letta-raw.txt'), rawResponse)
+  // Audit: log Letta message IDs so the run can be inspected in the ADE
+  const auditLog = {
+    ranAt: new Date().toISOString(),
+    agentId: LETTA_AGENT_ID,
+    lettaBaseUrl: LETTA_BASE_URL,
+    messageIds,
+    postCount: posts.length,
+  }
+  fs.writeFileSync(path.join(OUTPUT_DIR, 'letta-audit.json'), JSON.stringify(auditLog, null, 2))
+  console.log(`Letta message IDs: ${messageIds.join(', ') || '(none — dry run)'}`)
 
   console.log(`\nActions written to ${outPath}`)
   console.log(`  posts:    ${actions.actions.posts.length}`)
