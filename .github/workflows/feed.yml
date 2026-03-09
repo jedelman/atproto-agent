@@ -2,7 +2,7 @@ name: ATProto Feed Pull
 
 on:
   schedule:
-    - cron: '30 */6 * * *'  # offset from scanner run
+    - cron: '30 */6 * * *'
   workflow_dispatch:
     inputs:
       limit:
@@ -19,12 +19,14 @@ jobs:
     runs-on: ubuntu-latest
     environment: scout-two
     permissions:
-      contents: read
+      contents: write
       actions: write
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -38,7 +40,7 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Pull home timeline
+      - name: Pull timeline and notifications
         env:
           ATPROTO_IDENTIFIER: ${{ vars.ATPROTO_IDENTIFIER }}
           ATPROTO_APP_PASSWORD: ${{ secrets.ATPROTO_APP_PASSWORD }}
@@ -46,7 +48,21 @@ jobs:
           OUTPUT_DIR: ./output
           FEED_LIMIT: ${{ github.event.inputs.limit || '100' }}
           FEED_MAX_PAGES: ${{ github.event.inputs.max_pages || '1' }}
+          CURSOR_FILE: ./feed-cursor.json
+
         run: node dist/feed.js
+
+      - name: Commit cursor
+        run: |
+          git config user.email "scout-two@atproto-agent"
+          git config user.name "Scout-Two"
+          git add feed-cursor.json
+          if git diff --staged --quiet; then
+            echo "No cursor changes"
+          else
+            git commit -m "chore: update feed cursor $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            git push
+          fi
 
       - name: Upload feed results
         uses: actions/upload-artifact@v4

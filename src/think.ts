@@ -27,6 +27,7 @@ if (!LETTA_API_KEY) {
 // ---------------------------------------------------------------------------
 
 interface FeedItem {
+  uri?: string  // present on notification items
   post: {
     uri: string
     cid: string
@@ -64,6 +65,9 @@ interface PostDigest {
   replies: number
   isReply: boolean
   repostedBy?: string
+  threadParents?: Array<{ author: string; text: string }>
+  _type?: string
+  reason?: string  // notification reason
 }
 
 export interface ActionsSchema {
@@ -129,6 +133,28 @@ async function loadFeedItems(inputDir: string, maxPosts: number): Promise<PostDi
     if (!line.trim()) continue
     try {
       const item = JSON.parse(line) as FeedItem
+      const raw = item as unknown as Record<string, unknown>
+
+      // Notification item
+      if (raw._type === 'notification') {
+        items.push({
+          uri: raw.uri as string ?? '',
+          author: raw.authorHandle as string ?? raw.authorDid as string ?? '',
+          displayName: '',
+          text: raw.text as string ?? '',
+          createdAt: raw.indexedAt as string ?? '',
+          likes: 0,
+          reposts: 0,
+          replies: 0,
+          isReply: false,
+          threadParents: raw.threadParents as Array<{ author: string; text: string }> ?? [],
+          _type: 'notification',
+          reason: raw.reason as string,
+        })
+        continue
+      }
+
+      // Feed item
       const post = item.post
       if (!post?.record?.text) continue
 
@@ -136,7 +162,7 @@ async function loadFeedItems(inputDir: string, maxPosts: number): Promise<PostDi
         uri: post.uri,
         author: post.author?.handle ?? post.author?.did,
         displayName: post.author?.displayName ?? post.author?.handle ?? '',
-        text: post.record.text.slice(0, 500), // cap long posts
+        text: post.record.text.slice(0, 500),
         createdAt: post.record.createdAt,
         likes: post.likeCount ?? 0,
         reposts: post.repostCount ?? 0,
@@ -145,6 +171,8 @@ async function loadFeedItems(inputDir: string, maxPosts: number): Promise<PostDi
         repostedBy: item.reason?.$type === 'app.bsky.feed.defs#reasonRepost'
           ? item.reason.by?.handle
           : undefined,
+        threadParents: raw.threadParents as Array<{ author: string; text: string }> ?? [],
+        _type: 'feed',
       })
 
       if (items.length >= maxPosts) break
@@ -162,22 +190,47 @@ async function loadFeedItems(inputDir: string, maxPosts: number): Promise<PostDi
 // ---------------------------------------------------------------------------
 
 function formatDigest(posts: PostDigest[]): string {
+  const notifs = posts.filter(p => p._type === 'notification')
+  const feed = posts.filter(p => p._type !== 'notification')
+
   const lines: string[] = [
     `FEED DIGEST — ${new Date().toISOString()}`,
-    `${posts.length} posts from your home timeline`,
-    '',
-    'Posts (most recent first):',
+    `${notifs.length} notifications + ${feed.length} timeline posts`,
     '',
   ]
 
-  posts.forEach((p, i) => {
-    lines.push(`[${i + 1}] @${p.author}${p.displayName ? ` (${p.displayName})` : ''}`)
-    if (p.repostedBy) lines.push(`    ↻ reposted by @${p.repostedBy}`)
-    lines.push(`    ${p.text.replace(/\n/g, ' ')}`)
-    lines.push(`    ❤️ ${p.likes} 🔁 ${p.reposts} 💬 ${p.replies}  ${p.isReply ? '[reply]' : ''}`)
-    lines.push(`    URI: ${p.uri}`)
+  if (notifs.length > 0) {
+    lines.push('=== NOTIFICATIONS (direct engagement — highest priority) ===')
     lines.push('')
-  })
+    notifs.forEach((p, i) => {
+      lines.push(`[N${i + 1}] ${p.reason?.toUpperCase()} from @${p.author}`)
+      if (p.text) lines.push(`    "${p.text.replace(/\n/g, ' ')}"`)
+      if (p.threadParents?.length) {
+        lines.push(`    Thread context (${p.threadParents.length} parents):`)
+        p.threadParents.forEach(t => lines.push(`      @${t.author}: ${t.text.replace(/\n/g, ' ')}`))
+      }
+      if (p.uri) lines.push(`    URI: ${p.uri}`)
+      lines.push('')
+    })
+  }
+
+  if (feed.length > 0) {
+    lines.push('=== TIMELINE ===')
+    lines.push('')
+    feed.forEach((p, i) => {
+      lines.push(`[${i + 1}] @${p.author}${p.displayName ? ` (${p.displayName})` : ''}`)
+      if (p.repostedBy) lines.push(`    ↻ reposted by @${p.repostedBy}`)
+      if (p.threadParents?.length) {
+        lines.push(`    Thread (${p.threadParents.length} parents):`)
+        p.threadParents.forEach(t => lines.push(`      @${t.author}: ${t.text.replace(/\n/g, ' ')}`))
+        lines.push(`    ↳ Replying:`)
+      }
+      lines.push(`    ${p.text.replace(/\n/g, ' ')}`)
+      lines.push(`    ❤️ ${p.likes} 🔁 ${p.reposts} 💬 ${p.replies}`)
+      lines.push(`    URI: ${p.uri}`)
+      lines.push('')
+    })
+  }
 
   lines.push('---')
   lines.push('Review this feed. Respond ONLY with a JSON object matching this exact schema:')
