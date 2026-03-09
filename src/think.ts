@@ -260,12 +260,15 @@ async function callLetta(digest: string): Promise<{ json: string; messageIds: st
 
   // Debug: log message structure so we can see what Letta actually returns
   data.messages.forEach((msg, i) => {
+    const raw = msg as Record<string, unknown>
     const contentPreview = typeof msg.content === 'string'
       ? msg.content.slice(0, 200)
-      : JSON.stringify(msg.content).slice(0, 200)
+      : Array.isArray(msg.content)
+        ? JSON.stringify(msg.content).slice(0, 200)
+        : JSON.stringify(raw).slice(0, 200)
     console.log(`  msg[${i}] role=${msg.role} id=${msg.id ?? '?'} content_preview=${contentPreview}`)
-    if ((msg as Record<string, unknown>).tool_calls) {
-      console.log(`    tool_calls=${JSON.stringify((msg as Record<string, unknown>).tool_calls).slice(0, 300)}`)
+    if (raw.tool_calls) {
+      console.log(`    tool_calls=${JSON.stringify(raw.tool_calls).slice(0, 300)}`)
     }
   })
 
