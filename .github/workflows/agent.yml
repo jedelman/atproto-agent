@@ -1,0 +1,148 @@
+name: Scout-Two Agent Run
+
+on:
+  workflow_run:
+    workflows: ["ATProto Feed Pull"]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run (no Bluesky writes, no Letta calls)'
+        required: false
+        default: 'false'
+      max_posts:
+        description: 'Max feed posts to send to Scout-Two'
+        required: false
+        default: '50'
+
+jobs:
+  agent:
+    runs-on: ubuntu-latest
+    # Only run if the triggering feed workflow succeeded (or if manually dispatched)
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    permissions:
+      contents: write   # for committing requests.md
+      actions: read     # for downloading feed artifact
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      # Download the feed artifact from the triggering workflow run
+      # Falls back to the latest available feed artifact on manual dispatch
+      - name: Download feed artifact (from workflow_run)
+        if: github.event_name == 'workflow_run'
+        uses: actions/download-artifact@v4
+        with:
+          name: atproto-feed-${{ github.event.workflow_run.run_number }}
+          path: ./output
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Download latest feed artifact (manual dispatch)
+        if: github.event_name == 'workflow_dispatch'
+        uses: dawidd6/action-download-artifact@v6
+        with:
+          workflow: feed.yml
+          name_is_regexp: true
+          name: atproto-feed-\d+
+          path: ./output
+          search_artifacts: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Verify feed data
+        run: |
+          echo "Feed output directory contents:"
+          ls -la ./output/ || echo "No output directory found"
+          JSONL_COUNT=$(find ./output -name "feed-*.jsonl" | wc -l)
+          echo "JSONL files found: $JSONL_COUNT"
+          if [ "$JSONL_COUNT" -eq 0 ]; then
+            echo "Error: No feed JSONL files found — cannot proceed"
+            exit 1
+          fi
+
+      - name: Think — send feed to Scout-Two
+        env:
+          LETTA_BASE_URL: ${{ secrets.LETTA_BASE_URL }}
+          LETTA_AGENT_ID: ${{ secrets.LETTA_AGENT_ID }}
+          LETTA_API_KEY: ${{ secrets.LETTA_API_KEY }}
+          INPUT_DIR: ./output
+          THINK_OUTPUT_DIR: ./think-output
+          THINK_MAX_POSTS: ${{ github.event.inputs.max_posts || '50' }}
+          DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
+        run: node dist/think.js
+
+      - name: Print actions summary
+        run: |
+          if [ -f ./think-output/actions.json ]; then
+            echo "=== Actions from Scout-Two ==="
+            cat ./think-output/actions.json | python3 -c "
+          import json, sys
+          d = json.load(sys.stdin)
+          a = d['actions']
+          oob = d['out_of_band']
+          print(f'Posts:    {len(a[\"posts\"])}')
+          print(f'Replies:  {len(a[\"replies\"])}')
+          print(f'Likes:    {len(a[\"likes\"])}')
+          print(f'Reposts:  {len(a[\"reposts\"])}')
+          print()
+          print(f'Guidance: {len(oob[\"guidance_requests\"])}')
+          print(f'Features: {len(oob[\"feature_requests\"])}')
+          print(f'Bugs:     {len(oob[\"bug_reports\"])}')
+          if a['posts']:
+              print()
+              print('Post drafts:')
+              for p in a['posts']:
+                  print(f'  - {p[\"text\"][:100]}...')
+          "
+          fi
+
+      - name: Act — execute on Bluesky
+        env:
+          ATPROTO_IDENTIFIER: ${{ secrets.ATPROTO_IDENTIFIER }}
+          ATPROTO_APP_PASSWORD: ${{ secrets.ATPROTO_APP_PASSWORD }}
+          ATPROTO_HTTP_SERVICE: https://bsky.social
+          THINK_OUTPUT_DIR: ./think-output
+          REQUESTS_FILE: ./requests.md
+          DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
+          # Safety caps
+          ACT_MAX_POSTS: '3'
+          ACT_MAX_REPLIES: '5'
+          ACT_MAX_LIKES: '20'
+          ACT_MAX_REPOSTS: '5'
+        run: node dist/act.js
+
+      - name: Commit requests.md if updated
+        run: |
+          git config user.email "scout-two@atproto-agent"
+          git config user.name "Scout-Two"
+          git add requests.md
+          if git diff --staged --quiet; then
+            echo "No out-of-band requests to commit"
+          else
+            git commit -m "chore: scout-two out-of-band requests $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            git push
+          fi
+
+      - name: Upload think/act artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: agent-run-${{ github.run_number }}
+          path: |
+            ./think-output/
+          retention-days: 30
