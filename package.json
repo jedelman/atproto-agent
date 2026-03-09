@@ -1,0 +1,23 @@
+{
+  "name": "atproto-scanner",
+  "version": "0.1.0",
+  "description": "Lexicon-agnostic AT Protocol network firehose scanner",
+  "main": "dist/scanner.js",
+  "scripts": {
+    "build": "tsc",
+    "scan": "node --loader ts-node/esm src/scanner.ts",
+    "scan:built": "node dist/scanner.js",
+    "scan:short": "SCAN_DURATION_MS=15000 node --loader ts-node/esm src/scanner.ts"
+  },
+  "dependencies": {
+    "@atproto/api": "^0.19.3",
+    "@atproto/identity": "*",
+    "@atproto/repo": "^0.8.12",
+    "@atproto/sync": "^0.1.40"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.0.0"
+  }
+}
