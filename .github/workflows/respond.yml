@@ -6,15 +6,17 @@ on:
       responder:
         description: 'Who is responding'
         required: true
-        default: 'claude'
+        default: 'jason'
         type: choice
         options:
           - jason
           - claude
+      response_text:
+        description: 'Plain text response to request index 0 (use this for simple replies)'
+        required: false
+        default: ''
       responses_json:
-        description: |
-          JSON array of responses: [{"index": 0, "text": "your response"}, ...]
-          Run with empty responses_json first to list pending requests and their indices.
+        description: 'JSON array for multiple/non-zero responses: [{"index":1,"text":"..."}]'
         required: false
         default: '[]'
       dry_run:
@@ -51,8 +53,8 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: List pending requests (if no responses provided)
-        if: github.event.inputs.responses_json == '[]' || github.event.inputs.responses_json == ''
+      - name: List pending requests (nothing provided)
+        if: github.event.inputs.response_text == '' && (github.event.inputs.responses_json == '[]' || github.event.inputs.responses_json == '')
         env:
           LETTA_BASE_URL: ${{ vars.LETTA_BASE_URL }}
           LETTA_AGENT_ID: ${{ vars.LETTA_AGENT_ID }}
@@ -63,20 +65,21 @@ jobs:
           DRY_RUN: 'true'
         run: node dist/respond.js
 
-      - name: Send responses to Scout-Two
-        if: github.event.inputs.responses_json != '[]' && github.event.inputs.responses_json != ''
+      - name: Send response to Scout-Two
+        if: github.event.inputs.response_text != '' || (github.event.inputs.responses_json != '[]' && github.event.inputs.responses_json != '')
         env:
           LETTA_BASE_URL: ${{ vars.LETTA_BASE_URL }}
           LETTA_AGENT_ID: ${{ vars.LETTA_AGENT_ID }}
           LETTA_API_KEY: ${{ secrets.LETTA_API_KEY }}
           REQUESTS_FILE: ./requests.md
           RESPONDER: ${{ github.event.inputs.responder }}
+          RESPONSE_TEXT: ${{ github.event.inputs.response_text }}
           RESPONSES_JSON: ${{ github.event.inputs.responses_json }}
           DRY_RUN: ${{ github.event.inputs.dry_run }}
         run: node dist/respond.js
 
       - name: Commit acknowledgments
-        if: github.event.inputs.responses_json != '[]' && github.event.inputs.dry_run != 'true'
+        if: (github.event.inputs.response_text != '' || github.event.inputs.responses_json != '[]') && github.event.inputs.dry_run != 'true'
         run: |
           git config user.email "claude@anthropic.com"
           git config user.name "Claude"

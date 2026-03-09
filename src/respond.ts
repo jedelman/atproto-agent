@@ -217,13 +217,20 @@ async function main() {
     console.log(`  [${r.responseIndex}] [${r.priority}] ${r.message}`)
   })
 
-  // Parse responses from env
+  // Parse responses
   let responses: PendingResponse[] = []
-  try {
-    responses = JSON.parse(RESPONSES_JSON) as PendingResponse[]
-  } catch {
-    console.error(`Failed to parse RESPONSES_JSON: ${RESPONSES_JSON}`)
-    process.exit(1)
+
+  // Shortcut: RESPONSE_TEXT responds to index 0 without needing JSON syntax
+  const RESPONSE_TEXT = process.env.RESPONSE_TEXT || undefined
+  if (RESPONSE_TEXT) {
+    responses = [{ index: 0, text: RESPONSE_TEXT }]
+  } else {
+    try {
+      responses = JSON.parse(RESPONSES_JSON) as PendingResponse[]
+    } catch {
+      console.error(`Failed to parse RESPONSES_JSON: ${RESPONSES_JSON}`)
+      process.exit(1)
+    }
   }
 
   if (responses.length === 0) {
