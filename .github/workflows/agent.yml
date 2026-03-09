@@ -128,15 +128,24 @@ jobs:
           ACT_MAX_REPOSTS: '5'
         run: node dist/act.js
 
-      - name: Commit requests.md if updated
+      - name: Fetch Scout-Two's own posts
+        env:
+          ATPROTO_IDENTIFIER: ${{ vars.ATPROTO_IDENTIFIER }}
+          ATPROTO_APP_PASSWORD: ${{ secrets.ATPROTO_APP_PASSWORD }}
+          ATPROTO_HTTP_SERVICE: https://bsky.social
+          POSTS_OUTPUT_DIR: ./scout-posts
+          POSTS_LIMIT: '20'
+        run: node dist/posts.js
+
+      - name: Commit scout-posts and requests.md
         run: |
           git config user.email "scout-two@atproto-agent"
           git config user.name "Scout-Two"
-          git add requests.md
+          git add requests.md scout-posts/latest.json
           if git diff --staged --quiet; then
-            echo "No out-of-band requests to commit"
+            echo "Nothing to commit"
           else
-            git commit -m "chore: scout-two out-of-band requests $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            git commit -m "chore: scout-two run $(date -u +%Y-%m-%dT%H:%M:%SZ)"
             git push
           fi
 
