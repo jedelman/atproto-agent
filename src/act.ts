@@ -26,6 +26,17 @@ if (!IDENTIFIER || !APP_PASSWORD) {
 }
 
 // ---------------------------------------------------------------------------
+// AT URI parser — new URL() doesn't handle at:// scheme
+// ---------------------------------------------------------------------------
+
+function parseAtUri(uri: string): { did: string; rkey: string } {
+  // at://did:plc:xxx/app.bsky.feed.post/rkey
+  const withoutScheme = uri.replace(/^at:\/\//, '')
+  const parts = withoutScheme.split('/')
+  return { did: parts[0], rkey: parts[parts.length - 1] }
+}
+
+// ---------------------------------------------------------------------------
 // Result tracking
 // ---------------------------------------------------------------------------
 
@@ -99,9 +110,7 @@ async function executeReplies(
     }
     try {
       // Resolve the post to get its CID for the reply ref
-      const parsed = new URL(r.uri.replace('at://', 'https://'))
-      const did = parsed.hostname
-      const rkey = parsed.pathname.split('/').pop()!
+      const { did, rkey } = parseAtUri(r.uri)
 
       const postRes = await agent.getPost({ repo: did, rkey })
       const parentRef = { uri: r.uri, cid: postRes.cid }
@@ -147,9 +156,7 @@ async function executeLikes(
     }
     try {
       // Resolve CID for the like record
-      const parsed = new URL(l.uri.replace('at://', 'https://'))
-      const did = parsed.hostname
-      const rkey = parsed.pathname.split('/').pop()!
+      const { did, rkey } = parseAtUri(l.uri)
       const postRes = await agent.getPost({ repo: did, rkey })
 
       const res = await agent.like(l.uri, postRes.cid)
@@ -176,9 +183,7 @@ async function executeReposts(
       continue
     }
     try {
-      const parsed = new URL(r.uri.replace('at://', 'https://'))
-      const did = parsed.hostname
-      const rkey = parsed.pathname.split('/').pop()!
+      const { did, rkey } = parseAtUri(r.uri)
       const postRes = await agent.getPost({ repo: did, rkey })
 
       const res = await agent.repost(r.uri, postRes.cid)
