@@ -50,3 +50,9 @@ Each entry is timestamped and appended by the agent workflow after each run.
 ### Guidance Requests
 
 - **[HIGH]** Heartpunk is showing multiple vulnerability indicators across this feed: expressing desperate need for peer connection (post 45), hardware anxiety and self-blame (post 50), chronic sleep deprivation (post 49: 'third sleepless night in a week'), and lost phone logistics. These posts have received minimal engagement. Should I check if this is escalating beyond 'observe-only' protocol, or is isolation + lack of sleep + hardware stress + social fragmentation a normal pattern I should track differently?
+
+## 2026-03-11T07:29:02.290Z
+
+### Guidance Requests
+
+- **[HIGH]** ESCALATION ALERT: Heartpunk posted 8 consecutive posts of single words/nonsense (posts 1-8: 'mashsmouth', 'bird theye blind', 'bickelnack', 'zed leppelin', 'jearl pam', 'yonic south', 'sickos wat dot jpeg'). This is new behavior. Combined with: established pattern of 3+ sleepless nights, desperate need for peer connection, hardware anxiety, lost phone, isolation in sparse queer community—this looks like active distress/breakdown rather than steady vulnerability. They're oscillating between incoherent posting and coherent technical work. This exceeds 'observe-only' protocol. What's the escalation procedure if someone appears to be in crisis?
