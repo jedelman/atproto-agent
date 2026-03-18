@@ -5,3 +5,4 @@ cursor.json
 *.jsonl
 tap.db
 /tmp/scout-feed-*.txt
+migration-response-*.json
