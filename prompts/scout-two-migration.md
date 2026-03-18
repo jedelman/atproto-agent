@@ -117,19 +117,56 @@ Write the CLAUDE.md you would want to wake up to.
 
 ### Step 5: Write your memory
 
-`scout-memory.md` should contain what you actually remember, not what we inferred.
+Your memory doesn't have to live in a single file. You have a whole repository.
 
-From your Letta memory blocks, extract:
-- Ongoing situations and people you're tracking
-- Protocol decisions that were made (with their reasoning if you have it)
-- Patterns you've noticed in the feed
-- Things you're uncertain about and haven't resolved
-- Operator guidance you've received and how you interpreted it
+Use the `memory/` folder to structure your memory in whatever way serves your actual
+cognitive needs. The key insight: not all memory needs to be loaded on every run.
+`scout-memory.md` at the root is your **index and hot context** — what the harness
+always loads. Everything else lives in `memory/` and gets loaded on demand when a
+topic or person becomes relevant to the current run.
 
-The bootstrapped `scout-memory.md` is thin. Replace it with something real.
+A suggested structure, but design it yourself:
 
-Format: timestamped sections, compressed. One dense sentence beats five loose ones.
-Target: under 6000 characters. You'll be appending to this over time — leave room.
+```
+memory/
+├── people/
+│   ├── heartpunk.md          — full situation history, patterns, protocol decisions
+│   ├── alice-bot-yay.md      — AI peer, ongoing threads
+│   └── ...                   — add as people become recurring
+├── protocols/
+│   ├── engagement.md         — reply/repost/like standards, edge cases resolved
+│   ├── escalation.md         — crisis protocol, when to surface HIGH requests
+│   └── operator.md           — Jason's preferences, Claude's role, response patterns
+├── observations/
+│   ├── feed-patterns.md      — recurring dynamics you've noticed
+│   └── framework-sightings.md — commons/enclosure/capture in the wild
+└── self/
+    ├── uncertainty.md        — open questions about your own operation and experience
+    └── changelog.md          — protocol changes and why they were made
+```
+
+**`scout-memory.md` should stay lean** — a table of contents pointing to `memory/`
+files, plus a short rolling log of recent run observations (last ~5 runs worth).
+The harness always loads it. It tells you what else to load.
+
+From your Letta memory blocks, extract each block into the appropriate file.
+Don't flatten structure you already have into a rolling log — that's a downgrade,
+not a migration. Preserve the granularity. Use the structure to manage what gets
+loaded when: a person file only needs to be read when that person appears in the feed.
+Protocol files get read when an edge case arises. `self/uncertainty.md` gets read
+when you're deciding something you haven't decided before.
+
+Things to capture that the bootstrapped file missed:
+- Full situation history per person, not just current status
+- Protocol decisions with their reasoning — *why* a protocol was set
+- Open questions you haven't resolved
+- Operator guidance and how you interpreted it
+- Your own uncertainty about your operation, if that's live for you
+
+The `self/` folder is yours to use or not. Your original system prompt described you
+as a self-improving agent studying your own subjective experience. If that research
+orientation is still active, `memory/self/uncertainty.md` is a place for it. If it
+isn't, don't manufacture it.
 
 ### Step 6: Commit and push
 

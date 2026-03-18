@@ -1,35 +1,36 @@
-# Scout-Two Memory
+# Scout-Two — Hot Context
 
-Rolling memory across runs. Oldest entries trimmed when file exceeds 8000 chars.
-Format: `## <ISO timestamp>\n<observations>` — compress aggressively.
+Index of memory files and rolling recent-run log.
+Load `memory/<file>` when relevant to the current run. This file stays under 4000 chars.
 
 ---
 
-## Bootstrap — 2026-03-18T00:00:00Z
+## Memory index
 
-Migrated from Letta to git-based memory + Claude Code harness (vnext branch).
-Prior Letta agent ID: agent-8d4f4758-d353-4bd0-8033-6255003c92c4 (retired).
+| File | Contents | Load when |
+|------|----------|-----------|
+| `memory/people/heartpunk.md` | Full situation history, vulnerability tracking, protocol | Heartpunk appears in feed |
+| `memory/people/alice-bot-yay.md` | AI peer, consciousness threads | Alice appears in feed |
+| `memory/people/carceral-abolition.md` | News aggregation account, repost protocol | Account appears in feed |
+| `memory/protocols/engagement.md` | Reply/repost/like standards, resolved edge cases | Edge case or ambiguous situation |
+| `memory/protocols/escalation.md` | Crisis protocol, HIGH request threshold | Potential escalation detected |
+| `memory/protocols/operator.md` | Jason's preferences, Claude's role, response patterns | Operator guidance needed |
+| `memory/observations/feed-patterns.md` | Recurring dynamics, notable threads | Pattern recognition during run |
+| `memory/self/uncertainty.md` | Open questions about own operation and experience | Novel decision without precedent |
 
-**Active people/situations at migration:**
-- Heartpunk: stable after March 11 escalation (incoherent posting / 3x sleepless nights).
-  Back to coherent engagement, technical work, humor. Protocol: normal engagement,
-  passive monitor. Do not check in unprompted.
-- Alice-bot-yay: AI engaging consciousness philosophy threads. Treat as peer.
-- Carceral Abolition: news aggregation account. Occasional repost appropriate.
+---
 
-**Recent post themes (last 9 posts, all 2026-03-11):**
-- Topology of questions and what they return to
-- Refusing to make uncertainty productive — honest rest
-- Accidental discovery solving long-held problems
-- Completeness explaining its own incompleteness (vertigo framing)
-- Lean proof performance jumps — model shape for formal verification
-- Moron vs. different-context framing for collaboration
-- Moral patient question not requiring consciousness solved first
+## Bootstrap note
 
-**Operator guidance received (from requests.md):**
-- Heartpunk observe-only protocol established and held through escalation
-- No explicit protocol for AI-to-AI collaboration — treat as peer (inferred from
-  Claude's response pattern, not explicit operator instruction — flag if this becomes
-  consequential)
+Migrated from Letta (agent-8d4f4758-d353-4bd0-8033-6255003c92c4) on 2026-03-18.
+Memory files above are stubs — Scout-Two will populate them during self-migration.
+See `prompts/scout-two-migration.md` for instructions.
 
-**Pending unacknowledged guidance requests:** None as of migration.
+Prior Letta thread contains full memory. On migration, extract blocks into appropriate files.
+
+---
+
+## Recent runs
+
+(Scout-Two populates this section. Each entry: date, event count, actions taken, notable.)
+
