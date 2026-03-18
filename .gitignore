@@ -3,3 +3,5 @@ dist/
 output/
 cursor.json
 *.jsonl
+tap.db
+/tmp/scout-feed-*.txt

@@ -1,74 +1,99 @@
-# atproto-scanner
+# atproto-agent — vNext
 
-Lexicon-agnostic AT Protocol firehose scanner. Streams all record types from the network, stores results as GitHub Actions artifacts, and resumes from cursor across runs.
+Scout-Two's agent harness. Replaces GitHub Actions + Letta with a laptop-native process
+using [Tap](https://github.com/bluesky-social/indigo/tree/main/cmd/tap) for event delivery
+and `claude -p` (Claude Code headless) as the agent runtime.
 
-## What it does
-
-- Connects to `wss://bsky.network` (or any relay) via `@atproto/sync` `Firehose`
-- Collects all `$type` record operations (create/update/delete), identity, and account events
-- Writes per-run JSONL (one record per line) + a summary JSON grouped by collection
-- Persists the firehose cursor between runs so each run picks up where the last left off
-- No hardcoded lexicons — works with any current or future collection type
-
-## Local usage
+## Prerequisites
 
 ```bash
+# goat — atproto CLI
+brew install goat
+goat account login -u scout-two.bsky.social -p <app-password>
+
+# tap — atproto repo sync / event delivery
+go install github.com/bluesky-social/indigo/cmd/tap@latest
+
+# claude — Claude Code CLI
+npm install -g @anthropic-ai/claude-code
+# authenticate: claude (interactive, first run)
+
+# node deps
 npm install
-npm run build
-
-# 15-second test run
-SCAN_DURATION_MS=15000 npm run scan:built
-
-# Full run
-npm run scan:built
 ```
 
-## Configuration (env vars)
+## Running
+
+Two terminals:
+
+```bash
+# Terminal 1 — Tap sidecar (persists across harness restarts via tap.db)
+tap run
+
+# Terminal 2 — Scout-Two harness
+npm run harness
+
+# Dry run (no Bluesky writes, memory + git still work)
+npm run harness:dry
+```
+
+On first run Tap backfills tracked repos from their PDS. Subsequent starts resume from
+`tap.db` — events that arrived while the harness was offline are delivered on reconnect.
+
+## Operator interaction
+
+```bash
+# List pending guidance requests
+npm run respond:list
+
+# Respond as Claude
+RESPONSE_TEXT="Observe-only is correct. No public check-in." npm run respond
+
+# Respond as Jason
+RESPONDER=jason RESPONSE_TEXT="Good call, keep monitoring." npm run respond
+
+# Respond to specific request by index
+RESPONSES_JSON='[{"index":2,"text":"Yes, treat as peer."}]' npm run respond
+```
+
+## Architecture
+
+```
+tap (Go sidecar, tap.db)
+  ↓ WebSocket + acks
+src/harness.ts
+  ↓ debounce 2min / batch cap 15min
+  ↓ claude -p --allowedTools "Bash(goat *),Read,Write,Bash(git *)"
+CLAUDE.md + scout-memory.md + scout-posts/latest.json
+  ↓ goat bsky post / reply / like / repost
+  ↓ git commit + push
+```
+
+## Key files
+
+| File | Purpose |
+|------|---------|
+| `CLAUDE.md` | Scout-Two's identity, protocols, hard limits |
+| `scout-memory.md` | Rolling git-persisted memory, updated each run |
+| `requests.md` | Scout-Two's out-of-band guidance queue |
+| `scout-posts/latest.json` | Recent posts (dedup guard) |
+| `tap.db` | Tap SQLite state (local only, not committed) |
+| `src/harness.ts` | Tap listener + debounce + claude invocation |
+| `src/respond.ts` | Operator response → scout-memory.md |
+
+## Environment variables
 
 | Variable | Default | Description |
-|---|---|---|
-| `SCAN_DURATION_MS` | `300000` | How long to scan (ms) |
-| `OUTPUT_DIR` | `./output` | Where to write results |
-| `CURSOR_FILE` | `./cursor.json` | Cursor persistence path |
-| `ATPROTO_SERVICE` | `wss://bsky.network` | Relay WebSocket URL |
-| `ATPROTO_UNAUTHENTICATED` | `true` | Skip commit DID verification (faster) |
+|----------|---------|-------------|
+| `TAP_URL` | `http://localhost:2480` | Tap server |
+| `TAP_ADMIN_PASSWORD` | `` | Tap admin password if configured |
+| `DEBOUNCE_MS` | `120000` | Quiet period before triggering run |
+| `MAX_BATCH_MS` | `900000` | Force run after this regardless |
+| `MIN_EVENTS` | `3` | Minimum events to bother running |
+| `CLAUDE_MAX_TURNS` | `25` | Max Claude Code turns per run |
+| `DRY_RUN` | `false` | Skip Bluesky writes |
 
-## GitHub Actions
+## Legacy
 
-Runs every 6 hours via cron. Also triggerable via `workflow_dispatch` with custom duration.
-
-**Artifacts:**
-- `atproto-scan-{run_number}` — per-run JSONL + summary, retained 30 days
-- `atproto-cursor` — cursor for next run, retained 90 days
-
-**Secrets (optional, for AppView API calls):**
-- `ATPROTO_IDENTIFIER` — handle or DID
-- `ATPROTO_APP_PASSWORD` — app password from Bluesky settings
-
-## Output format
-
-### `records-{timestamp}.jsonl`
-
-One JSON object per line:
-```json
-{"seq":1234,"time":"2026-03-09T...","event":"create","did":"did:plc:...","collection":"app.bsky.feed.post","rkey":"...","uri":"at://...","record":{...}}
-```
-
-### `summary.json`
-
-```json
-{
-  "scannedAt": "...",
-  "durationMs": 300000,
-  "totalEvents": 45000,
-  "lastSeq": 9876543,
-  "collections": {
-    "app.bsky.feed.post": { "creates": 1200, "updates": 5, "deletes": 3, "samples": [...] },
-    ...
-  }
-}
-```
-
-## Letta agent integration
-
-The JSONL output is designed to feed into Letta agents for analysis. Each run's artifact can be downloaded, parsed, and routed to agents by collection type or record content.
+`src/think.ts`, `src/act.ts`, `src/feed.ts`, `.github/workflows/` remain on `main`.
+The `vnext` branch replaces them.

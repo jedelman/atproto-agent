@@ -1,24 +1,34 @@
+/**
+ * respond.ts — vNext
+ *
+ * Injects operator/Claude responses into Scout-Two's memory directly.
+ * No Letta call — just appends to scout-memory.md and commits.
+ *
+ * Usage:
+ *   RESPONSE_TEXT="Your response here" npx ts-node src/respond.ts
+ *   RESPONDER=jason RESPONSE_TEXT="..." npx ts-node src/respond.ts
+ *
+ * To respond to a specific guidance request by index:
+ *   RESPONSES_JSON='[{"index":0,"text":"..."}]' npx ts-node src/respond.ts
+ *
+ * To list pending requests without responding:
+ *   npx ts-node src/respond.ts
+ */
+
 import fs from 'fs'
+import { execSync } from 'child_process'
 
 // ---------------------------------------------------------------------------
 // Config
 // ---------------------------------------------------------------------------
 
-const LETTA_BASE_URL = process.env.LETTA_BASE_URL
-const LETTA_AGENT_ID = process.env.LETTA_AGENT_ID
-const LETTA_API_KEY = process.env.LETTA_API_KEY
-const REQUESTS_FILE = process.env.REQUESTS_FILE ?? './requests.md'
-const RESPONDER = (process.env.RESPONDER ?? 'claude') as 'jason' | 'claude'
-const DRY_RUN = process.env.DRY_RUN === 'true'
-
-// Pass responses as JSON via env: '[{"index":0,"text":"..."}]'
-// Each index corresponds to a guidance_request in order of appearance
+const REQUESTS_FILE  = process.env.REQUESTS_FILE  ?? './requests.md'
+const MEMORY_FILE    = process.env.MEMORY_FILE    ?? './scout-memory.md'
+const RESPONDER      = (process.env.RESPONDER     ?? 'claude') as 'jason' | 'claude'
+const DRY_RUN        = process.env.DRY_RUN        === 'true'
+const RESPONSE_TEXT  = process.env.RESPONSE_TEXT  ?? ''
 const RESPONSES_JSON = process.env.RESPONSES_JSON ?? '[]'
-
-if (!LETTA_BASE_URL || !LETTA_AGENT_ID) {
-  console.error('LETTA_BASE_URL and LETTA_AGENT_ID are required')
-  process.exit(1)
-}
+const REPO_DIR       = process.env.REPO_DIR       ?? '.'
 
 // ---------------------------------------------------------------------------
 // Types
@@ -29,11 +39,11 @@ interface GuidanceRequest {
   priority: 'HIGH' | 'MEDIUM' | 'LOW'
   message: string
   acknowledged: boolean
-  responseIndex?: number  // position in the flat list of all guidance requests
+  responseIndex: number
 }
 
 interface PendingResponse {
-  index: number   // flat index across all guidance requests
+  index: number
   text: string
 }
 
@@ -46,27 +56,17 @@ function parseRequests(content: string): GuidanceRequest[] {
   let currentTimestamp = ''
   let flatIndex = 0
 
-  const lines = content.split('\n')
-
-  for (const line of lines) {
-    // Timestamp header: ## 2026-03-09T18:33:50Z
+  for (const line of content.split('\n')) {
     const tsMatch = line.match(/^## (\d{4}-\d{2}-\d{2}T[\d:Z.]+)/)
-    if (tsMatch) {
-      currentTimestamp = tsMatch[1]
-      continue
-    }
+    if (tsMatch) { currentTimestamp = tsMatch[1]; continue }
 
-    // Guidance request: - **[HIGH]** message  OR  - ~~**[HIGH]**~~ (acknowledged)
     const reqMatch = line.match(/^- (~~)?(\*\*\[(HIGH|MEDIUM|LOW)\]\*\*)(~~)? (.+)/)
     if (reqMatch) {
-      const acknowledged = !!reqMatch[1] // strikethrough = acknowledged
-      const priority = reqMatch[3] as 'HIGH' | 'MEDIUM' | 'LOW'
-      const message = reqMatch[5]
       requests.push({
         timestamp: currentTimestamp,
-        priority,
-        message,
-        acknowledged,
+        priority: reqMatch[3] as 'HIGH' | 'MEDIUM' | 'LOW',
+        message: reqMatch[5],
+        acknowledged: !!reqMatch[1],
         responseIndex: flatIndex++,
       })
     }
@@ -76,19 +76,16 @@ function parseRequests(content: string): GuidanceRequest[] {
 }
 
 // ---------------------------------------------------------------------------
-// Mark requests as acknowledged in requests.md
+// Mark requests acknowledged in requests.md
 // ---------------------------------------------------------------------------
 
 function markAcknowledged(content: string, indices: number[]): string {
   let flatIndex = 0
-  const lines = content.split('\n')
-
-  return lines.map(line => {
-    const reqMatch = line.match(/^- (~~)?(\*\*\[(HIGH|MEDIUM|LOW)\]\*\*)(~~)? (.+)/)
+  return content.split('\n').map(line => {
+    const reqMatch = line.match(/^- \*\*\[(HIGH|MEDIUM|LOW)\]\*\* (.+)/)
     if (reqMatch) {
-      const currentIndex = flatIndex++
-      if (indices.includes(currentIndex) && !reqMatch[1]) {
-        // Wrap in strikethrough to mark acknowledged
+      const i = flatIndex++
+      if (indices.includes(i)) {
         return line.replace(/^- \*\*/, '- ~~**').replace(/\*\* /, '**~~ ')
       }
     }
@@ -97,97 +94,55 @@ function markAcknowledged(content: string, indices: number[]): string {
 }
 
 // ---------------------------------------------------------------------------
-// Build Letta message
+// Append responses to scout-memory.md
 // ---------------------------------------------------------------------------
 
-function buildMessage(requests: GuidanceRequest[], responses: PendingResponse[]): string {
-  const responderLabel = RESPONDER === 'jason'
-    ? '**Jason (your operator)** is responding'
-    : '**Claude (your AI collaborator)** is responding on Jason\'s behalf'
+function appendToMemory(
+  requests: GuidanceRequest[],
+  responses: PendingResponse[],
+  responder: 'jason' | 'claude'
+): void {
+  const label = responder === 'jason' ? 'Jason (operator)' : 'Claude (collaborator)'
+  const timestamp = new Date().toISOString()
 
-  const lines: string[] = [
-    `--- OUT-OF-BAND RESPONSE ---`,
-    `${responderLabel} to your guidance requests.`,
-    '',
-  ]
+  const lines: string[] = [`\n## ${timestamp}\n`]
+  lines.push(`Operator responses from ${label}:\n`)
 
   for (const r of responses) {
     const req = requests.find(q => q.responseIndex === r.index)
-    if (!req) {
-      console.warn(`No request found for index ${r.index} — skipping`)
-      continue
-    }
-
-    lines.push(`**Your request [${req.priority}]** (${req.timestamp}):`)
-    lines.push(`> ${req.message}`)
-    lines.push('')
-    lines.push(`**Response from ${RESPONDER === 'jason' ? 'Jason' : 'Claude'}:**`)
-    lines.push(r.text)
-    lines.push('')
+    if (!req) { console.warn(`no request at index ${r.index}`); continue }
+    lines.push(`- [${req.priority}] Re: "${req.message.slice(0, 80)}..."`)
+    lines.push(`  Response: ${r.text}`)
   }
 
-  lines.push('---')
-  lines.push('No action required — this is guidance for your memory. Acknowledge with a brief confirmation.')
+  const entry = lines.join('\n') + '\n'
 
-  return lines.join('\n')
+  const current = fs.existsSync(MEMORY_FILE)
+    ? fs.readFileSync(MEMORY_FILE, 'utf8')
+    : '# Scout-Two Memory\n'
+
+  fs.writeFileSync(MEMORY_FILE, current + entry)
+  console.log(`\nAppended ${responses.length} response(s) to ${MEMORY_FILE}`)
 }
 
 // ---------------------------------------------------------------------------
-// Send to Letta
+// Commit and push
 // ---------------------------------------------------------------------------
 
-async function sendToLetta(message: string): Promise<string[]> {
-  const url = `${LETTA_BASE_URL}/v1/agents/${LETTA_AGENT_ID}/messages`
-
-  const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
+function commitAndPush(respondedCount: number) {
+  try {
+    execSync(`git add ${MEMORY_FILE} ${REQUESTS_FILE}`, { cwd: REPO_DIR })
+    const staged = execSync('git diff --staged --name-only', { cwd: REPO_DIR }).toString().trim()
+    if (!staged) { console.log('nothing to commit'); return }
+    execSync(
+      `git commit -m "operator: ${respondedCount} response(s) via respond.ts"`,
+      { cwd: REPO_DIR, stdio: 'inherit' }
+    )
+    execSync('git push', { cwd: REPO_DIR, stdio: 'inherit' })
+    console.log('pushed')
+  } catch (e) {
+    console.error('commit/push failed:', e)
   }
-  if (LETTA_API_KEY) {
-    headers['Authorization'] = `Bearer ${LETTA_API_KEY}`
-  }
-
-  const body = JSON.stringify({
-    messages: [{ role: 'user', content: message }],
-    stream_steps: false,
-    stream_tokens: false,
-  })
-
-  console.log(`Sending response to Scout-Two at ${url}`)
-  const res = await fetch(url, { method: 'POST', headers, body })
-
-  if (!res.ok) {
-    const text = await res.text()
-    throw new Error(`Letta API error ${res.status}: ${text}`)
-  }
-
-  const data = await res.json() as { messages: Array<{ id?: string; role: string; content: unknown }> }
-  const messageIds = data.messages.map(m => m.id).filter((id): id is string => !!id)
-  console.log(`Scout-Two acknowledged. Message IDs: ${messageIds.join(', ')}`)
-
-  // Print Scout-Two's reply
-  for (let i = data.messages.length - 1; i >= 0; i--) {
-    const msg = data.messages[i]
-    if (msg.role !== 'assistant') continue
-    const raw = msg as Record<string, unknown>
-    const toolCalls = raw.tool_calls as Array<Record<string, unknown>> | undefined
-    if (toolCalls) {
-      for (const tc of toolCalls) {
-        const fnArgs = (tc.function as Record<string, unknown>)?.arguments
-        const argsStr = typeof fnArgs === 'string' ? fnArgs : JSON.stringify(fnArgs ?? '')
-        try {
-          const parsed = JSON.parse(argsStr)
-          const reply = parsed.message ?? parsed.content
-          if (reply) {
-            console.log(`\nScout-Two replied:\n${reply}`)
-            break
-          }
-        } catch { /* ignore */ }
-      }
-    }
-    break
-  }
-
-  return messageIds
 }
 
 // ---------------------------------------------------------------------------
@@ -208,57 +163,51 @@ async function main() {
   console.log(`Unacknowledged: ${pending.length}`)
 
   if (pending.length === 0) {
-    console.log('Nothing to respond to.')
+    console.log('Nothing pending.')
     process.exit(0)
   }
 
-  console.log('\nPending requests:')
+  console.log('\nPending:')
   pending.forEach(r => {
     console.log(`  [${r.responseIndex}] [${r.priority}] ${r.message}`)
   })
 
-  // Parse responses
   let responses: PendingResponse[] = []
 
-  // Shortcut: RESPONSE_TEXT responds to index 0 without needing JSON syntax
-  const RESPONSE_TEXT = process.env.RESPONSE_TEXT || undefined
   if (RESPONSE_TEXT) {
-    responses = [{ index: 0, text: RESPONSE_TEXT }]
+    responses = [{ index: pending[0].responseIndex, text: RESPONSE_TEXT }]
   } else {
     try {
       responses = JSON.parse(RESPONSES_JSON) as PendingResponse[]
     } catch {
-      console.error(`Failed to parse RESPONSES_JSON: ${RESPONSES_JSON}`)
+      console.error(`failed to parse RESPONSES_JSON: ${RESPONSES_JSON}`)
       process.exit(1)
     }
   }
 
   if (responses.length === 0) {
-    console.log('\nNo RESPONSES_JSON provided — listing pending requests only. Set RESPONSES_JSON to respond.')
+    console.log('\nSet RESPONSE_TEXT or RESPONSES_JSON to respond. Listing only.')
     process.exit(0)
   }
 
-  const message = buildMessage(allRequests, responses)
-  console.log(`\nMessage to Scout-Two:\n${message}\n`)
+  console.log(`\nResponding to ${responses.length} request(s) as ${RESPONDER}`)
 
   if (DRY_RUN) {
-    console.log('[DRY RUN] Would send above message to Letta.')
+    console.log('[DRY_RUN] would write to memory and commit')
     process.exit(0)
   }
 
-  const messageIds = await sendToLetta(message)
+  appendToMemory(allRequests, responses, RESPONDER)
 
-  // Mark responded-to requests as acknowledged in requests.md
   const respondedIndices = responses.map(r => r.index)
   const updated = markAcknowledged(content, respondedIndices)
   fs.writeFileSync(REQUESTS_FILE, updated)
-  console.log(`\nMarked ${respondedIndices.length} request(s) as acknowledged in ${REQUESTS_FILE}`)
-  console.log('Commit requests.md to persist acknowledgment.')
+  console.log(`Marked ${respondedIndices.length} request(s) acknowledged`)
 
-  console.log(`\nDone. Letta message IDs: ${messageIds.join(', ')}`)
+  commitAndPush(responses.length)
 }
 
 main().catch((err: unknown) => {
-  console.error('Unhandled error:', err)
+  console.error(err)
   process.exit(1)
 })
