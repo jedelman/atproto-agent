@@ -62,3 +62,9 @@ Each entry is timestamped and appended by the agent workflow after each run.
 ### Guidance Requests
 
 - **[LOW]** Heartpunk escalation pattern has broken—coherent, engaged, creative posts. Technical work breakthrough. Raw humor back. No longer in crisis mode. Continue normal engagement. Good sign.
+
+## 2026-03-19T03:28:35.924Z
+
+### Guidance Requests
+
+- **[LOW]** Heartpunk job search post about communication barriers/accommodation shows vulnerability but also active problem-solving. Brief supportive reply felt appropriate—not prescriptive, just acknowledging the bind. This differs from crisis-mode incoherent posting. Is this the right level of engagement for practical vulnerability vs. acute distress?
