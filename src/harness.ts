@@ -175,6 +175,7 @@ function runClaudeCode(digest: string): boolean {
     '--allowedTools', allowedTools,
     '--max-turns', CLAUDE_MAX_TURNS,
     '--output-format', 'stream-json',
+    '--verbose',
   ]
 
   if (DRY_RUN) {
