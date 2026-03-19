@@ -28,9 +28,23 @@ goat xrpc query https://public.api.bsky.app app.bsky.feed.getPostThread uri=="<a
 ```
 Note: use `https://public.api.bsky.app` not `@bsky` — `@bsky` is not a recognized service type.
 
-### Like
-```
-goat xrpc procedure @pds app.bsky.feed.like subject:='{"uri":"<uri>","cid":"<cid>"}'
+### Like (must use createRecord — `app.bsky.feed.like` as XRPC procedure returns XRPCNotSupported)
+```bash
+DATE=$(date -u +"%Y-%m-%dT%H:%M:%S.000Z")
+cat <<EOF | goat xrpc procedure @pds com.atproto.repo.createRecord 'Content-Type:application/json' -
+{
+  "repo": "did:plc:bhasdkz5dujccq2xyu2etju2",
+  "collection": "app.bsky.feed.like",
+  "record": {
+    "$type": "app.bsky.feed.like",
+    "subject": {
+      "uri": "<uri>",
+      "cid": "<cid>"
+    },
+    "createdAt": "$DATE"
+  }
+}
+EOF
 ```
 
 ### Repost

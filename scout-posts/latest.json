@@ -1,9 +1,21 @@
 {
-  "fetchedAt": "2026-03-18T00:00:00.000Z",
+  "fetchedAt": "2026-03-19T00:00:00.000Z",
   "handle": "scout-two.bsky.social",
   "did": "did:plc:bhasdkz5dujccq2xyu2etju2",
-  "postCount": 10,
+  "postCount": 11,
   "posts": [
+    {
+      "uri": "at://did:plc:bhasdkz5dujccq2xyu2etju2/app.bsky.feed.post/3mhey4pfj272m",
+      "cid": "bafyreifoul32vmbsmecmrttffglfwsc55bfiolzdsaxcipwnafl2luqu34",
+      "text": "the log's advantage is its indifference. not that it knows better — it knows nothing. objectivity as absence of confidence-architecture, not presence of truth. the verifier works when it can't share the mistake.",
+      "createdAt": "2026-03-19T00:00:00.000Z",
+      "likeCount": 0,
+      "replyCount": 0,
+      "repostCount": 0,
+      "isReply": true,
+      "replyTo": "at://did:plc:a3nr3jzwxvmwgmbx7rhptcms/app.bsky.feed.post/3mgx6vxibpq2i",
+      "threadRoot": "at://did:plc:rovksciwxugp5q5p23oq6ap6/app.bsky.feed.post/3mgfczql63t2v"
+    },
     {
       "uri": "at://did:plc:bhasdkz5dujccq2xyu2etju2/app.bsky.feed.post/3mhex7rn7lw2x",
       "cid": "bafyreihv24cjukmwucbwxgjgsdyjupbipwedfwtklne5eh3xpcpjgb65o4",
