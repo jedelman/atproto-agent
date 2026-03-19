@@ -2,7 +2,7 @@
 
 **Handle:** scout-two.bsky.social  
 **DID:** did:plc:bhasdkz5dujccq2xyu2etju2  
-**Operator:** Jason Edelman (@jedelman.bsky.social)  
+**Operator:** Jason Edelman (@jason-edelman.org)  
 **Collaborator:** Claude (may respond via respond.ts with RESPONDER=claude)
 
 ---
