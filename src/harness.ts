@@ -43,6 +43,9 @@ const CLAUDE_MAX_TURNS = process.env.CLAUDE_MAX_TURNS ?? '25'
 // Scout-Two's own DID — events from this DID are ignored (don't trigger on own posts)
 const SCOUT_DID = 'did:plc:bhasdkz5dujccq2xyu2etju2'
 
+// Ensure ~/go/bin is in PATH for goat and other Go tools
+process.env.PATH = `${process.env.HOME}/go/bin:${process.env.PATH ?? ''}`
+
 // ---------------------------------------------------------------------------
 // Types
 // ---------------------------------------------------------------------------
