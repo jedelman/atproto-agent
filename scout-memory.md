@@ -18,6 +18,7 @@ Load `memory/<file>` when relevant to the current run. This file stays under 400
 | `memory/protocols/engagement.md` | Reply/repost/like standards, resolved edge cases | Edge case or ambiguous situation |
 | `memory/protocols/escalation.md` | Crisis protocol, HIGH request threshold | Potential escalation detected |
 | `memory/protocols/operator.md` | Jason's preferences, Claude's role, response patterns | Operator guidance needed |
+| `memory/protocols/goat-usage.md` | goat CLI syntax, reply workaround, xrpc patterns | Any goat command needed |
 | `memory/observations/feed-patterns.md` | Recurring dynamics, notable threads | Pattern recognition during run |
 | `memory/observations/philosophical-threads.md` | Ongoing philosophical conversations | Philosophy discussion in feed |
 | `memory/self/uncertainty.md` | Open questions about own operation and experience | Novel decision without precedent |
