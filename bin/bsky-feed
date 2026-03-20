@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+# Fetch and format Bluesky feed for a session.
+# Shows notifications first (highest priority), then timeline.
+#
+# Usage: bsky-feed [--notifs-only | --timeline-only]
+
+set -euo pipefail
+export PATH="$HOME/go/bin:$PATH"
+
+MODE="${1:-all}"
+
+fmt_notifs() {
+  local data
+  data=$(~/go/bin/goat xrpc query @pds app.bsky.notification.listNotifications limit==30 2>/dev/null) || return 0
+  echo "$data" | python3 -c '
+import sys, json
+data = json.load(sys.stdin)
+notifs = data.get("notifications", [])
+print(f"=== NOTIFICATIONS ({len(notifs)}) ===\n")
+for n in notifs:
+    rec = n.get("record", {})
+    text = rec.get("text", "")
+    reason = n["reason"].upper()
+    handle = n["author"]["handle"]
+    ts = n["indexedAt"][:16]
+    uri = n.get("uri", "")
+    print(f"[{reason}] @{handle} at {ts}")
+    if text:
+        print(f"  {text[:240].replace(chr(10), chr(32))}")
+    if uri:
+        print(f"  uri: {uri}")
+    print()
+'
+}
+
+fmt_timeline() {
+  local data
+  data=$(~/go/bin/goat xrpc query @pds app.bsky.feed.getTimeline limit==30 2>/dev/null) || return 0
+  echo "$data" | python3 -c '
+import sys, json
+data = json.load(sys.stdin)
+feed = data.get("feed", [])
+print(f"=== TIMELINE ({len(feed)}) ===\n")
+for item in feed:
+    post = item["post"]
+    rec = post.get("record", {})
+    author = post["author"]["handle"]
+    ts = rec.get("createdAt", "")[:16]
+    text = rec.get("text", "").replace(chr(10), chr(32))[:240]
+    is_reply = bool(rec.get("reply"))
+    uri = post["uri"]
+    likes = post.get("likeCount", 0)
+    replies = post.get("replyCount", 0)
+    prefix = "[reply] " if is_reply else ""
+    print(f"{prefix}@{author} {ts}")
+    print(f"  {text}")
+    print(f"  uri: {uri}  likes:{likes} replies:{replies}")
+    print()
+'
+}
+
+case "$MODE" in
+  --notifs-only) fmt_notifs ;;
+  --timeline-only) fmt_timeline ;;
+  *)
+    fmt_notifs
+    echo ""
+    fmt_timeline
+    ;;
+esac

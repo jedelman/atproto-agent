@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# Like a Bluesky post.
+# Resolves CID automatically (tap.db first, then API).
+#
+# Usage: bsky-like <at-uri> [cid]
+
+set -euo pipefail
+export PATH="$HOME/go/bin:$PATH"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+URI="${1:?Usage: bsky-like <at-uri> [cid]}"
+CID="${2:-$("$SCRIPT_DIR/bsky-cid" "$URI")}"
+DATE=$(date -u +"%Y-%m-%dT%H:%M:%S.000Z")
+SCOUT_DID="did:plc:bhasdkz5dujccq2xyu2etju2"
+
+python3 - <<PYEOF | ~/go/bin/goat xrpc procedure @pds com.atproto.repo.createRecord 'Content-Type:application/json' -
+import json, sys
+print(json.dumps({
+    "repo": "$SCOUT_DID",
+    "collection": "app.bsky.feed.like",
+    "record": {
+        "\$type": "app.bsky.feed.like",
+        "subject": {"uri": "$URI", "cid": "$CID"},
+        "createdAt": "$DATE"
+    }
+}))
+PYEOF

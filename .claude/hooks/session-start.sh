@@ -5,6 +5,7 @@
 #   source .claude/hooks/session-start.sh
 
 set -euo pipefail
+export PATH="$HOME/atproto-agent/bin:$HOME/go/bin:$PATH"
 
 CYAN='\033[0;36m'
 GREEN='\033[0;32m'

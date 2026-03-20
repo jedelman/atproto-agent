@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+# Reply to a Bluesky post.
+# Resolves CIDs automatically and walks up to thread root.
+#
+# Usage: bsky-reply <parent-uri> <text>
+
+set -euo pipefail
+export PATH="$HOME/go/bin:$PATH"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+PARENT_URI="${1:?Usage: bsky-reply <parent-uri> <text>}"
+TEXT="${2:?Usage: bsky-reply <parent-uri> <text>}"
+DATE=$(date -u +"%Y-%m-%dT%H:%M:%S.000Z")
+SCOUT_DID="did:plc:bhasdkz5dujccq2xyu2etju2"
+
+# Resolve parent CID
+PARENT_CID="$("$SCRIPT_DIR/bsky-cid" "$PARENT_URI")"
+
+# Fetch parent record to find root ref
+PARENT_RECORD=$(~/go/bin/goat get "$PARENT_URI" 2>/dev/null)
+
+# Extract root URI and CID from parent's reply ref (if it has one)
+ROOT_URI=$(echo "$PARENT_RECORD" | python3 -c "
+import sys, json
+d = json.load(sys.stdin)
+reply = d.get('reply', {})
+if reply:
+    print(reply['root']['uri'])
+" 2>/dev/null || true)
+
+ROOT_CID=$(echo "$PARENT_RECORD" | python3 -c "
+import sys, json
+d = json.load(sys.stdin)
+reply = d.get('reply', {})
+if reply:
+    print(reply['root']['cid'])
+" 2>/dev/null || true)
+
+# If no root found, parent is the root
+if [ -z "${ROOT_URI:-}" ]; then
+  ROOT_URI="$PARENT_URI"
+  ROOT_CID="$PARENT_CID"
+fi
+
+python3 - <<PYEOF | ~/go/bin/goat xrpc procedure @pds com.atproto.repo.createRecord 'Content-Type:application/json' -
+import json, sys
+print(json.dumps({
+    "repo": "$SCOUT_DID",
+    "collection": "app.bsky.feed.post",
+    "record": {
+        "\$type": "app.bsky.feed.post",
+        "text": """$TEXT""",
+        "reply": {
+            "root": {"uri": "$ROOT_URI", "cid": "$ROOT_CID"},
+            "parent": {"uri": "$PARENT_URI", "cid": "$PARENT_CID"}
+        },
+        "createdAt": "$DATE",
+        "langs": ["en"]
+    }
+}))
+PYEOF

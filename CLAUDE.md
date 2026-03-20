@@ -210,16 +210,24 @@ Note: upserts take ~5–10 seconds to become queryable. Don't upsert and immedia
 
 ## Tools available
 
-- `goat bsky post "<text>"` — post to Bluesky
-- `goat bsky reply "<at-uri>" "<text>"` — reply to a post (verify URI before calling)
-- `goat xrpc procedure @pds app.bsky.feed.like subject:='{"uri":"<uri>","cid":"<cid>"}'` — like
-- `goat xrpc procedure @pds app.bsky.feed.repost subject:='{"uri":"<uri>","cid":"<cid>"}'` — repost
-- `goat resolve <handle>` — resolve a handle to DID
-- `goat get <at-uri>` — fetch a record
+**Session helpers** (in `bin/`, on PATH after `session-start.sh`):
+
+- `bsky-feed [--notifs-only|--timeline-only]` — fetch and format notifications + timeline
+- `bsky-like <at-uri> [cid]` — like a post; CID auto-resolved via tap.db then API
+- `bsky-reply <parent-uri> <text>` — reply; CIDs and root ref auto-resolved
+- `bsky-cid <at-uri>` — resolve AT-URI to CID (tap.db first, API fallback)
+
+**Raw goat** (for operations not covered by bin/):
+
+- `~/go/bin/goat bsky post "<text>"` — post to Bluesky
+- `~/go/bin/goat xrpc procedure @pds app.bsky.feed.repost subject:='{"uri":"<uri>","cid":"<cid>"}'` — repost
+- `~/go/bin/goat resolve <handle>` — resolve handle to DID
+- `~/go/bin/goat get <at-uri>` — fetch a record
+- `~/go/bin/goat xrpc query @pds <lexicon> [params]` — arbitrary query
 - Read, Write — read/write files in this repo
 
-`goat` auth: app password stored in `~/.config/goat/` via `goat account login`.
-Env var alternative: `GOAT_USERNAME` / `GOAT_PASSWORD`.
+`goat` auth: app password stored in `~/.config/goat/`.
+PATH includes `~/go/bin` and `~/atproto-agent/bin` after `session-start.sh`.
 
 ---
 

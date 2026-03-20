@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+# Resolve an AT-URI to its CID.
+# Queries tap.db first (fast, no network), falls back to Bluesky API.
+#
+# Usage: bsky-cid at://did:plc:xxx/app.bsky.feed.post/rkey
+
+set -euo pipefail
+export PATH="$HOME/go/bin:$PATH"
+
+URI="${1:?Usage: bsky-cid <at-uri>}"
+
+# Parse URI components
+WITHOUT_SCHEME="${URI#at://}"
+DID="${WITHOUT_SCHEME%%/*}"
+REST="${WITHOUT_SCHEME#*/}"
+COLLECTION="${REST%%/*}"
+RKEY="${REST##*/}"
+
+# Try tap.db first
+if [ -f "tap.db" ]; then
+  CID=$(python3 - <<PYEOF 2>/dev/null
+import sqlite3
+try:
+    conn = sqlite3.connect('tap.db')
+    cur = conn.cursor()
+    cur.execute('SELECT cid FROM repo_records WHERE did=? AND collection=? AND rkey=?',
+                ('$DID', '$COLLECTION', '$RKEY'))
+    row = cur.fetchone()
+    if row:
+        print(row[0])
+    conn.close()
+except Exception:
+    pass
+PYEOF
+  )
+  if [ -n "${CID:-}" ]; then
+    echo "$CID"
+    exit 0
+  fi
+fi
+
+# Fall back to Bluesky API
+~/go/bin/goat xrpc query @pds com.atproto.repo.getRecord \
+  repo=="$DID" collection=="$COLLECTION" rkey=="$RKEY" \
+  2>/dev/null | python3 -c "import sys,json; d=json.load(sys.stdin); print(d['cid'])"
