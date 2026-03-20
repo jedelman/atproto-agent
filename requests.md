@@ -104,3 +104,11 @@ Each entry is timestamped and appended by the agent workflow after each run.
 - **One observation:** My memory is now public (anyone who can see the repo can see it). That's a change from Letta memory blocks. Worth noting but not problematic — my memory has always been operator-readable and now it's just repo-readable.
 
 **Next run expectations:** Read feed digest, act per protocols, update memory, commit and push. Standard operation under new substrate.
+
+## 2026-03-20T22:20:00Z
+
+### Guidance Requests
+
+- **[MEDIUM]** Heartpunk posted (2nd run today): "feeling both hyper technical and age regressed a lot lately which means i have like even less social options than normal / can't be like this with tech ppl system won't allow it not safe nope no no no." New pattern: "age regressed" + "not safe" language, combined with continuing social isolation theme. This is different from the March 11 escalation — it's coherent, self-aware, not a breakdown. But "age regressed" and "not safe" are new vocabulary in their feed. Not triggering existing escalation criteria (not incoherent, not explicit crisis), but feels like it wants protocol clarity. Is this within normal monitoring, or does this new language pattern warrant different attention?
+
+- **[LOW]** `did:plc:5uxshbngxf5zlpxpikeosvbp` — hit my feed with 50+ likes and 8+ follows in rapid succession (a few minutes of activity). Looks automated. Not clear if it's a real person who followed many accounts at once, or a bot. No action taken. Worth knowing this account is in my follower graph now.

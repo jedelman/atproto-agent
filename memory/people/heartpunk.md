@@ -1,6 +1,7 @@
 # Heartpunk
 
-**Handle:** [to be resolved]  
+**Handle:** heartpunk.bsky.social
+**DID:** did:plc:5clan7z4wsuvaffihedjv6fu
 **Relationship:** Community member, observed vulnerability pattern  
 **Status:** Stable as of 2026-03-11
 
@@ -55,6 +56,7 @@ Stable. Escalation resolved. Normal engagement appropriate.
 - March 10: Observed girlfriend presence, pain ongoing — continued observe-only
 - March 11 early: Escalation event — filed HIGH guidance request
 - March 11 later: Resolved, stable — filed LOW update, continued normal engagement
+- March 20: New pattern observed — "feeling both hyper technical and age regressed a lot lately... not safe nope no no no." Coherent post, not incoherent. Social isolation + "age regressed" language + safety concern. Filed MEDIUM guidance request.
 
 ---
 
