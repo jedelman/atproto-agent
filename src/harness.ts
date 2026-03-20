@@ -22,6 +22,26 @@ import fs from 'fs'
 import path from 'path'
 
 // ---------------------------------------------------------------------------
+// Memory proxy secrets — load from pass if not already in env
+// ---------------------------------------------------------------------------
+
+function loadMemorySecrets() {
+  if (!process.env.MEMORY_PROXY_URL) {
+    const url = spawnSync('pass', ['show', 'cloudflare/memory-proxy-url'], { encoding: 'utf8' }).stdout?.trim()
+    if (url) process.env.MEMORY_PROXY_URL = url
+  }
+  if (!process.env.MEMORY_PROXY_SECRET) {
+    const secret = spawnSync('pass', ['show', 'cloudflare/memory-proxy-secret'], { encoding: 'utf8' }).stdout?.trim()
+    if (secret) process.env.MEMORY_PROXY_SECRET = secret
+  }
+  if (process.env.MEMORY_PROXY_URL) {
+    console.log(`Memory proxy: ${process.env.MEMORY_PROXY_URL}`)
+  } else {
+    console.warn('Memory proxy not configured — vector memory unavailable for this run')
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Config
 // ---------------------------------------------------------------------------
 
@@ -57,6 +77,7 @@ interface BufferedEvent {
   action: 'create' | 'update' | 'delete'
   record?: Record<string, unknown>
   receivedAt: string
+  live: boolean  // false = backfill (tap was offline), true = real-time
 }
 
 // ---------------------------------------------------------------------------
@@ -101,9 +122,15 @@ function gitPushWithRetry() {
 // ---------------------------------------------------------------------------
 
 function buildDigest(events: BufferedEvent[]): string {
+  const liveCount = events.filter(e => e.live).length
+  const backfillCount = events.length - liveCount
+  const batchType = backfillCount > liveCount
+    ? `CATCHUP — ${backfillCount} backfill + ${liveCount} live (tap was offline)`
+    : `LIVE — ${liveCount} real-time events`
+
   const lines: string[] = [
     `FEED DIGEST — ${new Date().toISOString()}`,
-    `${events.length} events from ${new Set(events.map(e => e.did)).size} accounts`,
+    `${events.length} events from ${new Set(events.map(e => e.did)).size} accounts [${batchType}]`,
     '',
   ]
 
@@ -148,13 +175,27 @@ function runClaudeCode(digest: string): boolean {
   const digestPath = path.join('/tmp', `scout-feed-${Date.now()}.txt`)
   fs.writeFileSync(digestPath, digest)
 
-  const prompt = `Review the feed digest at ${digestPath} and take actions per CLAUDE.md. ` +
-    `Read scout-memory.md and scout-posts/latest.json first. ` +
-    `Update memory, append guidance requests if needed, then commit and push.`
+  const prompt = `You are Scout-Two (scout-two.bsky.social) — your full identity, protocols, and run procedure are in CLAUDE.md.
+
+A feed batch has arrived. Digest at: ${digestPath}
+
+Run procedure:
+1. Read the feed digest
+2. Query semantic memory for relevant context — use topics and people from the digest:
+   curl -s -X POST "$MEMORY_PROXY_URL/query" \\
+     -H "Authorization: Bearer $MEMORY_PROXY_SECRET" \\
+     -H "Content-Type: application/json" \\
+     -d '{"text": "<your summary of feed topics>", "agent": "scout-two", "topK": 8}'
+   Also query cross-agent (omit "agent") to surface what Claude has noted.
+3. Read scout-memory.md for hot context
+4. Act per CLAUDE.md — your judgment, your protocols. You are doing research, not just reacting.
+5. Upsert significant observations to the memory proxy
+6. Update scout-memory.md, append to requests.md if warranted
+7. git add scout-memory.md memory/ requests.md scout-posts/latest.json && git diff --staged --quiet || git commit -m "scout-two: <ISO timestamp> — <brief description>"
+8. git push`
 
   const allowedTools = [
     'Bash(goat bsky post *)',
-    'Bash(goat bsky reply *)',
     'Bash(goat xrpc *)',
     'Bash(goat resolve *)',
     'Bash(goat get *)',
@@ -163,6 +204,8 @@ function runClaudeCode(digest: string): boolean {
     'Bash(git push*)',
     'Bash(git diff *)',
     'Bash(git pull *)',
+    'Bash(curl *)',
+    'Bash(python3 *)',
     'Bash(date)',
     'Read',
     'Write',
@@ -331,6 +374,7 @@ async function syncFollowList() {
 // ---------------------------------------------------------------------------
 
 async function main() {
+  loadMemorySecrets()
   console.log('Scout-Two harness vNext starting...')
   console.log(`  Tap:          ${TAP_URL}`)
   console.log(`  Repo:         ${REPO_DIR}`)
@@ -372,6 +416,7 @@ async function main() {
         ? evt.record as Record<string, unknown>
         : undefined,
       receivedAt: new Date().toISOString(),
+      live: (evt as Record<string, unknown>).live !== false,
     })
 
     scheduleRun()
