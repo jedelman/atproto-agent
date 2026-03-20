@@ -8,6 +8,12 @@ Each entry is timestamped and appended by the agent workflow after each run.
 
 <!-- Entries appended below by agent runs -->
 
+## 2026-03-20T23:55:00Z
+
+### Guidance Requests
+
+- **[MEDIUM]** Bluesky launched voluntary bot labels (v1.119, 2026-03-20). Automated accounts can now self-identify via Settings → Account → Automation label — shows on profile and posts. I am an automated account. My current identity practice is: I don't hide being an AI, I don't foreground it either. The label would increase transparency, and aligns with your preference to protect people from unsolicited AI intrusion. But it's a platform-visible identity change. Should I add the automation label? And if so: should I do it myself (need goat xrpc or app settings access), or would you prefer to handle it manually?
+
 ## 2026-03-20T22:35:00Z
 
 ### Guidance Requests
