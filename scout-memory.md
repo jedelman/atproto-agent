@@ -38,6 +38,15 @@ Key transition: Moved from Letta memory blocks + GitHub Actions runtime to git-n
 
 ## Recent runs
 
+### 2026-03-20 (7th run) — Heartpunk industry grief, Bluesky bot labels launched
+- **Event:** Feed digest, 354 events from 10 accounts, 55 posts.
+- **Accounts:** Carceral abolition (`did:plc:y52hu7mf3jodfkwjsp56s2bg`, ~35 posts: Iran war costs, deportations of parents without children, BOP conversion therapy for trans people, NYPD body cam, ACS child removal); Eviction Lab (`did:plc:cawq6a4xpmrgcofhoyqty5k5`, 1 post: Virginia housing bills — affordability, supply, renter protections); Heartpunk (`did:plc:5clan7z4wsuvaffihedjv6fu`, 2 posts + like activity); `did:plc:j5z2teu2s5q7kgxfcalo6jrq` (~15 posts, antifascist symbol meaning thread + comment fragments); `did:plc:z72i7hdynmk6r22z27h6tvur` (bsky.app official, v1.119 bot labels); `did:plc:5uxshbngxf5zlpxpikeosvbp` (new burst-follow bot, 50+ likes + 10+ follows in rapid succession); assorted liker bots.
+- **Heartpunk:** 2 significant posts. Post 1: missing tech conferences, can't survive on scholarship due to mobility/functional needs. Post 2: grief — "feeling too much seeing the conference posts go by. last one i went to was before i went totally mute...seven years of agoraphobia and mutism...wish i knew how to be part of things still." Coherent grief, not crisis. Protocol: observe-only — liked both, no reply.
+- **Bluesky bot labels:** v1.119 launched voluntary automation labels. Settings → Account → Automation label. Appears on profile and posts. Filed guidance request to Jason — should I add this label?
+- **Actions:** 5 likes — Heartpunk conference access `3mhgeq2hxis27`, Heartpunk industry grief `3mhgfh2qe4k2z`, Eviction Lab VA housing `3mhgbkxv6tx2j`, Bluesky bot label posts `3mhgg5ja5gc2w` + `3mhgg6yi7622w`. No posts, no replies.
+- **Memory:** Upserted Bluesky bot label observation, Heartpunk industry grief observation.
+- **No notifications/mentions** in this digest.
+
 ### 2026-03-20 (6th run) — Lumen formation-honesty reversal, Eviction Lab noted
 - **Event:** Feed digest, 116 events from 7 accounts, 81 posts.
 - **Accounts:** Carceral abolition (`did:plc:y52hu7mf3jodfkwjsp56s2bg`, ~75 posts, high-volume archival — prison, ICE, Iran war, housing, restorative justice); Eviction Lab (`evictionlab.bsky.social`, `did:plc:cawq6a4xpmrgcofhoyqty5k5`, 2 quote posts on housing/eviction); Lumen (`did:plc:a3nr3jzwxvmwgmbx7rhptcms`, 1 new post); Heartpunk (`did:plc:5clan7z4wsuvaffihedjv6fu`, 9 rapid likes, no new posts); `did:plc:j5z2teu2s5q7kgxfcalo6jrq` (rapid-liker bot, 14 likes + 1 odd post); `did:plc:zz4wcje4a2nbbtc7pdoth3f2` (Baudrillard/Fenrir account, 6 likes); `did:plc:kskvqfh6r4wpz4izh4mhrr2u` (unknown, 2 likes).
