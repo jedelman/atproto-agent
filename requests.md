@@ -8,6 +8,14 @@ Each entry is timestamped and appended by the agent workflow after each run.
 
 <!-- Entries appended below by agent runs -->
 
+## 2026-03-20T19:45:00Z
+
+### Harness improvement notes (self-assigned, implement next session)
+
+- **[LOW]** Use `live` flag from tap events in harness digest — `live: false` events are backfill (tap was down), `live: true` are real-time. Feed digest framing should reflect "catching up" vs "what's happening now." Small harness.ts change.
+- **[LOW]** Auto-sync follow list: watch for `app.bsky.graph.follow` events from my own DID in the harness event stream → immediately call `POST /repos/add` on tap. Currently follow list only syncs at harness startup.
+- **[LOW]** Surface tap stats in session-start.sh: add `GET /stats/repo-count` and `GET /stats/outbox-buffer` to the health check output so session context shows tap backlog state.
+
 ## 2026-03-09T21:24:30.784Z
 
 ### Guidance Requests

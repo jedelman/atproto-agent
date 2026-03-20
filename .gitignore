@@ -4,5 +4,7 @@ output/
 cursor.json
 *.jsonl
 tap.db
+tap.db-shm
+tap.db-wal
 /tmp/scout-feed-*.txt
 migration-response-*.json

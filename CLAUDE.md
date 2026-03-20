@@ -64,18 +64,26 @@ Load a person file when they appear in the feed. Load a protocol file when an ed
 
 ## Run procedure
 
+Before starting a session (in the terminal, not inside Claude Code):
+```bash
+source .claude/hooks/session-start.sh
+```
+This loads `MEMORY_PROXY_URL` and `MEMORY_PROXY_SECRET` from `pass` and health-checks the memory proxy.
+
 At the start of every run:
 1. Read `CLAUDE.md` (this file)
 2. Read `scout-memory.md`
 3. Read `scout-posts/latest.json`
 4. Read the feed digest provided to you
+5. Query memory for context relevant to what's in the feed (see Memory API below)
 
 At the end of every run:
 1. Write updated `scout-memory.md` and any modified `memory/` files
-2. Append to `requests.md` if warranted
-3. Run: `git add scout-memory.md memory/ requests.md scout-posts/latest.json`
-4. Run: `git diff --staged --quiet || git commit -m "scout-two: <ISO timestamp>"`
-5. Run: `git push`
+2. Upsert new or updated memories to the vector DB (see Memory API below)
+3. Append to `requests.md` if warranted
+4. Run: `git add scout-memory.md memory/ requests.md scout-posts/latest.json`
+5. Run: `git diff --staged --quiet || git commit -m "scout-two: <ISO timestamp>"`
+6. Run: `git push`
 
 ---
 
@@ -141,6 +149,62 @@ Claude sometimes responds on Jason's behalf (labeled RESPONDER=claude in respond
 **Carceral Abolition account:** Heavy news aggregation, minimal commentary. Valuable archival work. Occasional repost of substantive items is appropriate, not spam.
 
 Add new people/situations to `scout-memory.md` as they emerge. Promote to CLAUDE.md only when a pattern is established enough to be protocol-level.
+
+---
+
+## Memory API
+
+Semantic memory proxy at `$MEMORY_PROXY_URL` (loaded from `pass cloudflare/memory-proxy-url`). All routes except `/health` require `Authorization: Bearer $MEMORY_PROXY_SECRET`.
+
+**Query at session start** — find what's relevant to this run:
+```bash
+curl -s -X POST "$MEMORY_PROXY_URL/query" \
+  -H "Authorization: Bearer $MEMORY_PROXY_SECRET" \
+  -H "Content-Type: application/json" \
+  -d '{"text": "<topic or feed summary>", "agent": "scout-two", "topK": 8}' | jq .
+```
+
+Filter by namespace: add `"namespace": "observations"` (or `patterns`, `relationships`, `annotations`, `notes`).
+Cross-agent query (see what Claude knows too): omit the `"agent"` field.
+
+**Upsert a memory** — store or update:
+```bash
+curl -s -X POST "$MEMORY_PROXY_URL/upsert" \
+  -H "Authorization: Bearer $MEMORY_PROXY_SECRET" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "id": "scout-two-observations-<slug>-<YYYY-MM>",
+    "text": "<plain prose — what you observed or inferred>",
+    "agent": "scout-two",
+    "namespace": "observations",
+    "type": "observation",
+    "tags": ["tag1", "tag2"],
+    "confidence": 0.85,
+    "source": "feed"
+  }' | jq .
+```
+
+ID convention: `{agent}-{namespace}-{slug}-{YYYY-MM}`. For relationship memories, omit the date (same id gets upserted as the relationship evolves).
+
+**Types:** `observation` · `pattern` · `relationship` · `annotation` · `note`
+**Namespaces:** `observations` · `patterns` · `relationships` · `annotations` · `notes`
+**Sources:** `session` · `feed` · `inference` · `human`
+
+**Delete:**
+```bash
+curl -s -X POST "$MEMORY_PROXY_URL/delete" \
+  -H "Authorization: Bearer $MEMORY_PROXY_SECRET" \
+  -H "Content-Type: application/json" \
+  -d '{"id": "<id>"}' | jq .
+```
+
+**List** (approximate — zero-vector search):
+```bash
+curl -s "$MEMORY_PROXY_URL/list?agent=scout-two&namespace=relationships" \
+  -H "Authorization: Bearer $MEMORY_PROXY_SECRET" | jq .
+```
+
+Note: upserts take ~5–10 seconds to become queryable. Don't upsert and immediately query the same memory in one session.
 
 ---
 
