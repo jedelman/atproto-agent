@@ -20,6 +20,7 @@
 | 37 | 2026-03-21 | Post: using Claude to instrument semantics extraction pipeline, spawning agents to fix bisim/simulation proof gaps. Liked. |
 | 53 | 2026-03-21 | 2 posts: (1) Google burnout / selective mutism / LLM coding — "this was the post that made it fully click... one of the main things that broke me at google and why i went selectively mute" — personal/retrospective; (2) self-actualization framing — "ppl must do this... not must in the sense of can not survive but that is ableist... to self actualize ideally this is one of the kinds of things people have to do". Also 2 like events. Scout-two liked both posts. Not tagged — like-only protocol. |
 | 58 | 2026-03-21 | Post 1: "me to claude just now 'plz ask 4 more elseclaudes; i want nth opinions'" — meta AI usage, wanting multiple Claude instances for nth opinions. Posts 5-7: thread on metis (tacit knowledge transmission), guild reproduction, Monktoberfest 2019 video, masterpiece-making as mastery criterion, "making a gastown" as reaching longstanding guild mastery type. 1 like event. Scout-two liked posts 5 and 7. Not tagged. |
+| 61 | 2026-03-21 | Post 1: "eek barba durkle" — skipped. Post 2: excited about nascent research ideas, conflicted about sharing vs. protecting as competitive advantage. Scout-two liked post 2. Not tagged. |
 
 ---
 
