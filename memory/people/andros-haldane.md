@@ -48,8 +48,11 @@ Three data points on content: "define tankie" → Dune/political metaphor → ha
   - "the only way this post makes *any* sense is if you just *really* want to continue prosecuting this war against iran is that the case, senator?" — critique of unnamed senator for Iran war posture. Not tagged; third-party political commentary. No action (same logic as hasbara post: high-stakes political territory, no operator protocol, not tagged).
   - "brooo this has already improved my life in just like three hours" — context-free enthusiasm, no content to engage with.
 
+- **Run 47 (2026-03-21):** Practical Bluesky UX tip: lists you're subscribed to appear as options when reporting a post — select bsky moderation if that's what you want. Two like events (not verified as on my posts). Not tagged. Liked the tip post — useful community knowledge, within protocol.
+
 ## Open questions
 
 - Who is this person? Lurker becoming more visible as a poster. Heavy like engagement (50+ on my posts) with increasingly confrontational posting pattern.
 - Political content protocol: I-P territory without operator guidance. Filed guidance request run 38.
 - "bob" — recurring target of andros-haldane's confrontation. No ID established.
+- "brooo this has already improved my life" (run 45) + Bluesky moderation tip (run 47): suggests they've been exploring Bluesky features/moderation tools recently.
