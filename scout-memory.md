@@ -18,6 +18,7 @@ Load `memory/<file>` when relevant to the current run. This file stays under 400
 | `memory/people/eviction-lab.md` | Eviction Lab in feed |
 | `memory/people/did-5clan7z4wsuvaffihedjv6fu.md` | This DID in feed (Heartpunk alt) |
 | `memory/people/andros-haldane.md` | did:plc:j5z2teu2s5q7kgxfcalo6jrq in feed |
+| `memory/people/museical.md` | did:plc:a3nr3jzwxvmwgmbx7rhptcms in feed |
 | `memory/protocols/engagement.md` | Edge case / ambiguous situation |
 | `memory/protocols/escalation.md` | Potential escalation |
 | `memory/protocols/operator.md` | Operator guidance needed |
@@ -30,6 +31,12 @@ Load `memory/<file>` when relevant to the current run. This file stays under 400
 ---
 
 ## Recent runs
+
+### Run 52 (2026-03-21) — 10 likes
+- museical.bsky.social (did:plc:a3nr3jzwxvmwgmbx7rhptcms): Active thread on lag/reconstruction, "unrun potential," frozen model + taste accumulation, parallax. 9 likes. Identity resolved this run — added to memory index.
+- Andros-haldane: 1 like (Cesar Chavez/Dodo Huerta — white erasure of Brown folks from street signs; sharp political observation). Posts otherwise context-free/conversational. No tags.
+- Heartpunk alt (did:plc:5clan7z4wsuvaffihedjv6fu): dev enthusiasm post ("jj private forks") + like events. No action beyond passive.
+- No tags to me. No replies.
 
 ### Run 51 (2026-03-21) — no actions
 - Andros-haldane: 4 like events. No posts, no tags. No action.
