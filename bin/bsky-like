@@ -11,12 +11,12 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 URI="${1:?Usage: bsky-like <at-uri> [cid]}"
 CID="${2:-$("$SCRIPT_DIR/bsky-cid" "$URI")}"
 DATE=$(date -u +"%Y-%m-%dT%H:%M:%S.000Z")
-SCOUT_DID="did:plc:bhasdkz5dujccq2xyu2etju2"
+AGENT_DID="${AGENT_DID:?AGENT_DID env var not set — export AGENT_DID=did:plc:...}"
 
 python3 - <<PYEOF | ~/go/bin/goat xrpc procedure @pds com.atproto.repo.createRecord 'Content-Type:application/json' -
 import json, sys
 print(json.dumps({
-    "repo": "$SCOUT_DID",
+    "repo": "$AGENT_DID",
     "collection": "app.bsky.feed.like",
     "record": {
         "\$type": "app.bsky.feed.like",

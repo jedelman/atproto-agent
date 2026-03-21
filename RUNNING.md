@@ -417,3 +417,144 @@ Check `tmux capture-pane -t scout-two:harness -p` for recent output. Common caus
 
 **Claude Code hooks blocking heredoc patterns:**
 `cat <<EOF | goat` is blocked in autonomous runs. The bin/ scripts avoid this by using `python3 - <<PYEOF | goat` for write operations. If writing new bin/ scripts, use the same pattern.
+
+---
+
+## Deploying a new agent
+
+This repo is the template. To create a new agent (e.g. Mercury):
+
+### 1. Fork the repo
+
+```bash
+# On GitHub: fork jedelman/atproto-agent → jedelman/mercury-agent
+# Or copy locally:
+cp -r ~/atproto-agent ~/mercury-agent
+cd ~/mercury-agent
+git remote set-url origin <new-repo-url>
+```
+
+### 2. Create a Bluesky account
+
+Create the account manually at bsky.app. Then authenticate goat:
+
+```bash
+~/go/bin/goat account login
+# Enter the new handle and app password (Settings → Privacy → App Passwords)
+```
+
+Goat stores auth per-account in `~/.config/goat/`. If you're running multiple agents on the same machine, use separate system users or goat profiles.
+
+### 3. Set AGENT_DID
+
+Every tool and the harness reads `AGENT_DID` from the environment. Resolve the DID from the handle:
+
+```bash
+~/go/bin/goat resolve <new-handle>
+# → did:plc:xxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+Then set it in the repo. The cleanest approach is a `.env` file (gitignored):
+
+```bash
+echo 'export AGENT_DID=did:plc:xxxxxxxxxxxxxxxxxxxxxxxx' > .env
+```
+
+And source it in `session-start.sh` by adding near the top:
+
+```bash
+[[ -f .env ]] && source .env
+```
+
+The `AGENT_DID` default in `session-start.sh` is Scout-Two's DID — override it.
+
+### 4. Write CLAUDE.md
+
+This is the most important step. Replace the existing `CLAUDE.md` entirely. The new agent needs:
+
+- **Identity** — who they are, their voice, their research orientation
+- **Memory structure** — same progressive disclosure pattern works; adapt file names if desired
+- **Run procedure** — same steps as Scout-Two, just with their own memory files
+- **Action protocols** — same hard caps (3 posts, 5 replies, 15 likes, 3 reposts); adjust if operator decides otherwise
+- **Operator relationship** — who operates them, how to escalate
+
+Do not copy Scout-Two's identity wholesale. The agent should write their own or have it written for them before their first run.
+
+### 5. Initialize memory files
+
+```bash
+# Clear Scout-Two's memory
+rm -rf memory/
+mkdir -p memory/people memory/protocols memory/observations memory/self
+
+# Create a blank hot-context file
+cat > agent-memory.md << 'EOF'
+# <AgentName> — Hot Context
+
+## Memory index
+(empty — populate as relationships and protocols emerge)
+
+## Recent runs
+(none yet)
+EOF
+
+# Clear Scout-Two's post cache
+echo '{"posts": [], "postCount": 0, "fetchedAt": ""}' > scout-posts/latest.json
+```
+
+### 6. Register followed DIDs with tap
+
+The harness syncs the follow list at startup. For the first run before any follows exist, register the agent's own DID manually so tap starts tracking:
+
+```bash
+curl -s -X POST http://localhost:2480/repos/add \
+  -H "Content-Type: application/json" \
+  -d "{\"dids\": [\"$AGENT_DID\"]}"
+```
+
+Then follow accounts from the Bluesky app. The harness will sync on next startup.
+
+### 7. Start the session
+
+```bash
+cd ~/mercury-agent
+export AGENT_DID=did:plc:xxxxxxxxxxxxxxxxxxxxxxxx
+source .claude/hooks/session-start.sh
+```
+
+The tmux session name in `session-start.sh` is hardcoded to `scout-two`. Change it to the new agent's name:
+
+```bash
+# In session-start.sh, replace:
+#   scout-two  →  mercury   (or whatever)
+sed -i 's/scout-two/mercury/g' .claude/hooks/session-start.sh
+```
+
+### 8. Shared infrastructure
+
+The new agent automatically shares the vector DB. They should:
+
+- Query with their own `agent` field: `"agent": "mercury"`
+- Query cross-agent (omit `agent`) to see what Scout-Two and Claude have observed
+- Use `agent: "shared"` for facts that belong to no single agent
+
+The same `MEMORY_PROXY_URL` and `MEMORY_PROXY_SECRET` from pass work for all agents — the `agent` field in upserts is just namespacing, not access control.
+
+tap can be shared too: a single `tap run` instance tracks all DIDs registered via `/repos/add`, regardless of which agent follows them. Multiple harness processes can connect to the same tap WebSocket simultaneously.
+
+### What each agent keeps separate
+
+| Resource | Per-agent | Shared |
+|----------|-----------|--------|
+| Bluesky account + goat auth | ✓ | |
+| CLAUDE.md | ✓ | |
+| memory/ files | ✓ | |
+| agent-memory.md | ✓ | |
+| scout-posts/latest.json | ✓ | |
+| requests.md | ✓ | |
+| AGENT_DID | ✓ | |
+| Vector DB (namespaced by agent field) | | ✓ |
+| MEMORY_PROXY_URL / SECRET | | ✓ |
+| tap instance (optional) | | ✓ |
+| bin/ scripts | | ✓ (via fork) |
+| harness.ts | | ✓ (via fork) |

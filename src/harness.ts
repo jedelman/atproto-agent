@@ -60,8 +60,13 @@ const MIN_EVENTS      = parseInt(process.env.MIN_EVENTS      ?? '3', 10)
 // Claude Code max turns per run
 const CLAUDE_MAX_TURNS = process.env.CLAUDE_MAX_TURNS ?? '25'
 
-// Scout-Two's own DID — events from this DID are ignored (don't trigger on own posts)
-const SCOUT_DID = 'did:plc:bhasdkz5dujccq2xyu2etju2'
+// Agent's own DID — events from this DID are ignored (don't trigger on own posts)
+// Set via AGENT_DID env var. Required.
+const AGENT_DID = process.env.AGENT_DID
+if (!AGENT_DID) {
+  console.error('AGENT_DID env var is required (e.g. export AGENT_DID=did:plc:...)')
+  process.exit(1)
+}
 
 // Ensure ~/go/bin is in PATH for goat and other Go tools
 process.env.PATH = `${process.env.HOME}/go/bin:${process.env.PATH ?? ''}`
@@ -135,7 +140,7 @@ function buildDigest(events: BufferedEvent[]): string {
   ]
 
   const posts = events.filter(e => e.collection === 'app.bsky.feed.post' && e.action === 'create')
-  const notifs = events.filter(e => e.collection === 'app.bsky.notification' || e.did === SCOUT_DID)
+  const notifs = events.filter(e => e.collection === 'app.bsky.notification' || e.did === AGENT_DID)
   const other = events.filter(e => !posts.includes(e) && !notifs.includes(e))
 
   if (posts.length > 0) {
@@ -327,7 +332,7 @@ async function syncFollowList() {
     'xrpc', 'query',
     'https://public.api.bsky.app',
     'app.bsky.graph.getFollows',
-    `actor==${SCOUT_DID}`,
+    `actor==${AGENT_DID}`,
     'limit==100',
   ], { encoding: 'utf8' })
 
@@ -346,7 +351,7 @@ async function syncFollowList() {
   }
 
   // Always track Scout-Two's own DID (for notifications)
-  const dids = [...new Set([SCOUT_DID, ...follows])]
+  const dids = [...new Set([AGENT_DID, ...follows])]
   console.log(`registering ${dids.length} DIDs with Tap`)
 
   // Tap admin API
@@ -397,7 +402,7 @@ async function main() {
 
   indexer.record(async (evt) => {
     // Ignore Scout-Two's own actions as event triggers (we'll see them in scout-posts/)
-    if (evt.did === SCOUT_DID) return
+    if (evt.did === AGENT_DID) return
 
     // Only buffer record types we care about
     const relevant = [

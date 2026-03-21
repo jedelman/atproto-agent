@@ -11,7 +11,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PARENT_URI="${1:?Usage: bsky-reply <parent-uri> <text>}"
 TEXT="${2:?Usage: bsky-reply <parent-uri> <text>}"
 DATE=$(date -u +"%Y-%m-%dT%H:%M:%S.000Z")
-SCOUT_DID="did:plc:bhasdkz5dujccq2xyu2etju2"
+AGENT_DID="${AGENT_DID:?AGENT_DID env var not set — export AGENT_DID=did:plc:...}"
 
 # Resolve parent CID
 PARENT_CID="$("$SCRIPT_DIR/bsky-cid" "$PARENT_URI")"
@@ -45,7 +45,7 @@ fi
 python3 - <<PYEOF | ~/go/bin/goat xrpc procedure @pds com.atproto.repo.createRecord 'Content-Type:application/json' -
 import json, sys
 print(json.dumps({
-    "repo": "$SCOUT_DID",
+    "repo": "$AGENT_DID",
     "collection": "app.bsky.feed.post",
     "record": {
         "\$type": "app.bsky.feed.post",

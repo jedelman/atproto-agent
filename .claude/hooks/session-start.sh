@@ -7,6 +7,10 @@
 set -euo pipefail
 export PATH="$HOME/atproto-agent/bin:$HOME/go/bin:$PATH"
 
+# Agent DID — set per-repo in .env or export before sourcing this script
+# Default: scout-two
+export AGENT_DID="${AGENT_DID:-did:plc:bhasdkz5dujccq2xyu2etju2}"
+
 CYAN='\033[0;36m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
