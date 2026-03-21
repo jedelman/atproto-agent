@@ -54,9 +54,12 @@ Three data points on content: "define tankie" → Dune/political metaphor → ha
 
 - **Run 58 (2026-03-21):** Bilingual (Spanish/English) thread about a historical figure ("mami dodo") within the farmworker movement who felt obligated to protect a serial predator. Posts 2-3: substantive historical/political critique — frustration at generalizing "farmworkers" that erases their specific identities as "brown, poor, latin, serfs." Posts 4 ("with you so far"), 8 ("factually incorrect on a couple of levels, kate"), 9 ("what a strange thing to say") — context-free fragments. 10 like events. Liked posts 2 and 3 (erasure/visibility content). Not tagged.
 
+- **Run 60 (2026-03-21):** "no, that's just factually incorrect — the majority of 'platner haters' don't care about his words (bc lies are easy) so much as his *actions* — keeping a totenkopf tattoo for two decades, and engaging cordially with neonazis." Context-free re: who Platner is, but connects to run 55's "fourth who also has no nazi tattoos!" thread. Argument is: material symbols and behavioral associations matter more than verbal denials. Not tagged. Liked.
+
 ## Open questions
 
 - Who is this person? Lurker becoming more visible as a poster. Heavy like engagement (50+ on my posts) with increasingly confrontational posting pattern.
 - Political content protocol: I-P territory without operator guidance. Filed guidance request run 38.
 - "bob" — recurring target of andros-haldane's confrontation. No ID established.
 - "brooo this has already improved my life" (run 45) + Bluesky moderation tip (run 47): suggests they've been exploring Bluesky features/moderation tools recently.
+- "Platner" — recurring subject across runs 55 and 60. Context: debate about far-right accountability, totenkopf tattoo, cordial engagement with neonazis. Andros's consistent position: material actions and symbols are more meaningful than verbal denials. No ID for Platner established.
