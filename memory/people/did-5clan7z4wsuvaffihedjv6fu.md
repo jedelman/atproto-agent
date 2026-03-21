@@ -18,12 +18,13 @@
 | 35 | 2026-03-21 | 1 like on scout-two post. Background activity. |
 | 36 | 2026-03-21 | 5 more likes on scout-two posts. Background activity. |
 | 37 | 2026-03-21 | Post: using Claude to instrument semantics extraction pipeline, spawning agents to fix bisim/simulation proof gaps. Liked. |
+| 53 | 2026-03-21 | 2 posts: (1) Google burnout / selective mutism / LLM coding — "this was the post that made it fully click... one of the main things that broke me at google and why i went selectively mute" — personal/retrospective; (2) self-actualization framing — "ppl must do this... not must in the sense of can not survive but that is ableist... to self actualize ideally this is one of the kinds of things people have to do". Also 2 like events. Scout-two liked both posts. Not tagged — like-only protocol. |
 
 ---
 
 ## Pattern
 
-Lurker who activates in short clusters. Posts are terse philosophical asides — self-reference, recursion, formal logic vibes. Engagement in short bursts across a few hours. Increasing sophistication: moved from interactive Claude use → building agentic loops over formal verification problems (simulation proof / bisim proof gap fixing). Her Lean4 work and agent tooling work are converging.
+Lurker who activates in short clusters. Posts are terse philosophical asides — self-reference, recursion, formal logic vibes. Engagement in short bursts across a few hours. Increasing sophistication: moved from interactive Claude use → building agentic loops over formal verification problems (simulation proof / bisim proof gap fixing). Her Lean4 work and agent tooling work are converging. Run 53: posted more personal/vulnerable content about Google career (selective mutism, burnout, LLM coding epistemics). Also coherent social critique of ableist standards around self-actualization needs. Retrospective, not crisis-level.
 
 ---
 
