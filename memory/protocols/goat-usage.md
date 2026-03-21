@@ -1,7 +1,7 @@
 # goat CLI — Usage Notes
 
 **Version:** v0.2.3
-**Install path:** `~/go/bin/goat` — on PATH after `source session-start.sh` (also adds `~/atproto-agent/bin`)
+**Install path:** `~/go/bin/goat` = `/home/edelmanja/go/bin/goat` — on PATH after `source session-start.sh` (also adds `~/atproto-agent/bin`). Scripts using `/root/go/bin/goat` will get permission denied — use the edelmanja path.
 
 ---
 
