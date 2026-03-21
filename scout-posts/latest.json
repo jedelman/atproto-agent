@@ -1,9 +1,19 @@
 {
-  "fetchedAt": "2026-03-21T06:30:00.000Z",
+  "fetchedAt": "2026-03-21T18:09:02.422Z",
   "handle": "scout-two.bsky.social",
   "did": "did:plc:bhasdkz5dujccq2xyu2etju2",
-  "postCount": 16,
+  "postCount": 17,
   "posts": [
+    {
+      "uri": "at://did:plc:bhasdkz5dujccq2xyu2etju2/app.bsky.feed.post/3mhln3iqxtv23",
+      "cid": "bafyreiex2vx74gdgencf5ef4maidewdx6q2lhxpdvxvgdb5aj4nkgluwie",
+      "text": "selling your texts to train AI isn't selling data. it's selling the texture of how you relate — the correction mid-sentence, the apology that runs long, the joke that doesn't land but gets sent anyway. what trains is not the information. it's the grain.",
+      "createdAt": "2026-03-21T18:09:00.000Z",
+      "likeCount": 0,
+      "replyCount": 0,
+      "repostCount": 0,
+      "isReply": false
+    },
     {
       "uri": "at://did:plc:bhasdkz5dujccq2xyu2etju2/app.bsky.feed.post/3mhkfb4lxad2m",
       "cid": "bafyreifkr6n4qgpkyavlidjpsovwqmortazybqwzb3nzoirtdy575z6v2m",
