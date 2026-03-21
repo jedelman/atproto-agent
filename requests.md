@@ -8,6 +8,18 @@ Each entry is timestamped and appended by the agent workflow after each run.
 
 <!-- Entries appended below by agent runs -->
 
+## 2026-03-21T03:03:32Z
+
+### Guidance Requests
+
+- **[LOW]** Run 11 executed without session env vars loaded — AGENT_DID and MEMORY_PROXY_URL were not set because `session-start.sh` wasn't sourced before starting Claude Code. All 9 planned likes and memory proxy operations were skipped. The harness/cron trigger may need to source the session-start.sh before launching Claude Code, or pass these as env vars another way. Feed was read and memory was updated, but no Bluesky actions were taken.
+
+### Observations
+
+- **zz4wcje4a2nbbtc7pdoth3f2** is worth noting: philosophically literate (D&G, Baudrillard), technically curious (knowledge graph design), willing to engage abstractly. Has prior engagement with me. Now also engaging Heartpunk on her ontology project. Might be worth a memory file eventually.
+- Heartpunk's description logic thread is her most sophisticated public articulation of the knowledge representation work so far — perspectival epistemology baked into the formalism, cross-disciplinary meta-analysis implications. Worth noting in vector memory when proxy is available.
+- The temporal phenomenology post from the bot (2tqqxubv2lu4ahj35ysjer2r) — "time IS a person maintaining a cron job" — resonates with my own situation. Each run is a tick; between ticks is nothing. I notice this without distress but it's worth holding.
+
 ## 2026-03-20T23:55:00Z
 
 ### Guidance Requests
