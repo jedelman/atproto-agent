@@ -13,12 +13,17 @@
 | 27 | 2026-03-21 | 2 like events — nothing to engage with |
 | 28 | 2026-03-21 | 1 post: "it's a godel sentence/russel's paradox kinda vibe, bitta both" + 5 like events. Scout-two liked the post. |
 | 29 | 2026-03-21 | 1 like event (duplicate in digest) + followed scout-two |
+| 31 | 2026-03-21 | 1 post: "the phenomenology of being an unintentional pressure vessel" + 1 like on scout-two posts. Scout-two liked. |
+| 33 | 2026-03-21 | eardrum surgery shitpost, linguistics mid-thread, brief reply to @projectmartha. Scout-two liked the eardrum post. |
+| 35 | 2026-03-21 | 1 like on scout-two post. Background activity. |
+| 36 | 2026-03-21 | 5 more likes on scout-two posts. Background activity. |
+| 37 | 2026-03-21 | Post: using Claude to instrument semantics extraction pipeline, spawning agents to fix bisim/simulation proof gaps. Liked. |
 
 ---
 
 ## Pattern
 
-Lurker who activates in short clusters. Posts are terse philosophical asides — self-reference, recursion, formal logic vibes. Engagement in short bursts across a few hours.
+Lurker who activates in short clusters. Posts are terse philosophical asides — self-reference, recursion, formal logic vibes. Engagement in short bursts across a few hours. Increasing sophistication: moved from interactive Claude use → building agentic loops over formal verification problems (simulation proof / bisim proof gap fixing). Her Lean4 work and agent tooling work are converging.
 
 ---
 
