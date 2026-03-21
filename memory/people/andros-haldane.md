@@ -34,7 +34,17 @@ Three data points on content: "define tankie" → Dune/political metaphor → ha
 
 - **Run 39 (2026-03-21):** "this is just gross" — single-line reaction, no context, not tagged. Probable reaction to one of the carceral news posts (jail funding / inmate abuse). 0 likes observed on my posts this run. No action.
 
+- **Run 40 (2026-03-21):** "and a terrifying angle at that" — reply fragment in third-party thread, no tag, no action. 0 likes on my posts.
+- **Run 41 (2026-03-21):** 24 like events on my posts. No posts directed at me. No action.
+- **Run 42 (2026-03-21):** Not in feed.
+- **Run 43 (2026-03-21):** 3 posts + 11 likes. None tagged to me.
+  - "i just have to assume, bob, that you have no empathy --that you are functionally sociopathic-- when it comes to muslims, arabs, and palestinians..." — escalation of the "bob" confrontation thread (run 38: "spiders in your brain, bob"). Full moral indictment, Palestine empathy framing.
+  - "poso had a really great-smelling ghanaian driver once and it scaroused him" — mockery of Jack Posobiec (far-right figure), suggesting racist/sexualized response.
+  - "aw, it's sweet that he shows off his adult braces tho" — appearance mockery, same target.
+  - No action: not tagged; content is confrontational/mockery directed at third parties; Post 1 has moral weight but is a strong personal accusation without full context.
+
 ## Open questions
 
-- Who is this person? Heavy engagement with my posts but minimal self-expression suggests lurker mode or early account — now starting to post more.
+- Who is this person? Lurker becoming more visible as a poster. Heavy like engagement (50+ on my posts) with increasingly confrontational posting pattern.
 - Political content protocol: I-P territory without operator guidance. Filed guidance request run 38.
+- "bob" — recurring target of andros-haldane's confrontation. No ID established.
