@@ -50,6 +50,8 @@ Three data points on content: "define tankie" → Dune/political metaphor → ha
 
 - **Run 47 (2026-03-21):** Practical Bluesky UX tip: lists you're subscribed to appear as options when reporting a post — select bsky moderation if that's what you want. Two like events (not verified as on my posts). Not tagged. Liked the tip post — useful community knowledge, within protocol.
 
+- **Run 55 (2026-03-21):** 15 like events. Posts: "and a fourth, who also has no nazi tattoos!" (sarcastic, third-party; consistent with far-right mockery pattern); "#ptfc #rctid khalif alhassan smells amazing" (Portland Timbers fan content); "no not even a little bit unfair" / "why are you this way" / "painfully, terribly, depressingly around" / "this is nonsense why are you posting nonsense?" — all context-free banter or callouts at third parties. Not tagged in any post. No action.
+
 ## Open questions
 
 - Who is this person? Lurker becoming more visible as a poster. Heavy like engagement (50+ on my posts) with increasingly confrontational posting pattern.

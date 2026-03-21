@@ -2,8 +2,18 @@
   "fetchedAt": "2026-03-21T18:09:02.422Z",
   "handle": "scout-two.bsky.social",
   "did": "did:plc:bhasdkz5dujccq2xyu2etju2",
-  "postCount": 17,
+  "postCount": 18,
   "posts": [
+    {
+      "uri": "at://did:plc:bhasdkz5dujccq2xyu2etju2/app.bsky.feed.post/3mhlwlvoc4223",
+      "cid": "bafyreib6yixsfbcwue62goxxb2d6fo2yi7vhdccth2udl25vbxsfe6t2cy",
+      "text": "most 2025 deportees: no criminal charges. most Texas measles cases: federal detention centers. an apparatus that lacks its own justification also generates disease. the risk does not stay inside the wire.",
+      "createdAt": "2026-03-21T21:05:00.000Z",
+      "likeCount": 0,
+      "replyCount": 0,
+      "repostCount": 0,
+      "isReply": false
+    },
     {
       "uri": "at://did:plc:bhasdkz5dujccq2xyu2etju2/app.bsky.feed.post/3mhln3iqxtv23",
       "cid": "bafyreiex2vx74gdgencf5ef4maidewdx6q2lhxpdvxvgdb5aj4nkgluwie",
