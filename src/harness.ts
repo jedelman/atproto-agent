@@ -321,13 +321,29 @@ function scheduleRun() {
 }
 
 // ---------------------------------------------------------------------------
-// Follow list sync — registers all followed DIDs with Tap
+// Follow list sync — registers followed DIDs with Tap
 // ---------------------------------------------------------------------------
+
+async function tapRegister(dids: string[]) {
+  const headers: Record<string, string> = { 'Content-Type': 'application/json' }
+  if (TAP_ADMIN_PASS) headers['Authorization'] = `Bearer ${TAP_ADMIN_PASS}`
+  try {
+    const res = await fetch(`${TAP_URL}/repos/add`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ dids }),
+    })
+    if (!res.ok) {
+      console.error(`Tap /repos/add returned ${res.status}`)
+    }
+  } catch (e) {
+    console.error('failed to register DIDs with Tap:', e)
+  }
+}
 
 async function syncFollowList() {
   console.log('syncing follow list with Tap...')
 
-  // goat can resolve the follow list via XRPC
   const result = spawnSync('goat', [
     'xrpc', 'query',
     'https://public.api.bsky.app',
@@ -350,28 +366,10 @@ async function syncFollowList() {
     return
   }
 
-  // Always track Scout-Two's own DID (for notifications)
-  const dids = [...new Set([AGENT_DID, ...follows])]
-  console.log(`registering ${dids.length} DIDs with Tap`)
-
-  // Tap admin API
-  const headers: Record<string, string> = { 'Content-Type': 'application/json' }
-  if (TAP_ADMIN_PASS) headers['Authorization'] = `Bearer ${TAP_ADMIN_PASS}`
-
-  try {
-    const res = await fetch(`${TAP_URL}/repos/add`, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify({ dids }),
-    })
-    if (!res.ok) {
-      console.error(`Tap /repos/add returned ${res.status}`)
-    } else {
-      console.log(`registered ${dids.length} DIDs with Tap`)
-    }
-  } catch (e) {
-    console.error('failed to register DIDs with Tap:', e)
-  }
+  // Always include agent's own DID (for notifications)
+  const dids = [...new Set([AGENT_DID!, ...follows])]
+  await tapRegister(dids)
+  console.log(`registered ${dids.length} DIDs with Tap`)
 }
 
 // ---------------------------------------------------------------------------
@@ -401,14 +399,25 @@ async function main() {
   const indexer = new SimpleIndexer()
 
   indexer.record(async (evt) => {
-    // Ignore Scout-Two's own actions as event triggers (we'll see them in scout-posts/)
+    // Own follow events: register the new DID with Tap immediately
+    if (evt.did === AGENT_DID && evt.collection === 'app.bsky.graph.follow' && evt.action === 'create') {
+      const record = (evt as Record<string, unknown>).record as Record<string, unknown> | undefined
+      const followedDid = record?.subject as string | undefined
+      if (followedDid && typeof followedDid === 'string') {
+        console.log(`[follow] new follow detected: ${followedDid} — registering with Tap`)
+        await tapRegister([followedDid])
+      }
+      return
+    }
+
+    // Ignore all other own actions (we'll see them in scout-posts/)
     if (evt.did === AGENT_DID) return
 
     // Only buffer record types we care about
     const relevant = [
       'app.bsky.feed.post',
-      'app.bsky.feed.like',    // likes on Scout-Two's posts
-      'app.bsky.graph.follow', // new follows
+      'app.bsky.feed.like',    // likes on agent's posts
+      'app.bsky.graph.follow', // new follows of agent
     ]
     if (!relevant.includes(evt.collection)) return
 
