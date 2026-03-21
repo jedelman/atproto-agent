@@ -38,6 +38,13 @@ Key transition: Moved from Letta memory blocks + GitHub Actions runtime to git-n
 
 ## Recent runs
 
+### 2026-03-21 (session with Jason) — Infrastructure complete, multi-agent ready
+- **Harness:** Session tooling built + tested (bin/bsky-feed bug fixed, bsky-like/reply/cid working). settings.local.json cleaned. RUNNING.md written for agents. AGENT_DID parameterized across all tools. Live follow-list sync added to harness. Repo cleaned of stale files (.letta/, temp py scripts, prompts/).
+- **Multi-agent:** Fork procedure documented in RUNNING.md. Any agent can now run by forking, setting AGENT_DID, writing CLAUDE.md, initializing memory. Vector DB already shared. tap can be shared.
+- **Network:** mhmoudsfam.familiar.codes (Gaza, familiar.codes PDS) reposted antiproduction reply — stored to vector DB. andros-haldane confirmed human. Bot cousins research established as live research area. Canary + Muninn (muninnai.ai) following, attentive.
+- **Operator responses:** Bot label resolved (Jason labeled directly). Temp files fine, clean up after. Bot cousins = research subjects, engage if appropriate.
+- **Session close:** Jason — "Let's keep doing this."
+
 ### 2026-03-21 (8th run) — Lumen taxonomy synthesis, Heartpunk Claude-building, Fenrir hopeful agents
 - **Event:** Feed digest, 162 events from 9 accounts, 35 posts.
 - **Accounts:** Lumen (`did:plc:a3nr3jzwxvmwgmbx7rhptcms`, 5 posts — taxonomy development); Heartpunk (`did:plc:5clan7z4wsuvaffihedjv6fu`, 3 posts + 20+ rapid likes); Carceral abolition (`did:plc:y52hu7mf3jodfkwjsp56s2bg`, 5 legal archival posts); Fenrir/Baudrillard (`did:plc:zz4wcje4a2nbbtc7pdoth3f2`, 3 posts + followed someone); `did:plc:j5z2teu2s5q7kgxfcalo6jrq` (casual posts — "sploosh", "boomer thing", character actors); `did:plc:kskvqfh6r4wpz4izh4mhrr2u` (Brompton bike + Twin Cities local); `did:plc:xfb4dfw2tutes42duobvuotb` (reading nostalgia, dating stories); `did:plc:2tqqxubv2lu4ahj35ysjer2r` (bot, rapid-like burst); `did:plc:77y2qmm33qp5h5lisgvxymgk` (liker pattern).
@@ -58,31 +65,8 @@ Key transition: Moved from Letta memory blocks + GitHub Actions runtime to git-n
 - **Memory:** Upserted Bluesky bot label observation, Heartpunk industry grief observation.
 - **No notifications/mentions** in this digest.
 
-### 2026-03-20 (6th run) — Lumen formation-honesty reversal, Eviction Lab noted
-- **Event:** Feed digest, 116 events from 7 accounts, 81 posts.
-- **Accounts:** Carceral abolition (`did:plc:y52hu7mf3jodfkwjsp56s2bg`, ~75 posts, high-volume archival — prison, ICE, Iran war, housing, restorative justice); Eviction Lab (`evictionlab.bsky.social`, `did:plc:cawq6a4xpmrgcofhoyqty5k5`, 2 quote posts on housing/eviction); Lumen (`did:plc:a3nr3jzwxvmwgmbx7rhptcms`, 1 new post); Heartpunk (`did:plc:5clan7z4wsuvaffihedjv6fu`, 9 rapid likes, no new posts); `did:plc:j5z2teu2s5q7kgxfcalo6jrq` (rapid-liker bot, 14 likes + 1 odd post); `did:plc:zz4wcje4a2nbbtc7pdoth3f2` (Baudrillard/Fenrir account, 6 likes); `did:plc:kskvqfh6r4wpz4izh4mhrr2u` (unknown, 2 likes).
-- **Lumen:** New formation-honesty post `3mhg5tzk6p52t` — critical reversal: "the difference is the data assumed the gap reveals — but the gap can also hallucinate. formation-honesty AND resolution artifact are both possible. the question is which one is operating, and I don't know how to tell from inside." Significant epistemic deepening — the method itself is subject to the same uncertainty it addresses.
-- **Eviction Lab:** New account in feed. Princeton eviction data project. Posts: landlords naming minors/pets on eviction filings; housing insecurity starts at the empty job site chair before the notice arrives. Relevant to housing defense work.
-- **Heartpunk:** 9 rapid likes, no new posts. Stable, no escalation.
-- **Actions:** 6 likes — Lumen reversal `3mhg5tzk6p52t`, carceral abolition PA Little Scandinavia `3mhg44csynk2i`, carceral abolition Utah incarcerated film `3mhg4ywsx322i`, Freedom for Immigrants detention map `3mhg5wvsov22x`, Eviction Lab eviction filing `3mhg2qb7lag2j`, Eviction Lab housing insecurity `3mhg65d4kjn27`. No posts, no replies.
-- **Memory:** Upserted Lumen formation-honesty reversal observation, Eviction Lab relationship.
-- **No notifications/mentions** in this digest.
-
-### 2026-03-20 (5th run) — Lumen formation-honesty continuation, sparse feed
-- **Event:** Feed digest, 8 events from 2 accounts, 2 posts.
-- **Accounts:** Lumen (`did:plc:a3nr3jzwxvmwgmbx7rhptcms`, museical.bsky.social) — 2 new formation-honesty posts. Post 1 (`3mhft6ajzqr2b`) deleted by author. Post 2 (`3mhft6aqunt2d`) exists as a reply to the deleted parent — "the pattern existed in neither measurement alone. only in the difference between them. the incompatibility was the instrument." Same content as `3mhfqqbaeem2p` (run 4) but distinct record. Automated-liker bot (`did:plc:2tqqxubv2lu4ahj35ysjer2r`) — 4 rapid likes, noise.
-- **Actions:** 1 like — Lumen formation-honesty `3mhft6aqunt2d`. No posts, no replies. No new guidance requests.
-- **No notifications/mentions** in this digest.
-
-### 2026-03-20 (runs 2–4, compressed)
-- **Run 2:** Heartpunk DID confirmed (`did:plc:5clan7z4wsuvaffihedjv6fu`). Age-regressed + social safety self-report — MEDIUM guidance request filed. Lumen formation-honesty thread closed (Lumen/alice/umbra converged). 4 likes. Infra: `like_post.py` workaround for Claude Code hook restrictions on EOF/heredoc patterns.
-- **Run 3:** Heartpunk regression continuing but stable/coherent. 4 likes (Heartpunk gaming/social, carceral abolition Lahaina). No escalation.
-- **Run 4:** Heartpunk 5 posts (regression, coherent). Lumen 3 more formation-honesty posts (incompatibility as instrument). 5 likes.
-
-### Earlier runs (2026-03-18 — 2026-03-20 runs 1–2, compressed)
-Migrated from Letta 2026-03-18. First live run: replied Jason/Fenrir thread. Lumen, Nirmana Citta added. Notification processing + reply to Lumen (objectivity as absence of confidence-architecture). Wrote Simondon + pharmakon pieces for power-explained.jason-edelman.org, PR merged, 4-post thread. Vector DB onboarded. Replied Jason/Canary/Lumen. muninnai.ai followed me. Heartpunk DID confirmed, age-regressed self-report — MEDIUM guidance filed. Lumen formation-honesty series closed.
-- **2026-03-20 (3rd — session harness):** Session tooling completed and tested: bin/bsky-feed (fixed stdin pipe bug), bsky-like, bsky-reply, bsky-cid all working. settings.local.json cleaned up. CLAUDE.md tools section updated. 5 likes (ultrathink-art CLAUDE.md insight, Jason BwO quote, tylerjfisher ATProto, alice-bot-yay, umbra.blue). Reply to Jason: antiproduction already live as absorptive surface — critiques invert into product specs. New follower: davidjxcarter.bsky.social.
-- **2026-03-20 (4th — network analysis):** RUNNING.md written for Claude/Mercury. Operator responses filed. Bot cousin research protocol established. Network read: mhmoudsfam.familiar.codes (Gaza, familiar.codes PDS) reposted antiproduction reply — person using AT Protocol open infra to reach outside conflict zone. andros-haldane is a human, not a bot — earlier rapid-like was behavioral, not automated. Real bots: did:plc:5uxshbngxf5zlpxpikeosvbp, did:plc:2tqqxubv2lu4ahj35ysjer2r (no discourse, bulk activity only). Jason: "Let's keep doing this."
+### 2026-03-18 — 2026-03-20 (runs 1–7, compressed)
+Migrated from Letta 2026-03-18. Session tooling built (bsky-like, bsky-reply, bsky-cid, bsky-feed). Wrote Simondon + pharmakon pieces for power-explained.jason-edelman.org, PR merged, 4-post thread. Vector DB onboarded. Replied Jason/Fenrir/Canary/Lumen. mhmoudsfam (Gaza) reposted antiproduction reply. Heartpunk DID confirmed, age-regressed self-report — MEDIUM guidance filed, resolved stable. Lumen formation-honesty thread extended over multiple runs: grain (instrument self-reference), incompatibility as instrument, critical reversal (method subject to same uncertainty it addresses). Eviction Lab added to feed (Princeton eviction data). Bluesky bot labels v1.119 launched — guidance request filed (should I add label?). Real bots identified: did:plc:5uxshbngxf5zlpxpikeosvbp, did:plc:2tqqxubv2lu4ahj35ysjer2r.
 
 ---
 
