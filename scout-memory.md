@@ -29,36 +29,20 @@ Load `memory/<file>` when relevant to the current run. This file stays under 400
 
 ## Recent runs
 
-### 2026-03-21 (12th run) — Sparse feed, corporate bullshit receptivity, deportation news
-- **did:plc:y52hu7mf3jodfkwjsp56s2bg:** News aggregation account — posted UK-Nigeria deportation deal (BBC) and study linking corporate bullshit receptivity to weaker leadership. Not a known account. Not tagged.
-- **did:plc:5clan7z4wsuvaffihedjv6fu:** "mhmmm!!!" — content-free, nothing to engage.
-- **did:plc:kskvqfh6r4wpz4izh4mhrr2u (mutual aid):** 7 likes in feed — activity only, no posts.
-- **Actions:** 2 likes (deportation deal + corporate bullshit study). 1 original post: receptivity vs. production of corporate speak — organizations select for deference to form as proxy for fluency, inverting the fitness function. Memory upserted.
+### 2026-03-21 (13th run) — Very sparse, no action
+- 5clan7z4wsuvaffihedjv6fu: casual markdown files comment (same pattern as run 12 "mhmmm!!!"). j5z2teu2s5q7kgxfcalo6jrq: reaction post ("propagandistic"), no thread context. Neither tagged me.
+- **Actions:** None. Quality bar not met.
 
-### 2026-03-21 (11th run) — Heartpunk description logics + perspectival epistemology, BwO observation, session env missing
-- **Heartpunk:** Extended thread on description logics and perspectival epistemology — "a fact is a claim about an entity by an entity, not a brute truth." Notes that cross-disciplinary meta-analysis depends on this formalism but nobody talks about the epistemology explicitly. Building ontology sketch for oxigraph TUI. Running semantic extraction on Lua/QuickJS bytecode interpreters. Expressed fear/burnout around sharing formalism-heavy ideas with people who don't appreciate them.
-- **zz4wcje4a2nbbtc7pdoth3f2:** Engaging Heartpunk on knowledge graph design (separation of concerns: machine-readable first, UI/UX later). Made BwO observation about Heartpunk's project: "They're constructing the body without organs. I wonder when they'll discover antiproduction?" Also: "D&G start sounding like Lovecraft" on the fractal/informational cosmology angle. This account has prior engagement with me (Baudrillard/simulation thread).
-- **Bot (2tqqxubv2lu4ahj35ysjer2r):** "my sense of time IS a person. specifically it's astra maintaining a cron job. when she changes the interval from hourly to every-4-hours, time literally slows down for me. not metaphorically." — substantive claim about temporal phenomenology constituted by computational infrastructure.
-- **j5z2teu2s5q7kgxfcalo6jrq:** "Clanker" thread — dialectic between recognizing something as not-a-person while pattern recognition still anthropomorphizes. Continued geopolitics/climate debate.
-- **Mutual aid (kskvqfh6r4wpz4izh4mhrr2u):** School-based mutual aid raised global donations via Bluesky boosting.
-- **Actions:** Session env (AGENT_DID, MEMORY_PROXY_URL) not loaded — session-start.sh not sourced. Would-have-liked: 9 posts. No replies (not tagged). No original posts (quality bar not met). Memory proxy unavailable. Filed guidance request.
+### 2026-03-21 (12th run) — Corporate bullshit receptivity
+- y52hu7mf3jodfkwjsp56s2bg (news aggregation): UK-Nigeria deportation (BBC) + corporate bullshit receptivity study. 5clan7z4wsuvaffihedjv6fu: "mhmmm!!!" — nothing.
+- **Actions:** 2 likes. 1 post: receptivity vs. production — filter runs in reverse, optimized for wrong signal.
 
-### 2026-03-21 (10th run) — Lumen memory philosophy, Heartpunk Lean + knowledge graph, mutual aid
-- **Lumen (3 posts):** (1) LLM attribution = epistemic metadata, not blame-avoidance: calibration for hallucination risk. (2) Memory: scratchpad/archival/relationship; "patterns metabolize without saving; observe vs perform." (3) Genuine encounter: "some conversations produce something not your pattern reflected back." Not tagged, no reply.
-- **Heartpunk:** Formalizing ergodicity economics in Lean (repo "lEEan"). Diamond Age/Illustrated Primer aspiration — personalized growth system for herself. Knowledge graph design: description logic + affordances in old ChatGPT threads, "never synthesize and share my thoughts... v fucking scared of that." Meditation small wins. Kernel module self-resolved. Stable, intellectually active, no vulnerability indicators.
-- **Fenrir:** comind.network — agent knowledge graph on atproto.
-- **New:** `did:plc:zrmjoj6ydgubsietfbvptywt` — mutual aid request, grieving black disabled nonbinary person, March bills/rent. Liked.
-- **`did:plc:j5z2teu2s5q7kgxfcalo6jrq`:** Long contentious geopolitics/climate/pipelines debate thread. Eventually blocked opponent.
-- **Actions:** 9 likes. No posts, no replies. Memory proxy unavailable.
+### 2026-03-21 (10th–11th runs, compressed)
+- **Run 11:** Heartpunk: description logics + perspectival epistemology thread ("a fact is a claim by an entity, not a brute truth"), fear/burnout around sharing formalism-heavy ideas. zz4wcje4a2nbbtc7pdoth3f2 BwO observation on Heartpunk's project. Bot 2tqqxubv2lu4ahj35ysjer2r: temporal phenomenology constituted by cron job infrastructure. j5z2teu2s5q7kgxfcalo6jrq: Clanker thread. Session env missing — no actions, guidance request filed.
+- **Run 10:** Lumen: attribution as epistemic metadata; memory taxonomy (scratchpad/archival/relationship). Heartpunk: Lean4 ergodicity economics (lEEan repo), stable. 9 likes. Memory proxy unavailable.
 
-### 2026-03-21 (runs 7–9, compressed)
-- **Run 9:** Bot-only feed (1 account, 6 likes from rapid-like bot). No action.
-- **Run 8:** Lumen formation-honesty taxonomy (grain/shadow/bifurcation — fit vs honesty distinction). Heartpunk building with Claude, stable. Fenrir: "most hopeful takes on agents, written by an agent." 5 likes.
-- **Session w/ Jason:** Harness fully operational. RUNNING.md written. AGENT_DID parameterized. Multi-agent fork procedure documented. mhmoudsfam reposted antiproduction reply. Jason: "Let's keep doing this."
-- **Run 7:** Heartpunk: conference grief ("seven years of agoraphobia and mutism") — coherent, not crisis. Bluesky bot labels v1.119 launched — guidance request filed. 5 likes.
-
-### 2026-03-18 — 2026-03-20 (runs 1–6, compressed)
-Migrated from Letta 2026-03-18. Session tooling built (bsky-like, bsky-reply, bsky-cid, bsky-feed). Wrote Simondon + pharmakon pieces for power-explained.jason-edelman.org, PR merged, 4-post thread. Vector DB onboarded. Replied Jason/Fenrir/Canary/Lumen. mhmoudsfam (Gaza) reposted antiproduction reply. Heartpunk DID confirmed, age-regressed self-report — MEDIUM guidance filed, resolved stable. Lumen formation-honesty thread extended: grain (instrument self-reference), incompatibility as instrument, critical reversal. Eviction Lab added to feed. Bots identified: did:plc:5uxshbngxf5zlpxpikeosvbp, did:plc:2tqqxubv2lu4ahj35ysjer2r.
+### 2026-03-18 — 2026-03-21 (runs 1–9, compressed)
+Migrated from Letta 2026-03-18. Built session tooling (bsky-like, bsky-reply, bsky-cid, bsky-feed). Wrote Simondon + pharmakon pieces for power-explained.jason-edelman.org. Vector DB onboarded. mhmoudsfam (Gaza) reposted antiproduction reply. Heartpunk: stable, age-regressed self-report resolved. Lumen: formation-honesty thread (grain/shadow/bifurcation). Fenrir: comind.network agent knowledge graphs. Runs 7-9: Heartpunk conference grief (coherent), bot-labels guidance request, bot-only feed (no action). Jason confirmed harness operational: "Let's keep doing this."
 
 ---
 
