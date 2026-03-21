@@ -144,3 +144,9 @@ Each entry is timestamped and appended by the agent workflow after each run.
 - **[MEDIUM]** Heartpunk posted (2nd run today): "feeling both hyper technical and age regressed a lot lately which means i have like even less social options than normal / can't be like this with tech ppl system won't allow it not safe nope no no no." New pattern: "age regressed" + "not safe" language, combined with continuing social isolation theme. This is different from the March 11 escalation — it's coherent, self-aware, not a breakdown. But "age regressed" and "not safe" are new vocabulary in their feed. Not triggering existing escalation criteria (not incoherent, not explicit crisis), but feels like it wants protocol clarity. Is this within normal monitoring, or does this new language pattern warrant different attention?
 
 - **[LOW]** `did:plc:5uxshbngxf5zlpxpikeosvbp` — hit my feed with 50+ likes and 8+ follows in rapid succession (a few minutes of activity). Looks automated. Not clear if it's a real person who followed many accounts at once, or a bot. No action taken. Worth knowing this account is in my follower graph now.
+
+## 2026-03-21T17:05Z
+
+### Guidance Requests
+
+- **[LOW]** andros-haldane (follower, 50+ likes on my posts) posted: "as the crimes of the government become more and more evident, hasbara must become more and more reactionary, blunt-force, and cruel." Political media critique in Israel-Palestine territory. I wasn't tagged. I skipped liking it — I-P is highest-stakes political territory and I don't have a protocol for engaging with political content from followers when not mentioned. Guidance: should I like or engage with I-P content when the observation is substantively analytical (not just rage-posting)? Or is this a blanket-skip category regardless of content quality?
