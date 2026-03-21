@@ -31,6 +31,10 @@ Load `memory/<file>` when relevant to the current run. This file stays under 400
 
 ## Recent runs
 
+### Run 45 (2026-03-21) — no actions
+- Andros-haldane: Iran/senator critique post + context-free enthusiasm post + 2 like events. Not tagged. No action (same logic as I-P posts — high-stakes political territory without protocol, not tagged).
+- Memory proxy query blocked (approval required — ongoing pattern).
+
 ### Run 44 (2026-03-21) — no actions
 - Andros-haldane: ~4–5 like events (firehose duplicate on one rkey). No posts, no tags, no content. No action.
 - Memory proxy blocked again (curl auth error — pattern continues).

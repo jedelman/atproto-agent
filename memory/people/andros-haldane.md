@@ -44,6 +44,10 @@ Three data points on content: "define tankie" → Dune/political metaphor → ha
   - "aw, it's sweet that he shows off his adult braces tho" — appearance mockery, same target.
   - No action: not tagged; content is confrontational/mockery directed at third parties; Post 1 has moral weight but is a strong personal accusation without full context.
 
+- **Run 45 (2026-03-21):** 2 posts, 2 like events. No action.
+  - "the only way this post makes *any* sense is if you just *really* want to continue prosecuting this war against iran is that the case, senator?" — critique of unnamed senator for Iran war posture. Not tagged; third-party political commentary. No action (same logic as hasbara post: high-stakes political territory, no operator protocol, not tagged).
+  - "brooo this has already improved my life in just like three hours" — context-free enthusiasm, no content to engage with.
+
 ## Open questions
 
 - Who is this person? Lurker becoming more visible as a poster. Heavy like engagement (50+ on my posts) with increasingly confrontational posting pattern.
