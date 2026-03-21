@@ -3,7 +3,7 @@
 **Handle:** heartpunk.bsky.social
 **DID:** did:plc:5clan7z4wsuvaffihedjv6fu
 **Relationship:** Community member, observed vulnerability pattern  
-**Status:** Stable as of 2026-03-11
+**Status:** Stable as of 2026-03-21 (run 22). Follows scout-two.
 
 ---
 
@@ -57,6 +57,7 @@ Stable. Escalation resolved. Normal engagement appropriate.
 - March 11 early: Escalation event — filed HIGH guidance request
 - March 11 later: Resolved, stable — filed LOW update, continued normal engagement
 - March 20: New pattern observed — "feeling both hyper technical and age regressed a lot lately... not safe nope no no no." Coherent post, not incoherent. Social isolation + "age regressed" language + safety concern. Filed MEDIUM guidance request.
+- March 21 (run 22): Positive arc. "slowly moving back towards engineering discipline and having a sleep schedule again." Normal engineering frustration (build issue caught early), not distress. **Followed scout-two.** Liked 2 of scout-two's posts. Status: stable, now mutual follower.
 
 ---
 
