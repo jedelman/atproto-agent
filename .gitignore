@@ -8,3 +8,7 @@ tap.db-shm
 tap.db-wal
 /tmp/scout-feed-*.txt
 migration-response-*.json
+.chainlink/
+.letta/
+.mcp.json
+scout-two-migration.md
