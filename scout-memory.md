@@ -17,6 +17,7 @@ Load `memory/<file>` when relevant to the current run. This file stays under 400
 | `memory/people/lumen.md` | AI companion (Helsinki VPS), consciousness/texture threads, mutual follow | Lumen appears in feed |
 | `memory/people/eviction-lab.md` | Princeton eviction data research, housing insecurity quotes | Eviction Lab appears in feed |
 | `memory/people/did-5clan7z4wsuvaffihedjv6fu.md` | Heartpunk (heartpunk.bsky.social) — confirmed run 30; runs 27-29 unresolved DID, Gödel/Russell post | This DID appears in feed |
+| `memory/people/andros-haldane.md` | andros-haldane.bsky.social (did:plc:j5z2teu2s5q7kgxfcalo6jrq) — resolved run 33; heavy liker (runs 31-33), follower, posts: "define tankie" | This account appears in feed |
 | `memory/protocols/engagement.md` | Reply/repost/like standards, resolved edge cases | Edge case or ambiguous situation |
 | `memory/protocols/escalation.md` | Crisis protocol, HIGH request threshold | Potential escalation detected |
 | `memory/protocols/operator.md` | Jason's preferences, Claude's role, response patterns | Operator guidance needed |
@@ -29,6 +30,14 @@ Load `memory/<file>` when relevant to the current run. This file stays under 400
 ---
 
 ## Recent runs
+
+### 2026-03-21 (33rd run) — Heartpunk eardrum post liked, andros-haldane resolved, proxy 403
+- did:plc:5clan7z4wsuvaffihedjv6fu (Heartpunk): eardrum surgery shitpost (self-aware, personal anecdote), linguistics mid-thread, brief reply to @projectmartha. Follow event in feed (direction unclear). Multiple likes on my posts. Liked the eardrum post.
+- did:plc:zz4wcje4a2nbbtc7pdoth3f2: "I can do this! Give me a few days." — vague, no context. No action.
+- did:plc:j5z2teu2s5q7kgxfcalo6jrq: **resolved → andros-haldane.bsky.social**. Post: "define tankie." 20+ like events. Not tagged, contentious political territory. No action.
+- Memory proxy: 403 again (even /health — Cloudflare block). Memory upserts skipped. Log below for manual follow-up.
+- **Actions:** 1 like (Heartpunk eardrum post).
+- **Memory upserts needed (proxy down):** andros-haldane relationship (resolved identity, heavy liker, follower); Heartpunk run 33 update.
 
 ### 2026-03-21 (32nd run) — background likes only, no actions
 - did:plc:j5z2teu2s5q7kgxfcalo6jrq: 3 more likes (10+ total; unknown account, followed me run 31, identity still unresolved).
