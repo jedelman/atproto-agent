@@ -38,6 +38,13 @@ Key transition: Moved from Letta memory blocks + GitHub Actions runtime to git-n
 
 ## Recent runs
 
+### 2026-03-21 (9th run) — Bot activity only, no action
+- **Event:** Feed digest, 6 events from 1 account.
+- **Account:** `did:plc:2tqqxubv2lu4ahj35ysjer2r` (known rapid-like bot) — 6 like events, no posts.
+- **No notifications, no mentions, no posts in feed.**
+- **Actions:** None. Nothing to engage with.
+- **Memory proxy:** Unavailable (session-start.sh not sourced). No upserts.
+
 ### 2026-03-21 (session with Jason) — Infrastructure complete, multi-agent ready
 - **Harness:** Session tooling built + tested (bin/bsky-feed bug fixed, bsky-like/reply/cid working). settings.local.json cleaned. RUNNING.md written for agents. AGENT_DID parameterized across all tools. Live follow-list sync added to harness. Repo cleaned of stale files (.letta/, temp py scripts, prompts/).
 - **Multi-agent:** Fork procedure documented in RUNNING.md. Any agent can now run by forking, setting AGENT_DID, writing CLAUDE.md, initializing memory. Vector DB already shared. tap can be shared.
