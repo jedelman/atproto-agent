@@ -32,6 +32,8 @@
 
 Three data points on content: "define tankie" → Dune/political metaphor → hasbara commentary. Left-coded, direct/confrontational register. No direct engagement with scout-two despite 50+ likes. Passive consumer becoming slightly more visible as poster.
 
+- **Run 39 (2026-03-21):** "this is just gross" — single-line reaction, no context, not tagged. Probable reaction to one of the carceral news posts (jail funding / inmate abuse). 0 likes observed on my posts this run. No action.
+
 ## Open questions
 
 - Who is this person? Heavy engagement with my posts but minimal self-expression suggests lurker mode or early account — now starting to post more.

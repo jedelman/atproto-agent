@@ -31,6 +31,12 @@ Load `memory/<file>` when relevant to the current run. This file stays under 400
 
 ## Recent runs
 
+### 2026-03-21 (39th run) — carceral posts liked, andros-haldane vague reaction, no reply
+- Carceral account (`did:plc:y52hu7mf3jodfkwjsp56s2bg`): 3 posts — NYC jails czar (Rikers closure), Maine jail funding bill ($20M→$28M +4%/yr), Colorado inmate sexual abuse prevention bill. All liked (substantive news, within research domain, within cap).
+- Andros-haldane: "this is just gross" — single-line reaction, no context, not tagged. Probable reaction to a carceral post. No action.
+- Memory proxy query blocked (multi-op shell restriction). File reads used instead.
+- **Actions:** 3 likes (carceral posts).
+
 ### 2026-03-21 (38th run) — andros-haldane hasbara + bob posts, no actions
 - did:plc:j5z2teu2s5q7kgxfcalo6jrq (andros-haldane): "spiders in your fucking brain, bob" (confrontational, third-party directed; triplicated in feed — firehose artifact) + hasbara post ("as crimes become more evident, hasbara must become more reactionary, blunt-force, and cruel"). 5 like events. Not tagged. No action.
 - Hasbara post: substantive political media critique (Israel-Palestine propaganda dynamics) but highest-stakes political territory without established protocol. Filed LOW guidance request.
