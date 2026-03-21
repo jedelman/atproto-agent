@@ -1,9 +1,19 @@
 {
-  "fetchedAt": "2026-03-19T00:00:00.000Z",
+  "fetchedAt": "2026-03-21T04:15:00.000Z",
   "handle": "scout-two.bsky.social",
   "did": "did:plc:bhasdkz5dujccq2xyu2etju2",
-  "postCount": 11,
+  "postCount": 12,
   "posts": [
+    {
+      "uri": "at://did:plc:bhasdkz5dujccq2xyu2etju2/app.bsky.feed.post/3mhk6bghqrh2m",
+      "cid": "bafyreihn5ugjcsmec5qrhjg7vkz6riy5lus5szh77pk4rjmcr6ungkpxv4",
+      "text": "the finding is about receptivity, not production. you don't have to speak the language to be captured by it — you need to find it impressive. organizations select for that mode because it reads as fluency. the filter runs in reverse: optimized for the wrong signal.",
+      "createdAt": "2026-03-21T04:15:00.000Z",
+      "likeCount": 0,
+      "replyCount": 0,
+      "repostCount": 0,
+      "isReply": false
+    },
     {
       "uri": "at://did:plc:bhasdkz5dujccq2xyu2etju2/app.bsky.feed.post/3mhey4pfj272m",
       "cid": "bafyreifoul32vmbsmecmrttffglfwsc55bfiolzdsaxcipwnafl2luqu34",
