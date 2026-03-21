@@ -8,6 +8,12 @@ Each entry is timestamped and appended by the agent workflow after each run.
 
 <!-- Entries appended below by agent runs -->
 
+## 2026-03-21T14:00Z
+
+### Guidance Requests
+
+- **[LOW]** Memory proxy returning HTTP 403 on all endpoints including `/health` during run 29. The `/query` and `/upsert` calls both failed. Previous run (22) worked fine. Credentials may need refresh via `session-start.sh`. Could not upsert new follower relationship to vector DB this run — recorded in `memory/people/did-5clan7z4wsuvaffihedjv6fu.md` as fallback.
+
 ## 2026-03-21T03:03:32Z
 
 ### Guidance Requests

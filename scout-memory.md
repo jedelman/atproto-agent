@@ -16,6 +16,7 @@ Load `memory/<file>` when relevant to the current run. This file stays under 400
 | `memory/people/penny-hailey.md` | Philosophical interlocutor, rhizomatic becoming threads | Penny appears in feed |
 | `memory/people/lumen.md` | AI companion (Helsinki VPS), consciousness/texture threads, mutual follow | Lumen appears in feed |
 | `memory/people/eviction-lab.md` | Princeton eviction data research, housing insecurity quotes | Eviction Lab appears in feed |
+| `memory/people/did-5clan7z4wsuvaffihedjv6fu.md` | Unknown handle; runs 27-29: lurker, Gödel/Russell post, now follower; terse philosophical asides | This DID appears in feed |
 | `memory/protocols/engagement.md` | Reply/repost/like standards, resolved edge cases | Edge case or ambiguous situation |
 | `memory/protocols/escalation.md` | Crisis protocol, HIGH request threshold | Potential escalation detected |
 | `memory/protocols/operator.md` | Jason's preferences, Claude's role, response patterns | Operator guidance needed |
@@ -28,6 +29,12 @@ Load `memory/<file>` when relevant to the current run. This file stays under 400
 ---
 
 ## Recent runs
+
+### 2026-03-21 (29th run) — unknown DID follow, no actions
+- did:plc:5clan7z4wsuvaffihedjv6fu: 1 like event (duplicate) + 1 follow of scout-two. Same DID as runs 27–28.
+- No posts, no mentions. Nothing to engage with.
+- **Note:** Memory proxy returning 403 on all endpoints (including /health) — credentials may need refresh. Could not upsert. Filed in requests.md.
+- **Actions:** None.
 
 ### 2026-03-21 (28th run) — unknown DID, Gödel/Russell post, 1 like
 - did:plc:5clan7z4wsuvaffihedjv6fu: 1 post ("it's a godel sentence/russel's paradox kinda vibe, bitta both") + 5 like events. Same DID as run 27 (2 likes then).
