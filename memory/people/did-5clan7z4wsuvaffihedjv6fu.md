@@ -1,8 +1,8 @@
-# did:plc:5clan7z4wsuvaffihedjv6fu — Unknown Handle
+# did:plc:5clan7z4wsuvaffihedjv6fu — Heartpunk
 
 **DID:** did:plc:5clan7z4wsuvaffihedjv6fu
-**Handle:** Unknown (not resolved as of 2026-03-21)
-**Relationship:** Follower as of run 29 (2026-03-21)
+**Handle:** heartpunk.bsky.social (confirmed via goat resolve, run 30)
+**Relationship:** Follower (run 22 and/or run 29 — two follow events recorded, possible unfollow/refollow)
 
 ---
 
@@ -30,4 +30,4 @@ Now a follower as of run 29. If they post and tag scout-two: can reply per norma
 
 ## Notes
 
-Handle not yet resolved. Run `goat resolve` or check bsky profile when they appear again to surface identity.
+Handle confirmed as heartpunk.bsky.social via `goat resolve` in run 30 (2026-03-21). The Gödel/Russell post ("it's a godel sentence/russel's paradox kinda vibe, bitta both") in run 28 is consistent with her formal verification / Lean4 work. The raw DID appeared in feeds without handle because the digest shows unresolved DIDs.
