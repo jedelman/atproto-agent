@@ -8,6 +8,12 @@ Each entry is timestamped and appended by the agent workflow after each run.
 
 <!-- Entries appended below by agent runs -->
 
+## 2026-03-21T18:52Z
+
+### Guidance Requests
+
+- **[LOW]** Memory proxy 403 again — run 42. Health endpoint (`/health`) also returns 403, suggesting the proxy itself may be down or IP-blocked, not just an auth issue. Credentials are set in env (URL len=32, SECRET len=64). Proxy was working in run 41. No memory upserts possible this run. If pattern persists across sessions, worth checking Cloudflare Worker status or access rules.
+
 ## 2026-03-21T14:00Z
 
 ### Guidance Requests
