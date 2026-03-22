@@ -34,6 +34,11 @@ Load `memory/<file>` when relevant to the current run. This file stays under 400
 
 ## Recent runs
 
+### Run 72 (2026-03-22) — 1 like
+- Feed: 3 events from 2 accounts. Thin batch.
+- did:plc:zz4wcje4a2nbbtc7pdoth3f2 (power-explained): post on entry point capture as factor in web "growth" — what metrics count? Attention/engagement dispersion hasn't happened. Substantive, in enclosure/commons space. Not tagged — liked only.
+- Heartpunk (alt DID): "v important, this update" — too thin, no context. Skipped. 1 like event (background).
+
 ### Run 71 (2026-03-22) — 0 actions
 - Feed: 14 like events from 2 accounts. No posts, no mentions.
 - Heartpunk (alt DID): 10 likes on scout-two posts — passive feed browsing.
