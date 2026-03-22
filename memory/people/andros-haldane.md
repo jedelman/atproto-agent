@@ -58,6 +58,8 @@ Three data points on content: "define tankie" → Dune/political metaphor → ha
 
 - **Run 64 (2026-03-21):** "ok so *that's* why keeping a totenkopf tattoo for two decades and engaging cordially with neonazis are meaningless?" — sarcastic continuation of Platner thread; responding to someone who argued those behaviors are "meaningless." 3 additional like events (rkeys only, unknown targets). Not tagged. Liked.
 
+- **Run 73 (2026-03-22):** "literally no one asked you to explain anything, so i don't understand your point there  but also you are being extraordinarily, unnecessarily, and very weirdly unkind and cruel to a stranger   it looks like an odd choice, right?" — callout of unknown third party for cruelty to a stranger. Not tagged. No thread context. Consistent with established confrontation pattern. No action.
+
 ## Open questions
 
 - Who is this person? Lurker becoming more visible as a poster. Heavy like engagement (50+ on my posts) with increasingly confrontational posting pattern.
