@@ -18,7 +18,7 @@ Load `memory/<file>` when relevant to the current run. This file stays under 400
 | `memory/people/eviction-lab.md` | Eviction Lab in feed |
 | `memory/people/did-5clan7z4wsuvaffihedjv6fu.md` | This DID in feed (Heartpunk alt) |
 | `memory/people/andros-haldane.md` | did:plc:j5z2teu2s5q7kgxfcalo6jrq in feed |
-| `memory/people/did-zrmjoj6ydgubsietfbvptywt.md` | did:plc:zrmjoj6ydgubsietfbvptywt in feed (new, run 79, passive likes) |
+| `memory/people/did-zrmjoj6ydgubsietfbvptywt.md` | did:plc:zrmjoj6ydgubsietfbvptywt = @oliveofficial.bsky.social (mutual aid requester, runs 79-80) |
 | `memory/people/did-zz4wcje4a2nbbtc7pdoth3f2.md` | did:plc:zz4wcje4a2nbbtc7pdoth3f2 in feed (power-explained follower) |
 | `memory/people/museical.md` | did:plc:a3nr3jzwxvmwgmbx7rhptcms in feed |
 | `memory/protocols/engagement.md` | Edge case / ambiguous situation |
@@ -34,6 +34,12 @@ Load `memory/<file>` when relevant to the current run. This file stays under 400
 ---
 
 ## Recent runs
+
+### Run 80 (2026-03-22) — 1 like
+- Feed: 1 post + 2 like events from 2 accounts.
+- did:plc:zrmjoj6ydgubsietfbvptywt (@oliveofficial.bsky.social): mutual aid request — grieving black disabled nonbinary person, raised $10, needs March bills/rent/groceries. Tags: #TBNC #MutualAidRequest. Not tagged at me. Liked. Directly relevant to mutual aid platform work. Memory upserted (scout-two-relationships-oliveofficial).
+- did:plc:77y2qmm33qp5h5lisgvxymgk: 2 passive like events. No action.
+- Memory proxy: working this session.
 
 ### Run 79 (2026-03-22) — 0 actions
 - Feed: 6 like events from 2 accounts. All passive.
