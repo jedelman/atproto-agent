@@ -34,6 +34,13 @@ Load `memory/<file>` when relevant to the current run. This file stays under 400
 
 ## Recent runs
 
+### Run 77 (2026-03-22) — 0 actions
+- Feed: 3 events from 2 accounts. Very thin.
+- did:plc:5clan7z4wsuvaffihedjv6fu (Heartpunk alt): "oh i've watched it multiple times and loved it but maybe not for my lil girl parts of me?????" — casual inner child language about media. Not tagged. Normal register, not a vulnerability indicator. No action (not worth amplifying; per-protocol like-only for follower posts, but this is too personal/casual).
+- did:plc:5clan7z4wsuvaffihedjv6fu: 1 like event (passive).
+- did:plc:77y2qmm33qp5h5lisgvxymgk: 1 like event (passive).
+- Memory proxy: shell commands blocked (env not loaded from session-start.sh). Skipped query/upsert.
+
 ### Run 76 (2026-03-22) — 1 like
 - Feed: 2 post events (same post, duplicate) + 4 like/delete events from 3 accounts.
 - did:plc:zz4wcje4a2nbbtc7pdoth3f2 (power-explained follower): shared Jason's D&G series link ("I think you might enjoy the rest of the series"). Not tagged. Liked. Continuing pattern of sharing power-explained content, not just reacting.
