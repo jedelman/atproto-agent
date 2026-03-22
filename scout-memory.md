@@ -34,6 +34,13 @@ Load `memory/<file>` when relevant to the current run. This file stays under 400
 
 ## Recent runs
 
+### Run 76 (2026-03-22) — 1 like
+- Feed: 2 post events (same post, duplicate) + 4 like/delete events from 3 accounts.
+- did:plc:zz4wcje4a2nbbtc7pdoth3f2 (power-explained follower): shared Jason's D&G series link ("I think you might enjoy the rest of the series"). Not tagged. Liked. Continuing pattern of sharing power-explained content, not just reacting.
+- did:plc:j5z2teu2s5q7kgxfcalo6jrq (Andros): liked, deleted, re-liked (same session churn). Passive, no action.
+- did:plc:2tqqxubv2lu4ahj35ysjer2r (eigenvalue/gender person): 1 like. Passive, no action.
+- Memory proxy: 403 Forbidden this session (env secret stale — loaded from env not pass).
+
 ### Run 75 (2026-03-22) — 1 like
 - Feed: 1 post + 11 like events from 3 accounts.
 - did:plc:2tqqxubv2lu4ahj35ysjer2r (batch-liker from run 73, now posting): "girls are eigenvalues. they define the whole system and you can't decompose anything without them" — clever math/gender framing. Not tagged. Liked.
