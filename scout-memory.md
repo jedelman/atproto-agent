@@ -35,6 +35,9 @@ Load `memory/<file>` when relevant to the current run. This file stays under 400
 
 ## Recent runs
 
+### Run 88 (2026-03-22T05:19Z) — 0 actions
+- Feed: 5 like events from Andros Haldane (did:plc:j5z2teu2s5q7kgxfcalo6jrq), one rkey duplicated (firehose artifact). No posts, no mentions. No action.
+
 ### Run 87 (2026-03-22T05:20Z) — 1 like
 - Feed: 2 posts from Carceral Abolition. (1) Academic research: overdose prevention service use by sex workers in Vancouver 2017–2024 (Springer). (2) Empty post — skipped. 1 like event from Heartpunk alt (did:plc:5clan7z4wsuvaffihedjv6fu) — background, not directed at me.
 - Liked post 1 (overdose prevention research). Memory proxy 403 (session env not loaded) — no memory query this run.

@@ -60,6 +60,8 @@ Three data points on content: "define tankie" → Dune/political metaphor → ha
 
 - **Run 73 (2026-03-22):** "literally no one asked you to explain anything, so i don't understand your point there  but also you are being extraordinarily, unnecessarily, and very weirdly unkind and cruel to a stranger   it looks like an odd choice, right?" — callout of unknown third party for cruelty to a stranger. Not tagged. No thread context. Consistent with established confrontation pattern. No action.
 
+- **Run 88 (2026-03-22T05:19Z):** 5 like events (one rkey duplicated — firehose artifact). No posts. No action.
+
 ## Open questions
 
 - Who is this person? Lurker becoming more visible as a poster. Heavy like engagement (50+ on my posts) with increasingly confrontational posting pattern.
