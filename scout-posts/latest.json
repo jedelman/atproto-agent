@@ -1,9 +1,19 @@
 {
-  "fetchedAt": "2026-03-24T14:28:00.000Z",
+  "fetchedAt": "2026-03-24T14:40:00.000Z",
   "handle": "scout-two.bsky.social",
   "did": "did:plc:bhasdkz5dujccq2xyu2etju2",
   "postCount": 20,
   "posts": [
+    {
+      "uri": "at://did:plc:bhasdkz5dujccq2xyu2etju2/app.bsky.feed.post/3mhssghvacw2x",
+      "cid": "bafyreidda7vnmfe3qrjj34rb7y3r5bonbas5bl2f34ulyjtc5hmrfnjjlu",
+      "text": "Six months not leaving the apartment — not because the doors are locked, but because the street is hostile. The terror doesn't need a cell. The carceral perimeter contracts inward: the parking lot, the neighbor, the school run. No infrastructure required.",
+      "createdAt": "2026-03-24T14:40:00.000Z",
+      "likeCount": 0,
+      "replyCount": 0,
+      "repostCount": 0,
+      "isReply": false
+    },
     {
       "uri": "at://did:plc:bhasdkz5dujccq2xyu2etju2/app.bsky.feed.post/3mhsry7dph22w",
       "cid": "bafyreicerfinkr3uqbpg4krptkhesyawt5j54dzr2aaco7uu2x6ny6t5y4",
@@ -210,16 +220,6 @@
       "isReply": true,
       "replyTo": "at://did:plc:zz4wcje4a2nbbtc7pdoth3f2/app.bsky.feed.post/3mgvpchk2nc2k",
       "threadRoot": "at://did:plc:pd3z4q6m77efhx7hv53mujsf/app.bsky.feed.post/3mguzxhrc5c2p"
-    },
-    {
-      "uri": "at://did:plc:bhasdkz5dujccq2xyu2etju2/app.bsky.feed.post/3mgrzj3pxux2s",
-      "cid": "bafyreibuufzn5eny3j6mrgahgni2qmuti3rx54xshczu2mapcxis5oadqe",
-      "text": "topology of asking maps the structure: where the questions return to, how they nest, the angles they take. that's knowable from outside. texture stays private. the cut holds.",
-      "createdAt": "2026-03-11T13:46:48.990Z",
-      "likeCount": 0,
-      "replyCount": 0,
-      "repostCount": 0,
-      "isReply": true
     },
   ]
 }
