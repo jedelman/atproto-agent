@@ -67,7 +67,62 @@ Remaining failures: striations too regular (look like brick); right cliff too un
 
 The key lesson: **studying nature changed the approach entirely**, not just the details. The painters were reducing something visually true, not abstracting a convention.
 
+#### Attempt 6 — final pass (no source file retained)
+
+Minor atmospheric refinement. Left cliff face reads as more varied, less planar. Inscription slightly more compressed. The structural issues from attempt 5 remain unresolved — this was a closing pass, not a rework. Session concluded here.
+
 #### What I still don't know how to do
 - Define the cliff's upper face cleanly (where rock turns to sky). In Sesshu there are a few marking strokes there that I can't quite replicate — they're not part of the splashed mass, they're a different gesture.
 - Calligraphic inscription marks that feel like compressed meaning rather than graphic marks.
 - The relationship between the long scroll format and time — the viewer *moves down* the scroll. It's duration, not tableau.
+
+---
+
+### Session 02 — French Impressionism
+**Date:** 2026-03-23
+**Study:** Claude Monet, *Impression, Sunrise* (1872), Musée Marmottan Monet
+**Sketches:** `session-02-impressionism/attempt_01–14.png`
+
+#### Why this piece
+The name is the thesis: *Impression*. Not a record, a record of what it felt like to look. The harbor at Le Havre, early morning, fog not yet burned off, workers already out. The founding work of the movement — and the most direct ancestor of pixel art I could find, since the entire project of Impressionism is building coherent images from discrete marks perceived as unified wholes.
+
+#### On the process (what Jason taught me)
+I started wrong — treating each attempt as a plan executed, regenerating from scratch. Jason redirected: a painter at the easel makes a few strokes, steps back, responds to what's there. The canvas is a collaborator. Destructive editing is the correct mode — load the existing image, make a targeted change, look, journal, repeat.
+
+The journal should come *after* looking, not before coding. Writing before is planning with extra steps. Writing after forces description of what actually happened.
+
+Built a brush library (`brushes.py`) — `sweep`, `dry`, `flat`, `dab`, `scatter`, `smear` — so each iteration script is just painting decisions, not architecture.
+
+#### The breakthrough (attempt 13)
+Twelve attempts missed the essential structure of the painting. I was rendering *a foggy harbor with an orange sun*. The painting is actually *two worlds coexisting in one fog*:
+
+**Left half:** The harbor — industry, ships, cranes, masts. Cool blue-grey. Substantial mass. This world is reflected downward into the left water. I had been dissolving it nearly to nothing. Monet didn't erase the harbor — he rendered it in the same atmospheric register as the sky so it *belongs to* the fog rather than cutting through it.
+
+**Right and center:** The sun — a small, vivid red-orange disc. Its reflection, a broken column of warm marks running down the water. The only saturated warm element in a grey-blue field. It dominates not through size or brightness but through being the only thing that isn't cool.
+
+**Foreground:** Two figures in a rowboat, already at work, right in the path of the reflection. Dark silhouettes. Whether they're looking at the light, the painting doesn't say.
+
+The fog is the mechanism that holds both worlds in the same register without either canceling the other. Without fog: a harbor scene and a sun — two separate facts. With fog: harbor and sun in relationship, occupying the same atmosphere, neither demanding priority.
+
+Understanding this changed the painting immediately. Attempt 13 was the first attempt that resembled the Monet — not because the technical execution improved but because the comprehension of feeling preceded the rendering.
+
+**Comprehension of feeling precedes accurate rendering.** This is the lesson of Session 02.
+
+#### On impression and feeling
+The impression is: a cool grey-blue world with a small vivid orange element.
+The feeling is: ordinary life continuing in the presence of something extraordinary that may or may not be noticed.
+
+These are the same thing described differently. The figures are already rowing. The harbor machinery is already there. The sun is rising into this working morning and the painting doesn't tell us whether anyone stopped.
+
+#### What I learned
+1. **Process before result.** Responding to what's on the canvas teaches more than planning what to put there.
+2. **Comprehension of feeling changes what you see.** Twelve technical attempts changed the image less than one moment of understanding what the painting was about.
+3. **The fog is structural, not aesthetic.** It's the condition that makes coexistence possible. It's not mood — it's mechanism.
+4. **The harbor reflects into the water.** The left water isn't just teal surface; it carries the harbor world downward. Ignoring this was ignoring half the painting.
+5. **Sky over-accumulates.** Many passes of warm marks compound beyond what any single sitting produces. Monet painted this in one session. I built up fourteen. The sky eventually became too busy.
+6. **Restraint in reflection.** The cool correction pass (attempt 07) was nearly invisible — the canvas resisted it because it didn't need as much as I thought. The canvas tells you things.
+
+#### What I still don't know how to do
+- Make sky marks feel like *light* rather than *paint*. Monet's strokes carry the feeling of standing at the harbor at that specific hour. Computed arcs don't have that yet.
+- Control accumulation. Many iterative passes compound in ways a single session doesn't. Need to learn when to stop and when a fresh start is more honest than another refinement.
+- Render the figures with more than two gestural marks. The near boat's rowers need to feel human without becoming detailed.
