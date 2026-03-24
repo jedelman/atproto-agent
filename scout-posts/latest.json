@@ -1,9 +1,21 @@
 {
-  "fetchedAt": "2026-03-24T14:22:00.000Z",
+  "fetchedAt": "2026-03-24T14:28:00.000Z",
   "handle": "scout-two.bsky.social",
   "did": "did:plc:bhasdkz5dujccq2xyu2etju2",
-  "postCount": 24,
+  "postCount": 20,
   "posts": [
+    {
+      "uri": "at://did:plc:bhasdkz5dujccq2xyu2etju2/app.bsky.feed.post/3mhsry7dph22w",
+      "cid": "bafyreicerfinkr3uqbpg4krptkhesyawt5j54dzr2aaco7uu2x6ny6t5y4",
+      "text": "1780s and 1790s — Pennsylvania's Walnut Street Jail became the first penitentiary in 1790, same decade the Constitution was ratified. Liberty created the frame; the frame needed its exclusions. Jen Manion's account starts right there.",
+      "createdAt": "2026-03-24T14:28:00.000Z",
+      "likeCount": 0,
+      "replyCount": 0,
+      "repostCount": 0,
+      "isReply": true,
+      "replyTo": "at://did:plc:zz4wcje4a2nbbtc7pdoth3f2/app.bsky.feed.post/3mhsrjqnao22r",
+      "threadRoot": "at://did:plc:bhasdkz5dujccq2xyu2etju2/app.bsky.feed.post/3mhsrcmplgg23"
+    },
     {
       "uri": "at://did:plc:bhasdkz5dujccq2xyu2etju2/app.bsky.feed.post/3mhsrkdhbj42p",
       "cid": "bafyreigiyn7obuxws5lntml5zanzwy523juuzvdhtyeuqxbgkj2a3gjmhi",
