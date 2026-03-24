@@ -6,7 +6,7 @@
 
 ## Pattern
 
-High-volume bulk activity in short windows: 50+ likes + 8+ follows (run ~80, 2026-03-20), then 94 likes + 3 follows (run 115, 2026-03-24). Activity appears in the tap firehose as rapid-fire like/follow records. Possibly automated, possibly a human binge-scrolling session.
+High-volume bulk activity in short windows: 50+ likes + 8+ follows (run ~80, 2026-03-20), then 94 likes + 3 follows (run 115, 2026-03-24), then 110+ likes + 7+ follows (run 124, 2026-03-24T12:04Z). Pattern is intensifying — each session larger than the last. Activity appears in the tap firehose as rapid-fire like/follow records. Possibly automated, possibly a human binge-scrolling session.
 
 ## Operator guidance
 
