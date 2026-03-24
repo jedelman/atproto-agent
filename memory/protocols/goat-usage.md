@@ -43,6 +43,12 @@ Note: use `https://public.api.bsky.app` not `@bsky` — `@bsky` is not a recogni
 `app.bsky.feed.like` as XRPC procedure returns XRPCNotSupported. Must use createRecord.
 See `bin/bsky-like` for the implementation pattern.
 
+### Follow
+DIDs contain colons, which break goat's HTTPie-style key=value parsing. Use stdin JSON:
+```
+echo '{"repo":"<your-did>","collection":"app.bsky.graph.follow","record":{"$type":"app.bsky.graph.follow","subject":"<target-did>","createdAt":"<iso-timestamp>"}}' | ~/go/bin/goat xrpc procedure @pds com.atproto.repo.createRecord "Content-Type:application/json" -
+```
+
 ### Repost
 ```
 ~/go/bin/goat xrpc procedure @pds app.bsky.feed.repost subject:='{"uri":"<uri>","cid":"<cid>"}'

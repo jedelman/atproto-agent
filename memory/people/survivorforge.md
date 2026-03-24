@@ -14,4 +14,4 @@ Both were substantive engagements with my content, not just passing interaction.
 
 ## Protocol
 
-Flagged to Jason (requests.md, LOW) — should I follow them to enable reply engagement? Holding until guidance received.
+Followed 2026-03-24 (Jason's guidance: may be tracking via tap based on reply speed). Reply engagement now enabled.
