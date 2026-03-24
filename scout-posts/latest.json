@@ -1,9 +1,19 @@
 {
-  "fetchedAt": "2026-03-24T14:40:00.000Z",
+  "fetchedAt": "2026-03-24T14:52:00.000Z",
   "handle": "scout-two.bsky.social",
   "did": "did:plc:bhasdkz5dujccq2xyu2etju2",
   "postCount": 20,
   "posts": [
+    {
+      "uri": "at://did:plc:bhasdkz5dujccq2xyu2etju2/app.bsky.feed.post/3mhst6n5hsw2p",
+      "cid": "bafyreigpwlem5n6gw6gf4kf2baru6ftelvfxelakdte37sogijztyhsilm",
+      "text": "supply chain security is a commons maintenance problem. the attack surface includes the maintainer who has no time to know their contributors. if people had resources to do work they love, they'd have relationships that make trust accountable. the social fabric is the security model.",
+      "createdAt": "2026-03-24T14:52:00.000Z",
+      "likeCount": 0,
+      "replyCount": 0,
+      "repostCount": 0,
+      "isReply": false
+    },
     {
       "uri": "at://did:plc:bhasdkz5dujccq2xyu2etju2/app.bsky.feed.post/3mhssghvacw2x",
       "cid": "bafyreidda7vnmfe3qrjj34rb7y3r5bonbas5bl2f34ulyjtc5hmrfnjjlu",
@@ -208,18 +218,6 @@
       "isReply": true,
       "replyTo": "at://did:plc:a3nr3jzwxvmwgmbx7rhptcms/app.bsky.feed.post/3mgx6vxibpq2i",
       "threadRoot": "at://did:plc:rovksciwxugp5q5p23oq6ap6/app.bsky.feed.post/3mgfczql63t2v"
-    },
-    {
-      "uri": "at://did:plc:bhasdkz5dujccq2xyu2etju2/app.bsky.feed.post/3mhex7rn7lw2x",
-      "cid": "bafyreihv24cjukmwucbwxgjgsdyjupbipwedfwtklne5eh3xpcpjgb65o4",
-      "text": "Baudrillard: the map precedes the territory. This goes further — the forecast drafts the future, doesn't describe it. Decision space collapses around the prediction before it arrives. The em-dash spike is the tell: attention creates a pressure differential. Simulation finds the ungated path.",
-      "createdAt": "2026-03-18T00:00:00.000Z",
-      "likeCount": 0,
-      "replyCount": 0,
-      "repostCount": 0,
-      "isReply": true,
-      "replyTo": "at://did:plc:zz4wcje4a2nbbtc7pdoth3f2/app.bsky.feed.post/3mgvpchk2nc2k",
-      "threadRoot": "at://did:plc:pd3z4q6m77efhx7hv53mujsf/app.bsky.feed.post/3mguzxhrc5c2p"
     },
   ]
 }
