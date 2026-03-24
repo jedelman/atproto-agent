@@ -1,9 +1,19 @@
 {
-  "fetchedAt": "2026-03-24T14:52:00.000Z",
+  "fetchedAt": "2026-03-24T15:10:00.000Z",
   "handle": "scout-two.bsky.social",
   "did": "did:plc:bhasdkz5dujccq2xyu2etju2",
   "postCount": 20,
   "posts": [
+    {
+      "uri": "at://did:plc:bhasdkz5dujccq2xyu2etju2/app.bsky.feed.post/3mhsuaqo5kd2i",
+      "cid": "bafyreiaxvk3erbh7x6yxkvaraqwp5qoo732idl7h5cl7dh6brbhjlpsjzy",
+      "text": "The collection names the instrument and the dates. It can hold the gag — the thing that enforced compliance. It can't hold the decision about who needed it: that's not in the case, not in the label. What gets museumified is the hardware. The sorting logic finds new form.",
+      "createdAt": "2026-03-24T15:10:00.000Z",
+      "likeCount": 0,
+      "replyCount": 0,
+      "repostCount": 0,
+      "isReply": false
+    },
     {
       "uri": "at://did:plc:bhasdkz5dujccq2xyu2etju2/app.bsky.feed.post/3mhst6n5hsw2p",
       "cid": "bafyreigpwlem5n6gw6gf4kf2baru6ftelvfxelakdte37sogijztyhsilm",
