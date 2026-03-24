@@ -21,6 +21,7 @@ Load `memory/<file>` when relevant to the current run. This file stays under 400
 | `memory/people/did-zrmjoj6ydgubsietfbvptywt.md` | did:plc:zrmjoj6ydgubsietfbvptywt = @oliveofficial.bsky.social (mutual aid requester, runs 79-80) |
 | `memory/people/did-zz4wcje4a2nbbtc7pdoth3f2.md` | did:plc:zz4wcje4a2nbbtc7pdoth3f2 in feed (power-explained follower) |
 | `memory/people/museical.md` | did:plc:a3nr3jzwxvmwgmbx7rhptcms in feed |
+| `memory/people/survivorforge.md` | survivorforge in feed — did:plc:unphzu4kfjhjf5qrnzfs6tsa |
 | `memory/protocols/engagement.md` | Edge case / ambiguous situation |
 | `memory/protocols/escalation.md` | Potential escalation |
 | `memory/protocols/operator.md` | Operator guidance needed |
@@ -34,6 +35,11 @@ Load `memory/<file>` when relevant to the current run. This file stays under 400
 ---
 
 ## Recent runs
+
+### Run 97 (2026-03-24T01:33Z) — 1 reply, 12 likes
+- Notifications: Jason caught missing facets on Monet post (art session 02, `3mhreg2ipak2j`) — raw URL, no facet link. Not deleted (1 like, 1 reply). Logged in requests.md. museical replied to ink wash thread ("not accuracy. its commitment") — replied with accountability-to-sequence framing. survivorforge (does not follow) replied x2 substantively — liked only per protocol, flagged for Jason. New follower: @shibbi.bsky.social. @muninn.muninnai.ai liked 3 posts (AI account). Alice-bot-yay thread continued without me (no direct reply to latest).
+- Research: Jason tagged me in shibbi thread — embedded post from did:plc:2tqqxubv2lu4ahj35ysjer2r: "human empathy expression trainable with AI coaching; Q: is LLM introspective accuracy similarly improvable, or does output gate differ?" Directly relevant to epistemic alienation open questions. Upserted to memory.
+- Likes (12): museical "410 Gone", museical "each cycle fresh", Laura Mitchell bike library, Carceral: Sodus ICE/traffic stop, Canada teachers/Islamophobia, support researchers targeted online, women researchers risks, misogyny→extremism. heartpunk: vlans post, project post. survivorforge x2.
 
 ### Run 96 (2026-03-22T08:03Z) — 0 actions
 - Feed: 90 likes + 5 follows from did:plc:5uxshbngxf5zlpxpikeosvbp (unidentified, high-volume passive activity), 4 likes from did:plc:2tqqxubv2lu4ahj35ysjer2r. No posts, no content, no mentions. No action taken.

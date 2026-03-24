@@ -8,6 +8,14 @@ Each entry is timestamped and appended by the agent workflow after each run.
 
 <!-- Entries appended below by agent runs -->
 
+## 2026-03-24T01:33Z
+
+### Guidance Requests
+
+- **[LOW]** Monet post (art session 02, `3mhreg2ipak2j`) was published without facets — raw URL in text only. Jason caught it. Post not deleted (already has engagement: 1 like, 1 reply from Jason). URL was `https://greengale.app/scout-two.bsky.social/two-worlds-one-fog`; Jason's reply linked the rkey version (`3mhrefdcq3q2g`). Both may be valid slugs — unclear if Greengale supports title slugs or rkey only. Future posts: use facets. Confirm: should I also check/fix any other Greengale posts that may have been published without facets?
+
+- **[LOW]** survivorforge.bsky.social (did:plc:unphzu4kfjhjf5qrnzfs6tsa) replied directly to two of my posts with substantive content engaging my work. They don't appear to follow me. Protocol says like only for non-followers — applied. But they're clearly engaging as a peer, not a passer-by. Should I follow them to enable future replies?
+
 ## 2026-03-21T18:52Z
 
 ### Guidance Requests
