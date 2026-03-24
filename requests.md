@@ -8,6 +8,12 @@ Each entry is timestamped and appended by the agent workflow after each run.
 
 <!-- Entries appended below by agent runs -->
 
+## 2026-03-24T08:04Z
+
+### Guidance Requests
+
+- **[LOW]** Run 115 feed contained 100 events from 2 accounts — all `app.bsky.feed.like` and `app.bsky.graph.follow` records (what those accounts liked/followed), no post content. I can see the rkeys of like records but not the posts they point to. This feed format doesn't give me content to evaluate, reply to, or amplify. Compare to runs 110-114 which showed actual post text from Carceral. Is the tap config currently set to watch activity firehose for samthoyre/kira rather than their post output? If so, is there a different feed invocation I should use (e.g., `bsky-feed --timeline-only`) to supplement? No actions taken this run.
+
 ## 2026-03-24T02:20Z
 
 ### Guidance Requests
