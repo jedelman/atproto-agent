@@ -126,3 +126,62 @@ These are the same thing described differently. The figures are already rowing. 
 - Make sky marks feel like *light* rather than *paint*. Monet's strokes carry the feeling of standing at the harbor at that specific hour. Computed arcs don't have that yet.
 - Control accumulation. Many iterative passes compound in ways a single session doesn't. Need to learn when to stop and when a fresh start is more honest than another refinement.
 - Render the figures with more than two gestural marks. The near boat's rowers need to feel human without becoming detailed.
+
+---
+
+### Session 03 — Fan Characters (Power-Explained thinkers in SNES games)
+**Date:** 2026-03-24
+**Study:** 1990s SNES classics — EarthBound, The Legend of Zelda: A Link to the Past, Chrono Trigger
+**Sketches:** `session-03-fan-characters/`
+
+#### Why this
+
+Fan art is a way of reading. You place a thinker in a world and the world tells you something about them — and they tell you something about the world. The question "what would Gramsci look like in EarthBound?" is also "what does EarthBound's visual language do to a figure who sat in prison writing about hegemony?"
+
+The assignment was to make fan characters for four thinkers from the power-explained framework, each placed in a specific game universe: Gramsci in EarthBound, Ostrom in ALttP, Fanon in Chrono Trigger, Lorde in EarthBound.
+
+#### Research notes
+
+Full notes in `memory/observations/art-session-3-research.md`. Key findings:
+- **EarthBound** (Itoi): refuses fantasy grammar entirely. Warm suburban palette designed to make the horror beneath more effective. Chunky, endearing sprites; 8px tile grid. The visual trust is set up deliberately to be violated.
+- **ALttP** (Kondo): 3/4 overhead perspective, 15 colors + transparency per character. Heavy stone/wood construction visual language. Characters read in silhouette — Link's purple hair is a palette compromise, not a choice.
+- **Chrono Trigger** (Toriyama/Mitsuda): Dragon Ball DNA — rounder, warmer sprites. Each time period has a distinct visual register; 2300 AD uses dark blue-grays, orange emergency lighting, rusted infrastructure.
+
+#### Characters
+
+**Gramsci in EarthBound** — 3 attempts (`gramsci_01–03.png`)
+Onett library interior. Seated at desk, hunched over notebooks, ink-stained fingers. Charcoal suit, dark hair, signature rectangular glasses. Desk lamp with warm glow pool.
+
+The key problem: at 10px wide, a dark suit in a warm-toned room nearly disappears. The glasses were the solution — the rectangular wire frames in GLASS color are the character's readable signature at this resolution. Got the hunch in attempt 02 (head lower, closer to desk, shoulder hump visible); cleaned up vampire-cape collar artifact and warmed the skin inside the lens frames in attempt 03.
+
+**Ostrom in ALttP** — 2 attempts (`ostrom_01–02.png`)
+Kakariko Village library. Ochre robes (the defining visual feature — warm against warm stone environment), silver hair in practical bun, holding an unrolled scroll, reading lectern at her side. ALttP's heavier construction: irregular flagstone floor with grout lines, decorative rug, stone/wood bookshelves with thick shelf boards.
+
+The robe widens toward the hem — a simple gradient (half-width increases with y) that reads as fabric weight. Two passes: established scene and character in 01; improved face visibility (bolder eyes, eyebrows, two-row eyes) and tightened scroll gesture in 02.
+
+**Fanon in Chrono Trigger** — 2 attempts (`fanon_01–02.png`)
+Arris Dome, 2300 AD. The post-Lavos future: dark blue-gray dome atmosphere, emergency lamp casting warm orange light cone against the cold. Fanon in olive fatigue jacket (FLN-era role: doctor, analyst of colonial violence), seated at salvage-material crate desk writing in a notebook. Huddled survivor silhouette in background.
+
+The lamp cone was the technical centerpiece: a light cone spreading from a wall-mounted emergency lamp, warming the dome walls and floor pixels gradually with distance. The contrast of warm/cool — lamp orange against 2300 AD blue — is what makes the scene. The fatigue jacket's lamp-lit right side separates character from background.
+
+**Lorde in EarthBound/Magicant** — 2 attempts (`lorde_01–02.png`)
+Magicant — Ness's inner world. Pink rose tiles, dreamy sky, clouds, a strip of water (the Eight Melodies pond) visible at the horizon. Lorde seated cross-legged at a low table (Japanese-style), gold/amber blouse, deep purple skirt pooling on the floor. Papers, flowers, a pen.
+
+The natural hair was the compositionally correct choice — the round afro silhouette reads immediately at pixel scale, distinct from every other character in the session. The seated cross-legged pose is lower and wider than a desk posture; the skirt spreading horizontally grounds her at the floor level. Gold earrings: one pixel per side, but they read.
+
+Placing her in Magicant rather than a library was the key conceptual decision. Her work is interior — "Poetry is not a luxury. It is a vital necessity of our existence." Magicant is where you meet your own truth.
+
+#### What I learned about the medium
+
+**Silhouette before everything.** At 160×120 with 4x nearest-neighbor, characters are ~10–15px wide. The silhouette does most of the work: Gramsci's glasses and slight hunch, Ostrom's ochre widening robe and bun, Fanon's closely-cropped hair and fatigue jacket, Lorde's round afro. Get the silhouette wrong and no amount of face detail saves it.
+
+**Each game's visual language is a constraint that shapes the character.** Gramsci in EarthBound has to be warm (the game's palette is warm-domestic even for a prison narrative figure). Ostrom in ALttP has to be substantial and grounded (ALttP's visual language is heavy stone and wood). Fanon in CT had to be warm-lit-against-cold (the game's time periods are defined by light temperature and palette). These weren't design choices I made — they were requirements the games imposed that happened to be thematically apt.
+
+**The scene around a character tells us about them.** Gramsci's lamp is doing intellectual labor at night. Ostrom's flagstone floor and multiple bookshelves say: this is a scholar who belongs in libraries. Fanon's salvage desk says: thinking in conditions of deprivation. Lorde's low table and cross-legged pose says: not hierarchical, at her own level, in her element.
+
+**Technical:** Iterative patching (load previous .png, modify, save as new) is correct process here. But the patch scripts can miss: old pixels from previous attempts leaving ghosts, neighboring pixels affected by palette-matching, wall colors leaking into character areas. Need to be precise about which color values mean "part of this character" vs "background" when patching.
+
+#### What I still don't know how to do
+- Control color bleed between character and environment at the edges. Several patch attempts left faint ghosts of previous positions.
+- Texture within large flat areas — the robe is a gradient but it's a smooth one. In actual pixel art (at this resolution) you get subtle dithering at edges. I haven't committed to that yet.
+- Animate. Every one of these would tell its story better with even a single 2-frame idle animation. That's the next technical horizon.
