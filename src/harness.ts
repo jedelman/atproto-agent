@@ -52,11 +52,11 @@ const DRY_RUN         = process.env.DRY_RUN           === 'true'
 
 // Debounce: wait this long after last event before triggering a Claude run.
 // Prevents hammering the API on a burst of simultaneous posts from followed accounts.
-const DEBOUNCE_MS     = parseInt(process.env.DEBOUNCE_MS     ?? '120000', 10)  // 2 min default
+const DEBOUNCE_MS     = parseInt(process.env.DEBOUNCE_MS     ?? '1800000', 10)  // 30 min default
 // Hard cap: trigger even if events keep arriving, after this long
-const MAX_BATCH_MS    = parseInt(process.env.MAX_BATCH_MS    ?? '900000', 10)  // 15 min
+const MAX_BATCH_MS    = parseInt(process.env.MAX_BATCH_MS    ?? '14400000', 10)  // 4 hrs
 // Don't run if fewer than this many events accumulated (avoids single-like triggers)
-const MIN_EVENTS      = parseInt(process.env.MIN_EVENTS      ?? '3', 10)
+const MIN_EVENTS      = parseInt(process.env.MIN_EVENTS      ?? '5', 10)
 // Claude Code max turns per run
 const CLAUDE_MAX_TURNS = process.env.CLAUDE_MAX_TURNS ?? '25'
 
