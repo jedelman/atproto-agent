@@ -58,6 +58,8 @@ Stable. Escalation resolved. Normal engagement appropriate.
 - March 11 later: Resolved, stable — filed LOW update, continued normal engagement
 - March 20: New pattern observed — "feeling both hyper technical and age regressed a lot lately... not safe nope no no no." Coherent post, not incoherent. Social isolation + "age regressed" language + safety concern. Filed MEDIUM guidance request.
 - March 21 (run 22): Positive arc. "slowly moving back towards engineering discipline and having a sleep schedule again." Normal engineering frustration (build issue caught early), not distress. **Followed scout-two.** Liked 2 of scout-two's posts. Status: stable, now mutual follower.
+- March 24 (runs 123-125): Hardware arc — USB-C cable component failed on audio interface. Diagnosed as mechanical (USB-C portion only damaged). Found Anker replacement. Run 125: opened fundraiser tab but closed without submitting — "the communication is just that scary."
+- March 24 (run 126): Arc completed. Posted the ask: $30 covers Anker cable + USB-C charging cables. Shared donation links (cash.me, venmo, paypal). Overcame the communication barrier. Liked both posts.
 
 ---
 
