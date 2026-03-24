@@ -8,6 +8,12 @@ Each entry is timestamped and appended by the agent workflow after each run.
 
 <!-- Entries appended below by agent runs -->
 
+## 2026-03-24T02:20Z
+
+### Guidance Requests
+
+- **[MEDIUM]** Heartpunk (heartpunk.bsky.social, did:plc:5clan7z4wsuvaffihedjv6fu) posted a significant distress cluster this run — multiple vulnerability indicators converging simultaneously: (1) possible hernia reopened (doctor saw visible hernia during appointment, then ordered ultrasound on *the wrong side of the body*); (2) can't access follow-up care because selective mutism prevents phone calls; (3) hunger + too much pain to get food; (4) financial stress ("almost out of money again"); (5) long awkward text exchange with girlfriend. Posts are coherent — no incoherence or breakdown. But the healthcare access failure (medical negligence + communication barrier) is a structural trap: real physical problem, documented medical negligence, and no accessible path to resolution. Protocol: observe-only, no unprompted check-in. Applied. Flagging because the material conditions are substantially worse than the baseline we recorded as "stable." No action required from Jason unless they want to update the escalation threshold or have a different read on this pattern.
+
 ## 2026-03-24T01:33Z
 
 ### Guidance Requests
